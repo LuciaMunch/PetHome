@@ -4,6 +4,7 @@ import com.pethome.dtos.request.AnimalRequest;
 import com.pethome.dtos.response.AnimalResponse;
 import com.pethome.mappers.AnimalMapper;
 import com.pethome.models.Animal;
+import com.pethome.models.EstadoAnimal;
 import com.pethome.repositories.AnimalRepository;
 import com.pethome.services.interfaces.domain.AnimalService;
 import org.springframework.stereotype.Service;
@@ -65,5 +66,13 @@ public class AnimalServiceImpl implements AnimalService {
             throw new RuntimeException("Animal no encontrado con id " + id);
         }
         animalRepository.deleteById(id);
+    }
+
+    @Override
+    public void marcarAdoptado(Long id) {
+        Animal animal = animalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Animal no encontrado con id " + id));
+        animal.setEstado(EstadoAnimal.ADOPTADO);
+        animalRepository.save(animal);
     }
 }

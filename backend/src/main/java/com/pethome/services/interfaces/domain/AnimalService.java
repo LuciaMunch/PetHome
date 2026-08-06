@@ -15,4 +15,6 @@ import java.util.List;
         AnimalResponse actualizar(Long id, AnimalRequest request);
 
         void eliminar(Long id);
+
+        void marcarAdoptado(Long id);
     }
