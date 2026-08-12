@@ -1,1 +1,51 @@
-<p>auth works!</p>
+<div class="auth-container">
+  <div class="card">
+    <h2>{{ modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label for="nombre_usuario">Nombre de usuario</label>
+        <input
+          id="nombre_usuario"
+          type="text"
+          formControlName="nombre_usuario"
+          placeholder="Tu nombre de usuario"
+        />
+      </div>
+
+      @if (modo === 'registro') {
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="tucorreo@ejemplo.com"
+        />
+      </div>
+      }
+
+      <div class="field">
+        <label for="contraseña">Contraseña</label>
+        <input
+          id="contraseña"
+          type="password"
+          formControlName="contraseña"
+          placeholder="••••••••"
+        />
+      </div>
+
+      @if (error) {
+      <p class="error">{{ error }}</p>
+      }
+
+      <button type="submit" [disabled]="loading || form.invalid">
+        {{ loading ? 'Cargando...' : (modo === 'login' ? 'Ingresar' : 'Registrarse') }}
+      </button>
+    </form>
+
+    <button class="link" (click)="cambiarModo()">
+      {{ modo === 'login' ? '¿No tenés cuenta? Registrate' : '¿Ya tenés cuenta? Ingresá' }}
+    </button>
+  </div>
+</div>
