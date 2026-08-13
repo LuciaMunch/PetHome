@@ -1,0 +1,115 @@
+<div class="admin">
+  <div class="admin-header">
+    <h1>Gestión de animales</h1>
+    <button class="btn-nuevo" (click)="nuevo()">+ Nuevo animal</button>
+  </div>
+
+  <table class="tabla">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Especie</th>
+      <th>Sexo</th>
+      <th>Tamaño</th>
+      <th>Edad</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (animal of animales; track animal.id) {
+    <tr>
+      <td>{{ animal.nombre }}</td>
+      <td>{{ animal.especie }}</td>
+      <td>{{ animal.sexo }}</td>
+      <td>{{ animal.tamanio }}</td>
+      <td>{{ animal.edad }} años</td>
+      <td>
+            <span class="badge" [ngClass]="{
+              'badge--disponible': animal.estado === 'DISPONIBLE',
+              'badge--en-proceso': animal.estado === 'EN_PROCESO',
+              'badge--adoptado': animal.estado === 'ADOPTADO'
+            }">{{ animal.estado }}</span>
+      </td>
+      <td class="acciones">
+        <button class="btn-editar" (click)="editar(animal)">Editar</button>
+        <button class="btn-borrar" (click)="borrar(animal)">Borrar</button>
+      </td>
+    </tr>
+    } @empty {
+    <tr><td colspan="7" class="vacio">No hay animales cargados</td></tr>
+    }
+    </tbody>
+    @if (mostrarFormulario) {
+    <div class="modal-fondo" (click)="cerrarFormulario()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h2>{{ animalActual.id === 0 ? 'Nuevo animal' : 'Editar animal' }}</h2>
+
+        <div class="campo">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="animalActual.nombre" placeholder="Nombre del animal">
+        </div>
+
+        <div class="campo-fila">
+          <div class="campo">
+            <label>Especie</label>
+            <select [(ngModel)]="animalActual.especie">
+              <option value="">Elegir...</option>
+              <option value="PERRO">Perro</option>
+              <option value="GATO">Gato</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Sexo</label>
+            <select [(ngModel)]="animalActual.sexo">
+              <option value="">Elegir...</option>
+              <option value="MACHO">Macho</option>
+              <option value="HEMBRA">Hembra</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo-fila">
+          <div class="campo">
+            <label>Tamaño</label>
+            <select [(ngModel)]="animalActual.tamanio">
+              <option value="">Elegir...</option>
+              <option value="PEQUENIO">Pequeño</option>
+              <option value="MEDIANO">Mediano</option>
+              <option value="GRANDE">Grande</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Edad (años)</label>
+            <input type="number" [(ngModel)]="animalActual.edad">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Descripción</label>
+          <textarea [(ngModel)]="animalActual.descripcion" rows="3" placeholder="Contanos sobre el animal..."></textarea>
+        </div>
+
+        <div class="campo">
+          <label>Fotos</label>
+          <input type="file" accept="image/*" (change)="onFotoSeleccionada($event)">
+          @if (fotosSeleccionadas.length > 0) {
+          <ul class="lista-fotos">
+            @for (foto of fotosSeleccionadas; track foto) {
+            <li>
+              🖼️ {{ foto }}
+              <button type="button" class="quitar" (click)="quitarFoto(foto)">✕</button>
+            </li>
+            }
+          </ul>
+          }
+        </div>
+
+        <div class="modal-acciones">
+          <button class="btn-cancelar" (click)="cerrarFormulario()">Cancelar</button>
+          <button class="btn-guardar" (click)="guardar()">Guardar</button>
+        </div>
+      </div>
+    </div>
+    }
+
