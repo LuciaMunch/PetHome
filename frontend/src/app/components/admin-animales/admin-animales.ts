@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AnimalService } from '../../services/animal.service';
 
 interface Animal {
   id: number;
@@ -20,77 +21,114 @@ interface Animal {
   templateUrl: './admin-animales.html',
   styleUrl: './admin-animales.css',
 })
-export class AdminAnimales {
+export class AdminAnimales implements OnInit {
 
-  animales: Animal[] = [
+  animales: Animal[] = [];
+
+  // Datos de ejemplo (plan B, si el backend no responde)
+  private ejemplo: Animal[] = [
     { id: 1, nombre: 'Luna',  especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO',  edad: 2, descripcion: 'Le encanta jugar en el patio', estado: 'DISPONIBLE' },
     { id: 2, nombre: 'Michi', especie: 'GATO',  sexo: 'MACHO',  tamanio: 'PEQUENIO', edad: 1, descripcion: 'Muy cariñoso', estado: 'EN_PROCESO' },
     { id: 3, nombre: 'Rocky', especie: 'PERRO', sexo: 'MACHO',  tamanio: 'GRANDE',   edad: 4, descripcion: 'Ya encontró su hogar', estado: 'ADOPTADO' },
   ];
 
-  // Controla si el formulario está abierto
   mostrarFormulario = false;
-
-  // El animal que se está creando o editando
   animalActual: Animal = this.animalVacio();
+  fotosSeleccionadas: string[] = [];
+  private archivoFoto: File | null = null;
 
-  // Crea un objeto animal vacío (para el alta)
+  constructor(private animalService: AnimalService) {}
+
+  ngOnInit(): void {
+    this.cargarAnimales();
+  }
+
+  // Trae la lista de animales del backend (si falla, usa los de ejemplo)
+  private cargarAnimales(): void {
+    this.animalService.listarTodos().subscribe({
+      next: (data) => this.animales = data,
+      error: () => this.animales = [...this.ejemplo]
+    });
+  }
+
   private animalVacio(): Animal {
     return { id: 0, nombre: '', especie: '', sexo: '', tamanio: '', edad: 0, descripcion: '', estado: 'DISPONIBLE' };
   }
 
-  // Abre el formulario vacío para crear
   nuevo(): void {
     this.animalActual = this.animalVacio();
     this.fotosSeleccionadas = [];
+    this.archivoFoto = null;
     this.mostrarFormulario = true;
   }
 
   editar(animal: Animal): void {
     this.animalActual = { ...animal };
     this.fotosSeleccionadas = [];
+    this.archivoFoto = null;
     this.mostrarFormulario = true;
   }
 
-  // Guarda (crea o actualiza según si tiene id)
   guardar(): void {
     if (this.animalActual.id === 0) {
-      // Crear: le asigna un id nuevo y lo agrega
-      this.animalActual.id = Date.now();
-      this.animales.push(this.animalActual);
+      // Crear
+      this.animalService.crear(this.animalActual).subscribe({
+        next: (creado) => {
+          this.animales.push(creado);
+          // Si hay una foto seleccionada, la subimos al animal recién creado
+          if (this.archivoFoto) {
+            this.animalService.subirFoto(creado.id, this.archivoFoto).subscribe({
+              next: () => console.log('Foto subida'),
+              error: () => console.log('No se pudo subir la foto (login pendiente)')
+            });
+          }
+          this.cerrarFormulario();
+        },
+        error: () => {
+          this.animalActual.id = Date.now();
+          this.animales.push(this.animalActual);
+          this.cerrarFormulario();
+        }
+      });
     } else {
-      // Editar: reemplaza el existente
-      const i = this.animales.findIndex(a => a.id === this.animalActual.id);
-      if (i !== -1) this.animales[i] = this.animalActual;
+      // Editar
+      this.animalService.actualizar(this.animalActual.id, this.animalActual).subscribe({
+        next: (actualizado) => {
+          const i = this.animales.findIndex(a => a.id === actualizado.id);
+          if (i !== -1) this.animales[i] = actualizado;
+          this.cerrarFormulario();
+        },
+        error: () => {
+          const i = this.animales.findIndex(a => a.id === this.animalActual.id);
+          if (i !== -1) this.animales[i] = this.animalActual;
+          this.cerrarFormulario();
+        }
+      });
     }
-    this.cerrarFormulario();
+  }
+
+  borrar(animal: Animal): void {
+    if (!confirm('¿Seguro que querés borrar a ' + animal.nombre + '?')) return;
+    this.animalService.eliminar(animal.id).subscribe({
+      next: () => this.animales = this.animales.filter(a => a.id !== animal.id),
+      error: () => this.animales = this.animales.filter(a => a.id !== animal.id)
+    });
   }
 
   cerrarFormulario(): void {
     this.mostrarFormulario = false;
   }
 
-  borrar(animal: Animal): void {
-    if (confirm('¿Seguro que querés borrar a ' + animal.nombre + '?')) {
-      this.animales = this.animales.filter(a => a.id !== animal.id);
-    }
-  }
-
-  // Fotos seleccionadas para el animal actual (por ahora, solo los nombres de archivo)
-  fotosSeleccionadas: string[] = [];
-
-  // Se ejecuta al elegir un archivo
   onFotoSeleccionada(evento: Event): void {
     const input = evento.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const archivo = input.files[0];
-      this.fotosSeleccionadas.push(archivo.name);
-      // (después: acá se subiría el archivo a Cloudinary vía tu endpoint POST /api/animales/{id}/fotos)
+      this.archivoFoto = input.files[0];
+      this.fotosSeleccionadas.push(input.files[0].name);
     }
   }
 
-  // Saca una foto de la lista
   quitarFoto(nombre: string): void {
     this.fotosSeleccionadas = this.fotosSeleccionadas.filter(f => f !== nombre);
+    this.archivoFoto = null;
   }
 }

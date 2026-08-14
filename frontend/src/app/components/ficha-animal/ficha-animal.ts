@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-// import { ModalFormularioAdopcion } from '../modal-formulario-adopcion/modal-formulario-adopcion';
+import { AnimalService } from '../../services/animal.service';
 
 interface Animal {
   id: number;
@@ -24,27 +24,47 @@ interface Animal {
 export class FichaAnimal implements OnInit {
 
   animalId!: number;
-
-  // Datos de ejemplo (después vendrá del backend según el id)
-  animal: Animal = {
-    id: 1, nombre: 'Luna', especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO',
-    edad: 2, descripcion: 'Le encanta jugar en el patio y es muy sociable con otros perros. Ideal para una familia con espacio al aire libre.',
-    estado: 'DISPONIBLE'
-  };
-
-  // Galería de ejemplo (después vendrá de tu endpoint de fotos)
+  animal!: Animal;
   fotos: string[] = [];
 
-  constructor(private route: ActivatedRoute) {}
+  // Datos de ejemplo (plan B, si el backend no responde)
+  private ejemplo: Animal[] = [
+    { id: 1, nombre: 'Luna',  especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO',  edad: 2, descripcion: 'Le encanta jugar en el patio y es muy sociable con otros perros.', estado: 'DISPONIBLE' },
+    { id: 2, nombre: 'Michi', especie: 'GATO',  sexo: 'MACHO',  tamanio: 'PEQUENIO', edad: 1, descripcion: 'Muy cariñoso, ideal para departamento.', estado: 'EN_PROCESO' },
+    { id: 3, nombre: 'Rocky', especie: 'PERRO', sexo: 'MACHO',  tamanio: 'GRANDE',   edad: 4, descripcion: 'Ya encontró su hogar. Un perro noble y tranquilo.', estado: 'ADOPTADO' },
+    { id: 4, nombre: 'Coco',  especie: 'GATO',  sexo: 'HEMBRA', tamanio: 'MEDIANO',  edad: 3, descripcion: 'Tranquila, se lleva bien con niños.', estado: 'DISPONIBLE' },
+  ];
+
+  mostrarModalAdopcion = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private animalService: AnimalService
+  ) {}
 
   ngOnInit(): void {
-    // Lee el id de la URL (/animal/5 -> animalId = 5)
     this.animalId = Number(this.route.snapshot.paramMap.get('id'));
-    // Acá después se llamaría al backend para traer el animal y sus fotos
+    this.cargarAnimal();
+    this.cargarFotos();
   }
 
-  // Controla si el modal de adopción está abierto
-  mostrarModalAdopcion = false;
+  // Trae el animal del backend (si falla, usa el de ejemplo)
+  private cargarAnimal(): void {
+    this.animalService.obtenerPorId(this.animalId).subscribe({
+      next: (data) => this.animal = data,
+      error: () => {
+        this.animal = this.ejemplo.find(a => a.id === this.animalId) ?? this.ejemplo[0];
+      }
+    });
+  }
+
+  // Trae las fotos del backend (si falla, deja la galería vacía)
+  private cargarFotos(): void {
+    this.animalService.obtenerFotos(this.animalId).subscribe({
+      next: (data) => this.fotos = data.map((f: any) => f.url),
+      error: () => this.fotos = []
+    });
+  }
 
   abrirAdopcion(): void {
     this.mostrarModalAdopcion = true;
