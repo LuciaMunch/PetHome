@@ -5,13 +5,15 @@ import com.pethome.dtos.response.SolicitudAdopcionResponse;
 import com.pethome.mappers.SolicitudAdopcionMapper;
 import com.pethome.models.SolicitudAdopcion;
 import com.pethome.models.User;
+import com.pethome.repositories.UserRepository;
 import com.pethome.services.interfaces.domain.SolicitudAdopcionService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,12 +23,15 @@ public class SolicitudAdopcionPostController {
 
     private final SolicitudAdopcionService solicitudAdopcionService;
     private final SolicitudAdopcionMapper solicitudAdopcionMapper;
+    private final UserRepository userRepository;
 
     @PostMapping
     @PreAuthorize("hasRole('ADOPTANTE')")
     public ResponseEntity<SolicitudAdopcionResponse> enviarSolicitud(
             @Valid @RequestBody SolicitudAdopcionRequest request,
-            @AuthenticationPrincipal User usuarioActual) {
+            Authentication authentication) {
+
+        User usuarioActual = obtenerUsuarioActual(authentication);
 
         SolicitudAdopcion solicitud = solicitudAdopcionMapper.toEntity(request);
         SolicitudAdopcion guardada = solicitudAdopcionService.enviarSolicitud(
@@ -34,5 +39,10 @@ public class SolicitudAdopcionPostController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(solicitudAdopcionMapper.toResponse(guardada));
+    }
+
+    private User obtenerUsuarioActual(Authentication authentication) {
+        return userRepository.findByNombreUsuario(authentication.getName())
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
     }
 }
