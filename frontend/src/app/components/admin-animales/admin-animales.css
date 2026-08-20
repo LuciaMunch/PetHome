@@ -1,0 +1,179 @@
+:host {
+  --verde-oscuro: #012312;
+  --verde-menta:  #58A787;
+  --naranja:      #FFB031;
+  --texto-suave:  #4B6358;
+  --borde:        #DCEEE2;
+  display: block;
+  background: #fff;
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  color: var(--verde-oscuro);
+}
+
+.admin {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.admin-header h1 {
+  font-family: 'Baloo 2', sans-serif;
+  margin: 0;
+}
+.btn-nuevo {
+  background: var(--naranja);
+  color: var(--verde-oscuro);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-nuevo:hover { background: #E89A1C; }
+
+/* Tabla */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.tabla th {
+  background: #F1FFF0;
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+.tabla td {
+  padding: 12px 16px;
+  border-top: 1px solid var(--borde);
+}
+.vacio {
+  text-align: center;
+  color: var(--texto-suave);
+  padding: 32px;
+}
+
+/* Badge */
+.badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.badge--disponible { background: #DFF5E8; color: #1E7A4B; }
+.badge--en-proceso { background: #FFD581; color: #8A5B00; }
+.badge--adoptado   { background: #E5E5E5; color: #666; }
+
+/* Acciones */
+.acciones { display: flex; gap: 8px; }
+.btn-editar, .btn-borrar {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-editar { background: var(--verde-menta); color: #fff; }
+.btn-editar:hover { background: #48926f; }
+.btn-borrar { background: #F8D7DA; color: #B02A37; }
+.btn-borrar:hover { background: #f1c2c6; }
+
+/* Modal del formulario */
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(1, 35, 18, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 90%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal h2 {
+  font-family: 'Baloo 2', sans-serif;
+  margin: 0 0 24px;
+}
+.campo { margin-bottom: 16px; }
+.campo label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.campo input, .campo select, .campo textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+.campo-fila { display: flex; gap: 16px; }
+.campo-fila .campo { flex: 1; }
+.modal-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+.btn-cancelar {
+  background: #fff;
+  border: 1.5px solid var(--borde);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-guardar {
+  background: var(--naranja);
+  color: var(--verde-oscuro);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-guardar:hover { background: #E89A1C; }
+
+.lista-fotos {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+.lista-fotos li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: #F1FFF0;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+.quitar {
+  background: none;
+  border: none;
+  color: #B02A37;
+  cursor: pointer;
+  font-weight: 700;
+}
