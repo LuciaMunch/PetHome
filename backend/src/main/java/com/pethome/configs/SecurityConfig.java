@@ -11,7 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.http.HttpMethod;
+
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
@@ -23,6 +28,8 @@ public class SecurityConfig {
         return http
                 // Como usamos JWT (stateless), NO usamos cookies ni CSRF => lo desactivamos
                 .csrf(AbstractHttpConfigurer::disable)
+
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 // Sin sesiones: cada request es independiente (no guardamos estado en el server)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -44,6 +51,17 @@ public class SecurityConfig {
                 .build();
     }
 
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
     // Cifra las contraseñas (hash BCrypt): nunca guardamos la contraseña en texto plano
     @Bean
     PasswordEncoder passwordEncoder() {
