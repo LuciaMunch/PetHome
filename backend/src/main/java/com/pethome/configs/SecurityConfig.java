@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableMethodSecurity
@@ -30,6 +31,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Cualquiera puede registrarse/loguearse
                         .requestMatchers("/api/auth/**").permitAll()
+                        // El catálogo es público: cualquiera ve los animales disponibles sin registrarse (solo GET)
+                        .requestMatchers(HttpMethod.GET, "/api/catalogo/**").permitAll()
                         // Solo usuarios con rol ADMIN entran a /api/admin/**
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         // TODO lo demás exige estar autenticado con token válido

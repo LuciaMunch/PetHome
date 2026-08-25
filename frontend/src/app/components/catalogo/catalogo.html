@@ -1,1 +1,78 @@
-<p>catalogo works!</p>
+<!-- HERO -->
+<header class="hero">
+  <h1>Encontrá a tu compañero</h1>
+  <p>Perros y gatos que están esperando un hogar.</p>
+</header>
+
+<!-- FILTROS -->
+<section class="filtros">
+  <div class="filtro">
+    <label>Especie</label>
+    <select [(ngModel)]="filtroEspecie">
+      <option value="">Todas</option>
+      <option value="PERRO">Perro</option>
+      <option value="GATO">Gato</option>
+    </select>
+  </div>
+  <div class="filtro">
+    <label>Sexo</label>
+    <select [(ngModel)]="filtroSexo">
+      <option value="">Todos</option>
+      <option value="MACHO">Macho</option>
+      <option value="HEMBRA">Hembra</option>
+    </select>
+  </div>
+  <div class="filtro">
+    <label>Tamaño</label>
+    <select [(ngModel)]="filtroTamanio">
+      <option value="">Todos</option>
+      <option value="PEQUENIO">Pequeño</option>
+      <option value="MEDIANO">Mediano</option>
+      <option value="GRANDE">Grande</option>
+    </select>
+  </div>
+  <div class="filtro">
+    <label>Edad máxima</label>
+    <input type="number" placeholder="años" [(ngModel)]="filtroEdadMax">
+  </div>
+  <button class="btn-buscar" (click)="buscar()">Buscar</button>
+  <button class="btn-buscar" (click)="limpiar()">Limpiar</button>
+</section>
+
+<!-- CONTADOR -->
+<p class="contador">
+  {{ animales.length }} {{ animales.length === 1 ? 'animal' : 'animales' }}
+</p>
+
+<!-- GRILLA DE ANIMALES -->
+<section class="grilla">
+  @for (animal of animales; track animal.id) {
+  <article class="card">
+    <a [routerLink]="['/animal', animal.id]" class="card-link">
+      <div class="card-foto"></div>
+      <div class="card-cuerpo">
+        <div class="card-header">
+          <h3>{{ animal.nombre }}</h3>
+          <span
+            class="badge"
+            [ngClass]="{
+            'badge--disponible': animal.estado === 'DISPONIBLE',
+            'badge--en-proceso': animal.estado === 'EN_PROCESO',
+            'badge--adoptado': animal.estado === 'ADOPTADO'
+          }"
+          >{{ animal.estado }}</span>
+        </div>
+        <p class="card-datos">
+          {{ animal.especie }} · {{ animal.sexo }} · {{ animal.tamanio }} · {{ animal.edad }} años
+        </p>
+        <p class="card-desc">{{ animal.descripcion }}</p>
+      </div>
+    </a>
+    <div class="card-cuerpo" style="padding-top:0;">
+      <button class="btn-adoptar">Adoptar</button>
+    </div>
+  </article>
+  } @empty {
+  <p class="sin-resultados">No se encontraron animales con esos filtros. 🐾</p>
+  }
+</section>
