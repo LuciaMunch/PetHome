@@ -1,1 +1,52 @@
-<p>modal-formulario-adopcion works!</p>
+<div class="overlay" (click)="cancelar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <h2>🐾 Formulario de Adopción</h2>
+    <p class="subtitulo">Contanos un poco sobre tu hogar para evaluar la adopción.</p>
+
+    <form [formGroup]="form" (ngSubmit)="enviar()">
+
+      <label>Tipo de vivienda</label>
+      <select formControlName="tipoVivienda">
+        <option value="CASA">Casa</option>
+        <option value="DEPARTAMENTO">Departamento</option>
+      </select>
+
+      <label>¿Tenés patio?</label>
+      <select formControlName="tienePatio">
+        <option [ngValue]="true">Sí</option>
+        <option [ngValue]="false">No</option>
+      </select>
+
+      <label>Integrantes del hogar</label>
+      <input type="number" formControlName="integrantesHogar" min="1" />
+
+      <label>¿Tenés otras mascotas?</label>
+      <select formControlName="otrasMascotas">
+        <option [ngValue]="true">Sí</option>
+        <option [ngValue]="false">No</option>
+      </select>
+
+      <label>¿Tenés experiencia previa con mascotas?</label>
+      <select formControlName="experienciaPrevia">
+        <option [ngValue]="true">Sí</option>
+        <option [ngValue]="false">No</option>
+      </select>
+
+      <label>Contanos por qué querés adoptar (viajes, presupuesto, compromiso, etc.)</label>
+      <textarea formControlName="motivo" rows="4"></textarea>
+
+      @if (mensajeError) {
+      <p class="error">{{ mensajeError }}</p>
+      }
+
+      <div class="acciones">
+        <button type="button" (click)="cancelar()">Cancelar</button>
+        <button type="submit" [disabled]="form.invalid || enviando">
+          {{ enviando ? 'Enviando...' : 'Enviar solicitud' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

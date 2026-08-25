@@ -1,0 +1,42 @@
+<div class="contenedor">
+
+  <a routerLink="/home-adoptante" class="volver">← Volver</a>
+
+  <h1>Mis solicitudes de adopción</h1>
+
+  @if (cargando) {
+  <p>Cargando...</p>
+  }
+
+  @if (error) {
+  <p class="error">{{ error }}</p>
+  }
+
+  @if (!cargando && !error && solicitudes.length === 0) {
+  <p class="vacio">Todavía no enviaste ninguna solicitud de adopción.</p>
+  }
+
+  @if (!cargando && solicitudes.length > 0) {
+  <div class="lista">
+    @for (solicitud of solicitudes; track solicitud.id) {
+    <div class="tarjeta">
+      <div class="tarjeta-header">
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge--pendiente': solicitud.estado === 'PENDIENTE',
+                'badge--aprobada': solicitud.estado === 'APROBADA',
+                'badge--rechazada': solicitud.estado === 'RECHAZADA'
+              }"
+            >{{ solicitud.estado }}</span>
+        <span class="fecha">{{ solicitud.fecha }}</span>
+      </div>
+      <p><strong>Animal ID:</strong> {{ solicitud.animalId }}</p>
+      <p><strong>Tipo de vivienda:</strong> {{ solicitud.tipoVivienda }}</p>
+      <p><strong>Motivo:</strong> {{ solicitud.motivo || '—' }}</p>
+    </div>
+    }
+  </div>
+  }
+
+</div>

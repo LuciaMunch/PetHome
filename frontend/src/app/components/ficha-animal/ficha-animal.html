@@ -1,0 +1,56 @@
+<div class="ficha">
+
+  <!-- Botón volver -->
+  <a routerLink="/catalogo" class="volver">← Volver al catálogo</a>
+
+  <div class="ficha-grid">
+
+    <!-- GALERÍA -->
+    <div class="galeria">
+      <div class="foto-principal"></div>
+      <div class="miniaturas">
+        @for (foto of fotos; track foto) {
+        <div class="miniatura"></div>
+        } @empty {
+        <p class="sin-fotos">Este animal todavía no tiene fotos cargadas 🐾</p>
+        }
+      </div>
+    </div>
+
+    <!-- DATOS -->
+    <div class="info">
+      <div class="info-header">
+        <h1>{{ animal.nombre }}</h1>
+        <span
+          class="badge"
+          [ngClass]="{
+            'badge--disponible': animal.estado === 'DISPONIBLE',
+            'badge--en-proceso': animal.estado === 'EN_PROCESO',
+            'badge--adoptado': animal.estado === 'ADOPTADO'
+          }"
+        >{{ animal.estado }}</span>
+      </div>
+
+      <ul class="datos">
+        <li><strong>Especie:</strong> {{ animal.especie }}</li>
+        <li><strong>Sexo:</strong> {{ animal.sexo }}</li>
+        <li><strong>Tamaño:</strong> {{ animal.tamanio }}</li>
+        <li><strong>Edad:</strong> {{ animal.edad }} años</li>
+      </ul>
+
+      <h3>Sobre {{ animal.nombre }}</h3>
+      <p class="descripcion">{{ animal.descripcion }}</p>
+
+      <button class="btn-adoptar" (click)="abrirAdopcion()">🐾 Quiero adoptar a {{ animal.nombre }}</button>
+    </div>
+  </div>
+  <!-- ficha-grid termina arriba -->
+</div>
+
+@if (mostrarModalAdopcion) {
+<app-modal-formulario-adopcion
+  [animalId]="animalId"
+  (cerrar)="cerrarAdopcion()">
+</app-modal-formulario-adopcion>
+}
+
