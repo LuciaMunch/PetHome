@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AnimalService } from '../../services/animal.service';
+import { ModalFormularioAdopcion } from '../modal-formulario-adopcion/modal-formulario-adopcion';
 
 interface Animal {
   id: number;
@@ -17,7 +18,7 @@ interface Animal {
 @Component({
   selector: 'app-ficha-animal',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ModalFormularioAdopcion],
   templateUrl: './ficha-animal.html',
   styleUrl: './ficha-animal.css',
 })
@@ -27,7 +28,6 @@ export class FichaAnimal implements OnInit {
   animal!: Animal;
   fotos: string[] = [];
 
-  // Datos de ejemplo (plan B, si el backend no responde)
   private ejemplo: Animal[] = [
     { id: 1, nombre: 'Luna',  especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO',  edad: 2, descripcion: 'Le encanta jugar en el patio y es muy sociable con otros perros.', estado: 'DISPONIBLE' },
     { id: 2, nombre: 'Michi', especie: 'GATO',  sexo: 'MACHO',  tamanio: 'PEQUENIO', edad: 1, descripcion: 'Muy cariñoso, ideal para departamento.', estado: 'EN_PROCESO' },
@@ -48,7 +48,6 @@ export class FichaAnimal implements OnInit {
     this.cargarFotos();
   }
 
-  // Trae el animal del backend (si falla, usa el de ejemplo)
   private cargarAnimal(): void {
     this.animalService.obtenerPorId(this.animalId).subscribe({
       next: (data) => this.animal = data,
@@ -58,7 +57,6 @@ export class FichaAnimal implements OnInit {
     });
   }
 
-  // Trae las fotos del backend (si falla, deja la galería vacía)
   private cargarFotos(): void {
     this.animalService.obtenerFotos(this.animalId).subscribe({
       next: (data) => this.fotos = data.map((f: any) => f.url),

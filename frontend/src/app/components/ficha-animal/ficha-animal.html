@@ -44,14 +44,11 @@
       <button class="btn-adoptar" (click)="abrirAdopcion()">🐾 Quiero adoptar a {{ animal.nombre }}</button>
     </div>
   </div>
-  <!-- ficha-grid termina arriba -->
 </div>
-<!--
-Pendiente: descomentar cuando Guada tenga su modal con @Input() animalId y @Output() cerrar
+
 @if (mostrarModalAdopcion) {
 <app-modal-formulario-adopcion
   [animalId]="animalId"
   (cerrar)="cerrarAdopcion()">
 </app-modal-formulario-adopcion>
 }
--->
