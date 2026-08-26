@@ -1,6 +1,17 @@
 <div class="auth-container">
   <div class="card">
-    <h2>{{ modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}</h2>
+    <div class="header">
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 100 100">
+          <circle cx="30" cy="25" r="12" fill="#58A787"/>
+          <circle cx="50" cy="18" r="12" fill="#58A787"/>
+          <circle cx="70" cy="25" r="12" fill="#58A787"/>
+          <ellipse cx="50" cy="58" rx="24" ry="20" fill="#58A787"/>
+        </svg>
+      </div>
+      <h1 class="app-name">PetHome</h1>
+      <p class="subtitle">{{ modo === 'login' ? 'Bienvenido de vuelta' : 'Encontrá tu nuevo compañero' }}</p>
+    </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="field">
@@ -44,7 +55,13 @@
       </button>
     </form>
 
-    <button class="link" (click)="cambiarModo()">
+    <div class="divider">
+      <span></span>
+      <p>o</p>
+      <span></span>
+    </div>
+
+    <button class="toggle" (click)="cambiarModo()">
       {{ modo === 'login' ? '¿No tenés cuenta? Registrate' : '¿Ya tenés cuenta? Ingresá' }}
     </button>
   </div>
