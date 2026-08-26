@@ -1,0 +1,76 @@
+.admin-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: inherit;
+}
+
+.subtitulo {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.tabla-responsive {
+  overflow-x: auto;
+}
+
+.tabla-admin {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-admin th, .tabla-admin td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.tabla-admin th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+.badge.pendiente { background: #fff3cd; color: #856404; }
+.badge.aprobada { background: #d4edda; color: #155724; }
+.badge.rechazada { background: #f8d7da; color: #721c24; }
+
+.acciones-cell {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-aprobar {
+  background: #198754;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-rechazar {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.vacio {
+  text-align: center;
+  color: #888;
+  padding: 2rem;
+}
