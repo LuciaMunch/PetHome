@@ -1,0 +1,207 @@
+/* -------------------------------------------------------------------------
+   Tipografía bubble para títulos (nombre del componente, hero, nombre del
+   animal en la card). "Clemente"/"Lowball VF" de la referencia son fuentes
+   de pago, no están en Google Fonts — uso "Baloo 2", que es gratuita y da
+   el mismo efecto de letra inflada/redondeada. Es solo un @import CSS, no
+   agrega ninguna librería ni framework.
+   ------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap');
+
+/* ---- Variables de PetHome (para este componente) ----
+   Paleta tomada de la referencia Waggle: verde muy oscuro como color de
+   marca (en vez del verde bosque que veníamos usando), verde menta como
+   secundario, y naranja/amarillo mostaza como color de acción en vez del
+   durazno anterior. */
+:host {
+  --verde-oscuro:   #012312;   /* marca: navbar, títulos, textos fuertes */
+  --verde-menta:    #58A787;   /* secundario: hovers suaves, acentos */
+  --verde-clarito:  #F1FFF0;   /* fondos suaves (hero, foto placeholder) */
+  --naranja:        #FFB031;   /* color de acción: botón "Adoptar" */
+  --naranja-oscuro: #E89A1C;   /* hover del botón de acción */
+  --amarillo:       #FFD581;   /* acentos chicos, fondo de badge "en proceso" */
+  --blanco:         #FFFFFF;
+  --texto:          #012312;
+  --texto-suave:    #4B6358;
+  --borde:          #DCEEE2;
+
+  display: block;
+  background: var(--blanco);
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  color: var(--texto);
+}
+
+/* ---- Huella (paw) — motivo decorativo, un solo SVG recortado con mask,
+   así que toma cualquier color con background-color. Sin librerías. ---- */
+.pata {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  background-color: var(--verde-oscuro);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='7' cy='9' rx='2.4' ry='3'/%3E%3Cellipse cx='12.5' cy='6.5' rx='2.4' ry='3.2'/%3E%3Cellipse cx='18' cy='9' rx='2.4' ry='3'/%3E%3Cpath d='M12.5 12c-4 0-7 2.6-7 5.7 0 2 1.7 3.3 3.8 2.7.9-.3 1.9-.5 3.2-.5s2.3.2 3.2.5c2.1.6 3.8-.7 3.8-2.7 0-3.1-3-5.7-7-5.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='7' cy='9' rx='2.4' ry='3'/%3E%3Cellipse cx='12.5' cy='6.5' rx='2.4' ry='3.2'/%3E%3Cellipse cx='18' cy='9' rx='2.4' ry='3'/%3E%3Cpath d='M12.5 12c-4 0-7 2.6-7 5.7 0 2 1.7 3.3 3.8 2.7.9-.3 1.9-.5 3.2-.5s2.3.2 3.2.5c2.1.6 3.8-.7 3.8-2.7 0-3.1-3-5.7-7-5.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---- Hero ---- */
+.hero {
+  background: var(--verde-clarito);
+  padding: 48px 24px;
+  text-align: center;
+}
+.hero h1 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  font-size: 2.75rem;
+  margin: 0;
+}
+.hero p { color: var(--texto-suave); font-size: 1.2rem; margin-top: 8px; }
+
+/* ---- Filtros ---- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: end;
+  justify-content: center;
+  padding: 24px;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--borde);
+}
+.filtro { display: flex; flex-direction: column; gap: 4px; }
+.filtro label { font-size: 0.85rem; font-weight: 600; }
+.filtro select, .filtro input {
+  padding: 8px 12px;
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+  font-size: 1rem;
+  min-width: 140px;
+  font-family: inherit;
+  color: var(--texto);
+}
+.btn-buscar {
+  background: var(--verde-oscuro);
+  color: var(--blanco);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.btn-buscar:hover { background: var(--verde-menta); }
+
+/* ---- Grilla ---- */
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  padding: 32px 24px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ---- Tarjeta ---- */
+.card {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(1, 35, 18, 0.08);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(1, 35, 18, 0.14); }
+
+/* Placeholder de foto con marca de agua de huella, como en el submark
+   de la referencia (huella centrada sobre bloque de color plano) */
+.card-foto {
+  height: 170px;
+  background: var(--verde-clarito);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-foto::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 48px;
+  background-color: var(--verde-menta);
+  opacity: 0.5;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='7' cy='9' rx='2.4' ry='3'/%3E%3Cellipse cx='12.5' cy='6.5' rx='2.4' ry='3.2'/%3E%3Cellipse cx='18' cy='9' rx='2.4' ry='3'/%3E%3Cpath d='M12.5 12c-4 0-7 2.6-7 5.7 0 2 1.7 3.3 3.8 2.7.9-.3 1.9-.5 3.2-.5s2.3.2 3.2.5c2.1.6 3.8-.7 3.8-2.7 0-3.1-3-5.7-7-5.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='7' cy='9' rx='2.4' ry='3'/%3E%3Cellipse cx='12.5' cy='6.5' rx='2.4' ry='3.2'/%3E%3Cellipse cx='18' cy='9' rx='2.4' ry='3'/%3E%3Cpath d='M12.5 12c-4 0-7 2.6-7 5.7 0 2 1.7 3.3 3.8 2.7.9-.3 1.9-.5 3.2-.5s2.3.2 3.2.5c2.1.6 3.8-.7 3.8-2.7 0-3.1-3-5.7-7-5.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.card-cuerpo { padding: 16px; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px; }
+.card-header h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--verde-oscuro);
+}
+
+/* ---- Badge de estado ----
+   Tres variantes de color según animal.estado. El HTML necesita la clase
+   correspondiente (ver nota sobre [ngClass] más abajo en la respuesta). */
+.badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: var(--verde-clarito);
+  color: var(--verde-oscuro);
+}
+.badge--disponible { background: #E1F3EA; color: var(--verde-menta); }
+.badge--en-proceso { background: #FFF1D6; color: var(--naranja-oscuro); }
+.badge--adoptado    { background: var(--borde); color: var(--texto-suave); }
+
+.card-datos { color: var(--texto-suave); font-size: 0.85rem; margin: 0 0 8px; }
+.card-desc { color: var(--texto-suave); font-size: 0.9rem; margin: 0 0 16px; }
+
+.btn-adoptar {
+  width: 100%;
+  background: var(--naranja);
+  color: var(--verde-oscuro);
+  border: none;
+  padding: 10px;
+  border-radius: 999px;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.btn-adoptar:hover { background: var(--naranja-oscuro); }
+.btn-adoptar:disabled {
+  background: var(--borde);
+  color: var(--texto-suave);
+  cursor: not-allowed;
+}
+/* Contador de resultados */
+.contador {
+  max-width: 1120px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+/* Mensaje cuando no hay resultados */
+.sin-resultados {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px;
+  color: var(--texto-suave);
+  font-size: 1.1rem;
+}
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}

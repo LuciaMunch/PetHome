@@ -1,0 +1,69 @@
+<div class="admin-container">
+  <h2>🩺 Gestión Sanitaria</h2>
+
+  <!-- HU-13: Registro de Evento Sanitario -->
+  <div class="card-form">
+    <h3>📌 Registrar Nuevo Evento (HU-13)</h3>
+    <form [formGroup]="form" (ngSubmit)="agregarRegistro()">
+      <div class="grid-form">
+        <div class="form-group">
+          <label>Nombre del Animal</label>
+          <input type="text" formControlName="animalNombre" placeholder="Ej: Luna" />
+        </div>
+
+        <div class="form-group">
+          <label>Tipo de Evento</label>
+          <select formControlName="tipoRegistro">
+            <option value="VACUNA">Vacunación</option>
+            <option value="DESPARASITACION">Desparasitación</option>
+            <option value="CASTRACION">Castración</option>
+            <option value="CHEQUEO">Chequeo Veterinario</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" formControlName="fecha" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Descripción / Observaciones</label>
+        <textarea formControlName="descripcion" rows="3" placeholder="Detalles de la atención sanitaria..."></textarea>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid" class="btn-guardar">Guardar Registro</button>
+    </form>
+  </div>
+
+  <hr class="divisor" />
+
+  <!-- HU-14: Historial Sanitario -->
+  <h3>📜 Historial Sanitario Reciente (HU-14)</h3>
+  <div class="tabla-responsive">
+    <table class="tabla-admin">
+      <thead>
+      <tr>
+        <th>Animal</th>
+        <th>Tipo</th>
+        <th>Fecha</th>
+        <th>Observaciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      @for (reg of registros; track reg.id) {
+      <tr>
+        <td><strong>{{ reg.animalNombre }}</strong></td>
+        <td><span class="badge-tipo">{{ reg.tipoRegistro }}</span></td>
+        <td>{{ reg.fecha }}</td>
+        <td>{{ reg.descripcion }}</td>
+      </tr>
+      } @empty {
+      <tr>
+        <td colspan="4" class="vacio">No hay registros sanitarios cargados.</td>
+      </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+</div>
