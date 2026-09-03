@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AnimalService } from '../../services/animal.service';
+import { EventoSanitarioService, EventoSanitarioResponse } from '../../services/evento-sanitario.service';
 
-interface RegistroSanitario {
+interface AnimalOpcion {
   id: number;
-  animalNombre: string;
-  tipoRegistro: string;
-  descripcion: string;
-  fecha: string;
+  nombre: string;
 }
 
 @Component({
@@ -19,38 +18,74 @@ interface RegistroSanitario {
 })
 export class AdminSanitario implements OnInit {
 
-  // MOCK del Historial Sanitario (HU-14)
-  registros: RegistroSanitario[] = [
-    { id: 1, animalNombre: 'Luna', tipoRegistro: 'VACUNA', descripcion: 'Quíntuple canina aplicada.', fecha: '2026-05-01' },
-    { id: 2, animalNombre: 'Michi', tipoRegistro: 'CASTRACION', descripcion: 'Cirugía realizada sin complicaciones.', fecha: '2026-04-20' },
-  ];
+  animales: AnimalOpcion[] = [];
+  animalSeleccionadoId: number | null = null;
+  historial: EventoSanitarioResponse[] = [];
+
+  cargandoAnimales = true;
+  cargandoHistorial = false;
+  mensajeError = '';
 
   form;
 
-  constructor(private fb: FormBuilder) {
-    // Formulario para Registrar Evento Sanitario (HU-13)
+  constructor(
+    private fb: FormBuilder,
+    private animalService: AnimalService,
+    private eventoService: EventoSanitarioService
+  ) {
     this.form = this.fb.nonNullable.group({
-      animalNombre: ['', Validators.required],
-      tipoRegistro: ['VACUNA', Validators.required],
-      descripcion: ['', Validators.required],
-      fecha: [new Date().toISOString().substring(0, 10), Validators.required]
+      animalId: [null as number | null, Validators.required],
+      tipo: ['VACUNA' as 'VACUNA' | 'CASTRACION' | 'DESPARASITACION', Validators.required],
+      fecha: [new Date().toISOString().substring(0, 10), Validators.required],
+      observaciones: [''],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.animalService.listarTodos().subscribe({
+      next: (data) => {
+        this.animales = data;
+        this.cargandoAnimales = false;
+      },
+      error: () => {
+        this.mensajeError = 'No se pudieron cargar los animales.';
+        this.cargandoAnimales = false;
+      }
+    });
+  }
+
+  seleccionarAnimal(id: number): void {
+    this.animalSeleccionadoId = id;
+    this.cargandoHistorial = true;
+    this.eventoService.obtenerHistorial(id).subscribe({
+      next: (data) => {
+        this.historial = data;
+        this.cargandoHistorial = false;
+      },
+      error: () => {
+        this.mensajeError = 'No se pudo cargar el historial de este animal.';
+        this.cargandoHistorial = false;
+      }
+    });
+  }
 
   agregarRegistro(): void {
     if (this.form.invalid) return;
 
-    const nuevoRegistro: RegistroSanitario = {
-      id: Date.now(),
-      ...this.form.getRawValue()
-    };
-
-    this.registros.unshift(nuevoRegistro);
-    this.form.reset({
-      tipoRegistro: 'VACUNA',
-      fecha: new Date().toISOString().substring(0, 10)
+    const valores = this.form.getRawValue();
+    this.eventoService.registrarEvento({
+      tipo: valores.tipo,
+      fecha: valores.fecha,
+      observaciones: valores.observaciones,
+      animalId: valores.animalId!,
+    }).subscribe({
+      next: () => {
+        if (this.animalSeleccionadoId === valores.animalId) {
+          this.seleccionarAnimal(valores.animalId!);
+        }
+        this.form.patchValue({ observaciones: '' });
+      },
+      error: () => this.mensajeError = 'No se pudo registrar el evento sanitario.'
     });
   }
 }

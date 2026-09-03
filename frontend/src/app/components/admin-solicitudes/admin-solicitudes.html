@@ -1,46 +1,44 @@
 <div class="admin-container">
-  <h2>📋 Gestión de Solicitudes de Adopción (HU-11)</h2>
-  <p class="subtitulo">Revisá y administrá las solicitudes recibidas.</p>
+  <h2>📋 Gestión de solicitudes de adopción</h2>
+  <p class="subtitulo">Revisá y administrá las solicitudes pendientes.</p>
 
   @if (cargando) {
   <p>Cargando solicitudes...</p>
-  } @else {
+  }
+
+  @if (error) {
+  <p class="error">{{ error }}</p>
+  }
+
+  @if (!cargando && solicitudes.length === 0) {
+  <p class="vacio">No hay solicitudes pendientes para revisar.</p>
+  }
+
+  @if (!cargando && solicitudes.length > 0) {
   <div class="tabla-responsive">
     <table class="tabla-admin">
       <thead>
       <tr>
-        <th>Animal</th>
-        <th>Solicitante</th>
+        <th>Animal (ID)</th>
+        <th>Solicitante (ID)</th>
         <th>Vivienda</th>
         <th>Patio</th>
         <th>Motivo</th>
-        <th>Estado</th>
         <th>Acciones</th>
       </tr>
       </thead>
       <tbody>
       @for (sol of solicitudes; track sol.id) {
       <tr>
-        <td><strong>{{ sol.animalNombre }}</strong></td>
-        <td>{{ sol.solicitanteEmail }}</td>
+        <td>{{ sol.animalId }}</td>
+        <td>{{ sol.usuarioId }}</td>
         <td>{{ sol.tipoVivienda }}</td>
         <td>{{ sol.tienePatio ? 'Sí' : 'No' }}</td>
-        <td>{{ sol.motivo }}</td>
-        <td>
-          <span class="badge" [ngClass]="sol.estado.toLowerCase()">{{ sol.estado }}</span>
-        </td>
+        <td>{{ sol.motivo || '—' }}</td>
         <td class="acciones-cell">
-          @if (sol.estado === 'PENDIENTE') {
-          <button class="btn-aprobar" (click)="cambiarEstado(sol.id, 'APROBADA')">Aprobar</button>
-          <button class="btn-rechazar" (click)="cambiarEstado(sol.id, 'RECHAZADA')">Rechazar</button>
-          } @else {
-          <span class="gestionado">-</span>
-          }
+          <button class="btn-aprobar" (click)="aprobar(sol.id)">Aprobar</button>
+          <button class="btn-rechazar" (click)="rechazar(sol.id)">Rechazar</button>
         </td>
-      </tr>
-      } @empty {
-      <tr>
-        <td colspan="7" class="vacio">No hay solicitudes para revisar.</td>
       </tr>
       }
       </tbody>

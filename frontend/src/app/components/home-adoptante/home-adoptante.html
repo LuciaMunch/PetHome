@@ -1,7 +1,11 @@
-<div class="home-adoptante">
-  <h1>Bienvenido/a</h1>
-  <nav>
-    <a routerLink="/catalogo">Ver catálogo de animales</a>
-    <a routerLink="/mis-solicitudes">Mis solicitudes de adopción</a>
-  </nav>
+<div class="home-container">
+  <div class="card-profile">
+    <h2 class="user-name">¡Hola, {{ nombreUsuario }}!</h2>
+    <p class="user-detail">Rol: {{ rol }}</p>
+
+    <div class="buttons-container">
+      <a routerLink="/catalogo" class="btn-action">Encontrá a tu compañero</a>
+      <a routerLink="/mis-solicitudes" class="btn-action">Mis solicitudes</a>
+    </div>
+  </div>
 </div>
