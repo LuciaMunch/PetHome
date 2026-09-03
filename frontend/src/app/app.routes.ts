@@ -16,9 +16,9 @@ export const routes: Routes = [
   { path: 'auth', component: Auth },
   { path: 'home-admin', component: HomeAdmin, canActivate: [adminGuard] },
   { path: 'home-adoptante', component: HomeAdoptante, canActivate: [authGuard] },
-  { path: 'catalogo', component: Catalogo },                                    // público
-  { path: 'animal/:id', component: FichaAnimal },                               // público (ficha)
-  { path: 'admin/animales', component: AdminAnimales, canActivate: [adminGuard] },  // solo admin
+  { path: 'catalogo', component: Catalogo },
+  { path: 'animal/:id', component: FichaAnimal },
+  { path: 'admin/animales', component: AdminAnimales, canActivate: [adminGuard] },
   { path: 'admin/solicitudes', component: AdminSolicitudes, canActivate: [adminGuard] },
   { path: 'admin/sanitario', component: AdminSanitario, canActivate: [adminGuard] },
   { path: 'mis-solicitudes', component: MisSolicitudes, canActivate: [authGuard] },
