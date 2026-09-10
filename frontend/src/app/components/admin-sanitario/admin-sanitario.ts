@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AnimalService } from '../../services/animal.service';
@@ -18,13 +18,13 @@ interface AnimalOpcion {
 })
 export class AdminSanitario implements OnInit {
 
-  animales: AnimalOpcion[] = [];
+  animales = signal<AnimalOpcion[]>([]);
   animalSeleccionadoId: number | null = null;
-  historial: EventoSanitarioResponse[] = [];
+  historial = signal<EventoSanitarioResponse[]>([]);
 
-  cargandoAnimales = true;
-  cargandoHistorial = false;
-  mensajeError = '';
+  cargandoAnimales = signal(true);
+  cargandoHistorial = signal(false);
+  mensajeError = signal('');
 
   form;
 
@@ -44,27 +44,27 @@ export class AdminSanitario implements OnInit {
   ngOnInit(): void {
     this.animalService.listarTodos().subscribe({
       next: (data) => {
-        this.animales = data;
-        this.cargandoAnimales = false;
+        this.animales.set(data);
+        this.cargandoAnimales.set(false);
       },
       error: () => {
-        this.mensajeError = 'No se pudieron cargar los animales.';
-        this.cargandoAnimales = false;
+        this.mensajeError.set('No se pudieron cargar los animales.');
+        this.cargandoAnimales.set(false);
       }
     });
   }
 
   seleccionarAnimal(id: number): void {
     this.animalSeleccionadoId = id;
-    this.cargandoHistorial = true;
+    this.cargandoHistorial.set(true);
     this.eventoService.obtenerHistorial(id).subscribe({
       next: (data) => {
-        this.historial = data;
-        this.cargandoHistorial = false;
+        this.historial.set(data);
+        this.cargandoHistorial.set(false);
       },
       error: () => {
-        this.mensajeError = 'No se pudo cargar el historial de este animal.';
-        this.cargandoHistorial = false;
+        this.mensajeError.set('No se pudo cargar el historial de este animal.');
+        this.cargandoHistorial.set(false);
       }
     });
   }
@@ -85,7 +85,7 @@ export class AdminSanitario implements OnInit {
         }
         this.form.patchValue({ observaciones: '' });
       },
-      error: () => this.mensajeError = 'No se pudo registrar el evento sanitario.'
+      error: () => this.mensajeError.set('No se pudo registrar el evento sanitario.')
     });
   }
 }

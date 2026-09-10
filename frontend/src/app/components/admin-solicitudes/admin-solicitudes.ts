@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SolicitudAdopcionService, SolicitudAdopcionResponse } from '../../services/solicitud-adopcion.service';
 
@@ -11,9 +11,9 @@ import { SolicitudAdopcionService, SolicitudAdopcionResponse } from '../../servi
 })
 export class AdminSolicitudes implements OnInit {
 
-  solicitudes: SolicitudAdopcionResponse[] = [];
-  cargando = true;
-  error = '';
+  solicitudes = signal<SolicitudAdopcionResponse[]>([]);
+  cargando = signal(true);
+  error = signal('');
 
   constructor(private solicitudService: SolicitudAdopcionService) {}
 
@@ -22,15 +22,16 @@ export class AdminSolicitudes implements OnInit {
   }
 
   cargarSolicitudes(): void {
-    this.cargando = true;
+    this.cargando.set(true);
+    this.error.set('');
     this.solicitudService.obtenerPendientes().subscribe({
       next: (data) => {
-        this.solicitudes = data.content;
-        this.cargando = false;
+        this.solicitudes.set(data.content);
+        this.cargando.set(false);
       },
       error: () => {
-        this.error = 'No se pudieron cargar las solicitudes.';
-        this.cargando = false;
+        this.error.set('No se pudieron cargar las solicitudes.');
+        this.cargando.set(false);
       }
     });
   }
@@ -38,14 +39,14 @@ export class AdminSolicitudes implements OnInit {
   aprobar(id: number): void {
     this.solicitudService.aprobar(id).subscribe({
       next: () => this.cargarSolicitudes(),
-      error: () => this.error = 'No se pudo aprobar la solicitud.'
+      error: () => this.error.set('No se pudo aprobar la solicitud.')
     });
   }
 
   rechazar(id: number): void {
     this.solicitudService.rechazar(id).subscribe({
       next: () => this.cargarSolicitudes(),
-      error: () => this.error = 'No se pudo rechazar la solicitud.'
+      error: () => this.error.set('No se pudo rechazar la solicitud.')
     });
   }
 }

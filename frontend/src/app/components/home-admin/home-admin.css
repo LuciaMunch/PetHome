@@ -1,0 +1,113 @@
+.admin-layout {
+  min-height: 100vh;
+  background: #F1FFF0;
+}
+
+.header {
+  background: #012312;
+  padding: 1.5rem 2rem;
+  color: #FFFFFF;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: #FFD581;
+}
+
+.options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.option {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: #FFFFFF;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.option:hover {
+  color: #58A787;
+  border-color: #58A787;
+   text-decoration: underline;
+   cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #FFFFFF;
+  border-bottom: 2px solid #F1FFF0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: #F1FFF0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: #012312;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.nav-item .icon {
+  font-size: 1.1rem;
+}
+
+.nav-item:hover {
+  background: #FFD581;
+}
+
+.nav-item.active {
+  background: #58A787;
+  border-color: #58A787;
+  color: #FFFFFF;
+}
+
+.content {
+  padding: 2rem;
+}
+
+.section {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 8px rgba(1, 35, 18, 0.1);
+}
+
+.section h2 {
+  margin: 0 0 0.5rem;
+  color: #012312;
+}
+
+.section p {
+  margin: 0;
+  color: #58A787;
+}

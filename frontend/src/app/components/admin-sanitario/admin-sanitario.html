@@ -1,8 +1,8 @@
 <div class="admin-container">
   <h2>🩺 Gestión Sanitaria</h2>
 
-  @if (mensajeError) {
-  <p class="error">{{ mensajeError }}</p>
+  @if (mensajeError()) {
+  <p class="error">{{ mensajeError() }}</p>
   }
 
   <!-- HU-13: Registro de Evento Sanitario -->
@@ -14,7 +14,7 @@
           <label>Animal</label>
           <select formControlName="animalId">
             <option [ngValue]="null" disabled>Seleccioná un animal</option>
-            @for (animal of animales; track animal.id) {
+            @for (animal of animales(); track animal.id) {
             <option [ngValue]="animal.id">{{ animal.nombre }}</option>
             }
           </select>
@@ -52,21 +52,21 @@
     <label>Ver historial de:</label>
     <select (change)="seleccionarAnimal($any($event.target).value)">
       <option value="" disabled selected>Seleccioná un animal</option>
-      @for (animal of animales; track animal.id) {
+      @for (animal of animales(); track animal.id) {
       <option [value]="animal.id">{{ animal.nombre }}</option>
       }
     </select>
   </div>
 
-  @if (cargandoHistorial) {
+  @if (cargandoHistorial()) {
   <p>Cargando historial...</p>
   }
 
-  @if (!cargandoHistorial && animalSeleccionadoId && historial.length === 0) {
+  @if (!cargandoHistorial() && animalSeleccionadoId && historial().length === 0) {
   <p class="vacio">Este animal todavía no tiene eventos sanitarios registrados.</p>
   }
 
-  @if (!cargandoHistorial && historial.length > 0) {
+  @if (!cargandoHistorial() && historial().length > 0) {
   <div class="tabla-responsive">
     <table class="tabla-admin">
       <thead>
@@ -77,7 +77,7 @@
       </tr>
       </thead>
       <tbody>
-      @for (reg of historial; track reg.id) {
+      @for (reg of historial(); track reg.id) {
       <tr>
         <td><span class="badge-tipo">{{ reg.tipo }}</span></td>
         <td>{{ reg.fecha }}</td>

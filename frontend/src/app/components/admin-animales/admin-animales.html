@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    @for (animal of animales; track animal.id) {
+    @for (animal of animales(); track animal.id) {
     <tr>
       <td>{{ animal.nombre }}</td>
       <td>{{ animal.especie }}</td>
@@ -42,7 +42,7 @@
     </tbody>
   </table>
 
-  @if (mostrarFormulario) {
+  @if (mostrarFormulario()) {
   <div class="modal-fondo" (click)="cerrarFormulario()">
     <div class="modal" (click)="$event.stopPropagation()">
       <h2>{{ animalActual.id === 0 ? 'Nuevo animal' : 'Editar animal' }}</h2>
@@ -95,9 +95,9 @@
       <div class="campo">
         <label>Fotos</label>
         <input type="file" accept="image/*" (change)="onFotoSeleccionada($event)">
-        @if (fotosSeleccionadas.length > 0) {
+        @if (fotosSeleccionadas().length > 0) {
         <ul class="lista-fotos">
-          @for (foto of fotosSeleccionadas; track foto) {
+          @for (foto of fotosSeleccionadas(); track foto) {
           <li>
             🖼️ {{ foto }}
             <button type="button" class="quitar" (click)="quitarFoto(foto)">✕</button>

@@ -2,19 +2,19 @@
   <h2>📋 Gestión de solicitudes de adopción</h2>
   <p class="subtitulo">Revisá y administrá las solicitudes pendientes.</p>
 
-  @if (cargando) {
+  @if (cargando()) {
   <p>Cargando solicitudes...</p>
   }
 
-  @if (error) {
-  <p class="error">{{ error }}</p>
+  @if (error()) {
+  <p class="error">{{ error() }}</p>
   }
 
-  @if (!cargando && solicitudes.length === 0) {
+  @if (!cargando() && solicitudes().length === 0) {
   <p class="vacio">No hay solicitudes pendientes para revisar.</p>
   }
 
-  @if (!cargando && solicitudes.length > 0) {
+  @if (!cargando() && solicitudes().length > 0) {
   <div class="tabla-responsive">
     <table class="tabla-admin">
       <thead>
@@ -28,7 +28,7 @@
       </tr>
       </thead>
       <tbody>
-      @for (sol of solicitudes; track sol.id) {
+      @for (sol of solicitudes(); track sol.id) {
       <tr>
         <td>{{ sol.animalId }}</td>
         <td>{{ sol.usuarioId }}</td>

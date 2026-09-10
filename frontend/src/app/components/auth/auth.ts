@@ -24,7 +24,13 @@ export class Auth {
         this.form = this.fb.group({
           nombre_usuario: ['', Validators.required],
           contraseña: ['', Validators.required],
-          email: ['', this.modo === 'registro' ? Validators.required : Validators.nullValidator]
+          email: ['', this.modo === 'registro' ? Validators.required : Validators.nullValidator],
+          nombre_completo: ['', this.modo === 'registro' ? Validators.required : Validators.nullValidator],
+          direccion: [''],
+          ciudad: [''],
+          provincia: [''],
+          telefono: [''],
+          edad: [null]
         });
   }
 
@@ -40,9 +46,20 @@ export class Auth {
 
     const { nombre_usuario, contraseña, email } = this.form.value;
 
-    const request = this.modo === 'login'
-      ? this.authService.login(nombre_usuario, contraseña)
-      : this.authService.register({ nombre_usuario, contraseña, email, rol: 'ADOPTANTE' });
+        const request = this.modo === 'login'
+          ? this.authService.login(nombre_usuario, contraseña)
+          : this.authService.register({
+              nombre_usuario,
+              contraseña,
+              email,
+              rol: 'ADOPTANTE',
+              nombre_completo: this.form.value.nombre_completo,
+              direccion: this.form.value.direccion,
+              ciudad: this.form.value.ciudad,
+              provincia: this.form.value.provincia,
+              telefono: this.form.value.telefono,
+              edad: this.form.value.edad ? Number(this.form.value.edad) : null,
+            });
 
     request.subscribe({
       next: (res) => {
