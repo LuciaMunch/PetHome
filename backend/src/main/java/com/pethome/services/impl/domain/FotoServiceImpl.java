@@ -9,6 +9,7 @@ import com.pethome.services.interfaces.commons.CloudinaryService;
 import com.pethome.services.interfaces.domain.FotoService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import com.pethome.exceptions.RecursoNoEncontradoException;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class FotoServiceImpl implements FotoService {
     public FotoResponse subirFoto(Long animalId, MultipartFile archivo) {
         // 1. Verificar que el animal exista
         Animal animal = animalRepository.findById(animalId)
-                .orElseThrow(() -> new RuntimeException("Animal no encontrado con id " + animalId));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Animal no encontrado con id " + animalId));
 
         // 2. Subir el archivo a Cloudinary y obtener la URL
         String url = cloudinaryService.subirImagen(archivo);
@@ -58,7 +59,7 @@ public class FotoServiceImpl implements FotoService {
     @Override
     public void eliminar(Long fotoId) {
         if (!fotoRepository.existsById(fotoId)) {
-            throw new RuntimeException("Foto no encontrada con id " + fotoId);
+            throw new RecursoNoEncontradoException("Foto no encontrada con id " + fotoId);
         }
         fotoRepository.deleteById(fotoId);
     }

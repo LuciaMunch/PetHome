@@ -8,6 +8,7 @@ import com.pethome.models.EstadoAnimal;
 import com.pethome.repositories.AnimalRepository;
 import com.pethome.services.interfaces.domain.AnimalService;
 import org.springframework.stereotype.Service;
+import com.pethome.exceptions.RecursoNoEncontradoException;
 
 import java.util.List;
 
@@ -40,14 +41,14 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     public AnimalResponse obtenerPorId(Long id) {
         Animal animal = animalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Animal no encontrado con id " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Animal no encontrado con id " + id));
         return animalMapper.toResponse(animal);
     }
 
     @Override
     public AnimalResponse actualizar(Long id, AnimalRequest request) {
         Animal animal = animalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Animal no encontrado con id " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Animal no encontrado con id " + id));
 
         animal.setNombre(request.getNombre());
         animal.setEspecie(request.getEspecie());
@@ -63,7 +64,7 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     public void eliminar(Long id) {
         if (!animalRepository.existsById(id)) {
-            throw new RuntimeException("Animal no encontrado con id " + id);
+            throw new RecursoNoEncontradoException("Animal no encontrado con id " + id);
         }
         animalRepository.deleteById(id);
     }
@@ -71,7 +72,7 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     public void marcarAdoptado(Long id) {
         Animal animal = animalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Animal no encontrado con id " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Animal no encontrado con id " + id));
         animal.setEstado(EstadoAnimal.ADOPTADO);
         animalRepository.save(animal);
     }
