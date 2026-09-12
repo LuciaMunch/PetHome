@@ -1,0 +1,41 @@
+<div class="admin-container">
+  <h2>👥 Usuarios registrados</h2>
+  <p class="subtitulo">Adoptantes registrados en la plataforma.</p>
+
+  @if (cargando()) {
+  <p>Cargando usuarios...</p>
+  }
+
+  @if (error()) {
+  <p class="error">{{ error() }}</p>
+  }
+
+  @if (!cargando() && usuarios().length === 0) {
+  <p class="vacio">Todavía no hay adoptantes registrados.</p>
+  }
+
+  @if (!cargando() && usuarios().length > 0) {
+  <div class="tabla-responsive">
+    <table class="tabla-admin">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre de usuario</th>
+        <th>Email</th>
+        <th>Rol</th>
+      </tr>
+      </thead>
+      <tbody>
+      @for (usuario of usuarios(); track usuario.id) {
+      <tr>
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nombreUsuario }}</td>
+        <td>{{ usuario.email }}</td>
+        <td><span class="badge-rol">{{ usuario.rol }}</span></td>
+      </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+  }
+</div>

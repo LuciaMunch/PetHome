@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AnimalService } from '../../services/animal.service';
@@ -23,7 +23,7 @@ interface Animal {
 })
 export class AdminAnimales implements OnInit {
 
-  animales: Animal[] = [];
+  animales = signal<Animal[]>([]);
 
   // Datos de ejemplo (plan B, si el backend no responde)
   private ejemplo: Animal[] = [
@@ -32,9 +32,9 @@ export class AdminAnimales implements OnInit {
     { id: 3, nombre: 'Rocky', especie: 'PERRO', sexo: 'MACHO',  tamanio: 'GRANDE',   edad: 4, descripcion: 'Ya encontró su hogar', estado: 'ADOPTADO' },
   ];
 
-  mostrarFormulario = false;
+  mostrarFormulario = signal(false);
   animalActual: Animal = this.animalVacio();
-  fotosSeleccionadas: string[] = [];
+  fotosSeleccionadas = signal<string[]>([]);
   private archivoFoto: File | null = null;
 
   constructor(private animalService: AnimalService) {}
@@ -46,8 +46,8 @@ export class AdminAnimales implements OnInit {
   // Trae la lista de animales del backend (si falla, usa los de ejemplo)
   private cargarAnimales(): void {
     this.animalService.listarTodos().subscribe({
-      next: (data) => this.animales = data,
-      error: () => this.animales = [...this.ejemplo]
+      next: (data) => this.animales.set(data),
+      error: () => this.animales.set([...this.ejemplo])
     });
   }
 
@@ -57,16 +57,16 @@ export class AdminAnimales implements OnInit {
 
   nuevo(): void {
     this.animalActual = this.animalVacio();
-    this.fotosSeleccionadas = [];
+    this.fotosSeleccionadas.set([]);
     this.archivoFoto = null;
-    this.mostrarFormulario = true;
+    this.mostrarFormulario.set(true);
   }
 
   editar(animal: Animal): void {
     this.animalActual = { ...animal };
-    this.fotosSeleccionadas = [];
+    this.fotosSeleccionadas.set([]);
     this.archivoFoto = null;
-    this.mostrarFormulario = true;
+    this.mostrarFormulario.set(true);
   }
 
   guardar(): void {
@@ -74,7 +74,7 @@ export class AdminAnimales implements OnInit {
       // Crear
       this.animalService.crear(this.animalActual).subscribe({
         next: (creado) => {
-          this.animales.push(creado);
+          this.animales.update(lista => [...lista, creado]);
           // Si hay una foto seleccionada, la subimos al animal recién creado
           if (this.archivoFoto) {
             this.animalService.subirFoto(creado.id, this.archivoFoto).subscribe({
@@ -86,7 +86,7 @@ export class AdminAnimales implements OnInit {
         },
         error: () => {
           this.animalActual.id = Date.now();
-          this.animales.push(this.animalActual);
+          this.animales.update(lista => [...lista, this.animalActual]);
           this.cerrarFormulario();
         }
       });
@@ -94,13 +94,11 @@ export class AdminAnimales implements OnInit {
       // Editar
       this.animalService.actualizar(this.animalActual.id, this.animalActual).subscribe({
         next: (actualizado) => {
-          const i = this.animales.findIndex(a => a.id === actualizado.id);
-          if (i !== -1) this.animales[i] = actualizado;
+          this.animales.update(lista => lista.map(a => a.id === actualizado.id ? actualizado : a));
           this.cerrarFormulario();
         },
         error: () => {
-          const i = this.animales.findIndex(a => a.id === this.animalActual.id);
-          if (i !== -1) this.animales[i] = this.animalActual;
+          this.animales.update(lista => lista.map(a => a.id === this.animalActual.id ? this.animalActual : a));
           this.cerrarFormulario();
         }
       });
@@ -110,25 +108,25 @@ export class AdminAnimales implements OnInit {
   borrar(animal: Animal): void {
     if (!confirm('¿Seguro que querés borrar a ' + animal.nombre + '?')) return;
     this.animalService.eliminar(animal.id).subscribe({
-      next: () => this.animales = this.animales.filter(a => a.id !== animal.id),
-      error: () => this.animales = this.animales.filter(a => a.id !== animal.id)
+      next: () => this.animales.update(lista => lista.filter(a => a.id !== animal.id)),
+      error: () => this.animales.update(lista => lista.filter(a => a.id !== animal.id))
     });
   }
 
   cerrarFormulario(): void {
-    this.mostrarFormulario = false;
+    this.mostrarFormulario.set(false);
   }
 
   onFotoSeleccionada(evento: Event): void {
     const input = evento.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.archivoFoto = input.files[0];
-      this.fotosSeleccionadas.push(input.files[0].name);
+      this.fotosSeleccionadas.update(lista => [...lista, input.files![0].name]);
     }
   }
 
   quitarFoto(nombre: string): void {
-    this.fotosSeleccionadas = this.fotosSeleccionadas.filter(f => f !== nombre);
+    this.fotosSeleccionadas.update(lista => lista.filter(f => f !== nombre));
     this.archivoFoto = null;
   }
 }

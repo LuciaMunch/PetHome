@@ -13,6 +13,16 @@
         />
       </div>
 
+      <div class="field">
+        <label for="contraseña">Contraseña</label>
+        <input
+          id="contraseña"
+          type="password"
+          formControlName="contraseña"
+          placeholder="Tu contraseña"
+        />
+      </div>
+
       @if (modo === 'registro') {
       <div class="field">
         <label for="email">Email</label>
@@ -20,20 +30,70 @@
           id="email"
           type="email"
           formControlName="email"
-          placeholder="tucorreo@ejemplo.com"
+          placeholder="Tu email"
+        />
+      </div>
+
+      <div class="field">
+        <label for="nombre_completo">Nombre completo</label>
+        <input
+          id="nombre_completo"
+          type="text"
+          formControlName="nombre_completo"
+          placeholder="Tu nombre y apellido"
+        />
+      </div>
+
+      <div class="field">
+        <label for="direccion">Dirección</label>
+        <input
+          id="direccion"
+          type="text"
+          formControlName="direccion"
+          placeholder="Calle, número"
+        />
+      </div>
+
+      <div class="field">
+        <label for="ciudad">Ciudad</label>
+        <input
+          id="ciudad"
+          type="text"
+          formControlName="ciudad"
+          placeholder="Tu ciudad"
+        />
+      </div>
+
+      <div class="field">
+        <label for="provincia">Provincia</label>
+        <input
+          id="provincia"
+          type="text"
+          formControlName="provincia"
+          placeholder="Tu provincia"
+        />
+      </div>
+
+      <div class="field">
+        <label for="telefono">Teléfono</label>
+        <input
+          id="telefono"
+          type="tel"
+          formControlName="telefono"
+          placeholder="Código de área + número"
+        />
+      </div>
+
+      <div class="field">
+        <label for="edad">Edad</label>
+        <input
+          id="edad"
+          type="number"
+          formControlName="edad"
+          placeholder="Tu edad"
         />
       </div>
       }
-
-      <div class="field">
-        <label for="contraseña">Contraseña</label>
-        <input
-          id="contraseña"
-          type="password"
-          formControlName="contraseña"
-          placeholder="••••••••"
-        />
-      </div>
 
       @if (error) {
       <p class="error">{{ error }}</p>
