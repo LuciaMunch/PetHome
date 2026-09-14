@@ -41,6 +41,22 @@
       <h3>Sobre {{ animal.nombre }}</h3>
       <p class="descripcion">{{ animal.descripcion }}</p>
 
+      <!-- HISTORIAL SANITARIO -->
+      <h3>Historial sanitario</h3>
+      <ul class="historial-sanitario">
+        @for (evento of eventosSanitarios; track evento.id) {
+        <li class="evento-sanitario">
+          <span class="evento-tipo">{{ evento.tipo }}</span>
+          <span class="evento-fecha">{{ evento.fecha }}</span>
+          @if (evento.observaciones) {
+          <span class="evento-obs">{{ evento.observaciones }}</span>
+          }
+        </li>
+        } @empty {
+        <p class="sin-historial">Todavía no hay registros sanitarios cargados 🩺</p>
+        }
+      </ul>
+
       <button class="btn-adoptar" (click)="abrirAdopcion()">🐾 Quiero adoptar a {{ animal.nombre }}</button>
     </div>
   </div>

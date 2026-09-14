@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AnimalService } from '../../services/animal.service';
+import { EventoSanitarioService, EventoSanitarioResponse } from '../../services/evento-sanitario.service';
 import { ModalFormularioAdopcion } from '../modal-formulario-adopcion/modal-formulario-adopcion';
 
 interface Animal {
@@ -27,6 +28,7 @@ export class FichaAnimal implements OnInit {
   animalId!: number;
   animal!: Animal;
   fotos: string[] = [];
+  eventosSanitarios: EventoSanitarioResponse[] = [];
 
   private ejemplo: Animal[] = [
     { id: 1, nombre: 'Luna',  especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO',  edad: 2, descripcion: 'Le encanta jugar en el patio y es muy sociable con otros perros.', estado: 'DISPONIBLE' },
@@ -39,13 +41,15 @@ export class FichaAnimal implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private animalService: AnimalService
+    private animalService: AnimalService,
+    private eventoSanitarioService: EventoSanitarioService
   ) {}
 
   ngOnInit(): void {
     this.animalId = Number(this.route.snapshot.paramMap.get('id'));
     this.cargarAnimal();
     this.cargarFotos();
+    this.cargarHistorialSanitario();
   }
 
   private cargarAnimal(): void {
@@ -61,6 +65,13 @@ export class FichaAnimal implements OnInit {
     this.animalService.obtenerFotos(this.animalId).subscribe({
       next: (data) => this.fotos = data.map((f: any) => f.url),
       error: () => this.fotos = []
+    });
+  }
+
+  private cargarHistorialSanitario(): void {
+    this.eventoSanitarioService.obtenerHistorial(this.animalId).subscribe({
+      next: (data) => this.eventosSanitarios = data,
+      error: () => this.eventosSanitarios = []
     });
   }
 
