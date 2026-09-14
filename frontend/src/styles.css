@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===== Base compartida de PetHome ===== */
+
+/* Variables de color (la paleta oficial de PetHome) */
+:root {
+  /* Colores principales */
+  --verde-oscuro: #012312;    /* principal (textos fuertes, header) */
+  --verde-menta:  #58A787;    /* secundario */
+  --naranja:      #FFB031;    /* botones de acción (adoptar) */
+  --naranja-oscuro: #E89A1C;  /* hover del naranja */
+  --fondo:        #F1FFF0;    /* fondos suaves */
+  --fondo-blanco: #FFFFFF;    /* tarjetas */
+  --borde:        #DCEEE2;    /* bordes suaves */
+  --texto:        #012312;    /* texto principal */
+  --texto-suave:  #4B6358;    /* texto secundario */
+
+  /* Colores de estado (badges) */
+  --estado-disponible-bg: #E1F3EA;
+  --estado-disponible-tx: #1E7A4B;
+  --estado-proceso-bg:    #FFF1D6;
+  --estado-proceso-tx:    #8A5B00;
+  --estado-adoptado-bg:   #E5E5E5;
+  --estado-adoptado-tx:   #666666;
+
+  /* Tipografías */
+  --fuente-titulos: 'Baloo 2', system-ui, sans-serif;
+  --fuente-texto:   'Nunito Sans', system-ui, sans-serif;
+}
+
+/* Estilos globales base */
+body {
+  margin: 0;
+  font-family: var(--fuente-texto);
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+/* Todos los títulos usan Baloo 2 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--fuente-titulos);
+  color: var(--verde-oscuro);
+}/* You can add global styles to this file, and also import other style files */
