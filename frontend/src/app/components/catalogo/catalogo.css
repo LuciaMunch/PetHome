@@ -1,26 +1,8 @@
-/* -------------------------------------------------------------------------
-   Tipografía bubble para títulos. "Baloo 2" (gratuita, Google Fonts),
-   solo un @import CSS, no agrega ninguna librería ni framework.
-   ------------------------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap');
-
-/* ---- Variables de PetHome (para este componente) ---- */
+/* ---- Catálogo ---- */
 :host {
-  --verde-oscuro:   #012312;   /* marca: navbar, títulos, textos fuertes */
-  --verde-menta:    #58A787;   /* secundario: hovers suaves, acentos */
-  --verde-clarito:  #F1FFF0;   /* fondos suaves (hero, foto placeholder) */
-  --naranja:        #FFB031;   /* color de acción: botón "Adoptar" */
-  --naranja-oscuro: #E89A1C;   /* hover del botón de acción */
-  --amarillo:       #FFD581;   /* acentos chicos, fondo de badge "en proceso" */
-  --blanco:         #FFFFFF;
-  --texto:          #012312;
-  --texto-suave:    #4B6358;
-  --borde:          #DCEEE2;
-
   display: block;
   background: var(--blanco);
   min-height: 100vh;
-  font-family: system-ui, sans-serif;
   color: var(--texto);
 }
 
@@ -31,7 +13,7 @@
   text-align: center;
 }
 .hero h1 {
-  font-family: 'Baloo 2', sans-serif;
+  font-family: var(--fuente-titulos);
   font-weight: 700;
   color: var(--verde-oscuro);
   font-size: 2.75rem;
@@ -67,7 +49,7 @@
   border: none;
   padding: 10px 24px;
   border-radius: 999px;
-  font-family: 'Baloo 2', sans-serif;
+  font-family: var(--fuente-titulos);
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.15s;
@@ -115,7 +97,7 @@
 .card-cuerpo { padding: 16px; }
 .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px; }
 .card-header h3 {
-  font-family: 'Baloo 2', sans-serif;
+  font-family: var(--fuente-titulos);
   font-weight: 700;
   margin: 0;
   font-size: 1.25rem;
@@ -134,9 +116,9 @@
   background: var(--verde-clarito);
   color: var(--verde-oscuro);
 }
-.badge--disponible { background: #E1F3EA; color: var(--verde-menta); }
-.badge--en-proceso { background: #FFF1D6; color: var(--naranja-oscuro); }
-.badge--adoptado    { background: var(--borde); color: var(--texto-suave); }
+.badge--disponible { background: var(--estado-disponible-bg); color: var(--estado-disponible-tx); }
+.badge--en-proceso { background: var(--estado-proceso-bg); color: var(--estado-proceso-tx); }
+.badge--adoptado    { background: var(--estado-adoptado-bg); color: var(--estado-adoptado-tx); }
 
 .card-datos { color: var(--texto-suave); font-size: 0.85rem; margin: 0 0 8px; }
 .card-desc { color: var(--texto-suave); font-size: 0.9rem; margin: 0 0 16px; }
@@ -148,7 +130,7 @@
   border: none;
   padding: 10px;
   border-radius: 999px;
-  font-family: 'Baloo 2', sans-serif;
+  font-family: var(--fuente-titulos);
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.15s;

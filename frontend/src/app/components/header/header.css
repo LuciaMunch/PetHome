@@ -38,6 +38,13 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
+.nav-link--boton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
 .nav-btn {
   background: var(--naranja, #FFB031);
   color: var(--verde-oscuro, #012312);

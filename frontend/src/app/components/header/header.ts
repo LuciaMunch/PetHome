@@ -21,8 +21,14 @@ export class Header {
     return this.authService.getRol();
   }
 
+  irAInicio(): void {
+    // TODO: cuando Guada termine la landing, cambiar '/catalogo' por su ruta
+    this.router.navigate(['/catalogo']);
+  }
+
   cerrarSesion(): void {
     this.authService.logout();
+    // TODO: cuando Guada termine la landing, cambiar '/catalogo' por su ruta
     this.router.navigate(['/catalogo']);
   }
 }
