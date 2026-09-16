@@ -23,4 +23,9 @@ export class CatalogoService {
 
     return this.http.get<any>(this.apiUrl, { params });
   }
+
+  // Trae un animal por id (endpoint público, para la ficha)
+  obtenerPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
 }

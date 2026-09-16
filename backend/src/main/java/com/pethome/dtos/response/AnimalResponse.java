@@ -21,4 +21,5 @@ public class AnimalResponse {
     private Integer edad;
     private String descripcion;
     private EstadoAnimal estado;
+    private String fotoUrl;
 }

@@ -7,14 +7,12 @@
 
     <!-- GALERÍA -->
     <div class="galeria">
+      @if (animal.fotoUrl) {
+      <img class="foto-principal" [src]="animal.fotoUrl" [alt]="animal.nombre">
+      } @else {
       <div class="foto-principal"></div>
-      <div class="miniaturas">
-        @for (foto of fotos; track foto) {
-        <div class="miniatura"></div>
-        } @empty {
-        <p class="sin-fotos">Este animal todavía no tiene fotos cargadas 🐾</p>
-        }
-      </div>
+      <p class="sin-fotos">Este animal todavía no tiene fotos cargadas 🐾</p>
+      }
     </div>
 
     <!-- DATOS -->
