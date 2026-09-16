@@ -1,0 +1,21 @@
+<header class="header">
+  <a routerLink="/catalogo" class="logo">🐾 PetHome</a>
+
+  <nav class="nav">
+    <a routerLink="/catalogo" class="nav-link">Catálogo</a>
+
+    @if (rol === 'ADMIN') {
+    <a routerLink="/home-admin" class="nav-link">Panel</a>
+    }
+
+    @if (rol === 'ADOPTANTE') {
+    <a routerLink="/mis-solicitudes" class="nav-link">Mis solicitudes</a>
+    }
+
+    @if (rol) {
+    <button class="nav-btn" (click)="cerrarSesion()">Cerrar sesión</button>
+    } @else {
+    <a routerLink="/auth" class="nav-btn">Iniciar sesión</a>
+    }
+  </nav>
+</header>
