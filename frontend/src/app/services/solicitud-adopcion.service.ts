@@ -23,7 +23,10 @@ export interface SolicitudAdopcionResponse {
   experienciaPrevia: boolean;
   motivo: string;
   animalId: number;
+  animalNombre: string;
   usuarioId: number;
+  usuarioNombre: string;
+  usuarioEmail: string;
 }
 
 interface PageResponse<T> {

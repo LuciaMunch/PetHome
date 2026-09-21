@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SolicitudAdopcionService, SolicitudAdopcionResponse } from '../../services/solicitud-adopcion.service';
 
@@ -11,9 +11,11 @@ import { SolicitudAdopcionService, SolicitudAdopcionResponse } from '../../servi
 })
 export class AdminSolicitudes implements OnInit {
 
-  solicitudes = signal<SolicitudAdopcionResponse[]>([]);
-  cargando = signal(true);
-  error = signal('');
+  solicitudes: SolicitudAdopcionResponse[] = [];
+  cargando = true;
+  error = '';
+
+  solicitudSeleccionada: SolicitudAdopcionResponse | null = null;
 
   constructor(private solicitudService: SolicitudAdopcionService) {}
 
@@ -22,31 +24,44 @@ export class AdminSolicitudes implements OnInit {
   }
 
   cargarSolicitudes(): void {
-    this.cargando.set(true);
-    this.error.set('');
+    this.cargando = true;
     this.solicitudService.obtenerPendientes().subscribe({
       next: (data) => {
-        this.solicitudes.set(data.content);
-        this.cargando.set(false);
+        this.solicitudes = data.content;
+        this.cargando = false;
       },
       error: () => {
-        this.error.set('No se pudieron cargar las solicitudes.');
-        this.cargando.set(false);
+        this.error = 'No se pudieron cargar las solicitudes.';
+        this.cargando = false;
       }
     });
   }
 
+  verDetalle(solicitud: SolicitudAdopcionResponse): void {
+    this.solicitudSeleccionada = solicitud;
+  }
+
+  cerrarDetalle(): void {
+    this.solicitudSeleccionada = null;
+  }
+
   aprobar(id: number): void {
     this.solicitudService.aprobar(id).subscribe({
-      next: () => this.cargarSolicitudes(),
-      error: () => this.error.set('No se pudo aprobar la solicitud.')
+      next: () => {
+        this.cerrarDetalle();
+        this.cargarSolicitudes();
+      },
+      error: () => this.error = 'No se pudo aprobar la solicitud.'
     });
   }
 
   rechazar(id: number): void {
     this.solicitudService.rechazar(id).subscribe({
-      next: () => this.cargarSolicitudes(),
-      error: () => this.error.set('No se pudo rechazar la solicitud.')
+      next: () => {
+        this.cerrarDetalle();
+        this.cargarSolicitudes();
+      },
+      error: () => this.error = 'No se pudo rechazar la solicitud.'
     });
   }
 }
