@@ -7,14 +7,12 @@
 
     <!-- GALERÍA -->
     <div class="galeria">
+      @if (animal.fotoUrl) {
+      <img class="foto-principal" [src]="animal.fotoUrl" [alt]="animal.nombre">
+      } @else {
       <div class="foto-principal"></div>
-      <div class="miniaturas">
-        @for (foto of fotos; track foto) {
-        <div class="miniatura"></div>
-        } @empty {
-        <p class="sin-fotos">Este animal todavía no tiene fotos cargadas 🐾</p>
-        }
-      </div>
+      <p class="sin-fotos">Este animal todavía no tiene fotos cargadas 🐾</p>
+      }
     </div>
 
     <!-- DATOS -->
@@ -40,6 +38,22 @@
 
       <h3>Sobre {{ animal.nombre }}</h3>
       <p class="descripcion">{{ animal.descripcion }}</p>
+
+      <!-- HISTORIAL SANITARIO -->
+      <h3>Historial sanitario</h3>
+      <ul class="historial-sanitario">
+        @for (evento of eventosSanitarios; track evento.id) {
+        <li class="evento-sanitario">
+          <span class="evento-tipo">{{ evento.tipo }}</span>
+          <span class="evento-fecha">{{ evento.fecha }}</span>
+          @if (evento.observaciones) {
+          <span class="evento-obs">{{ evento.observaciones }}</span>
+          }
+        </li>
+        } @empty {
+        <p class="sin-historial">Todavía no hay registros sanitarios cargados 🩺</p>
+        }
+      </ul>
 
       <button class="btn-adoptar" (click)="abrirAdopcion()">🐾 Quiero adoptar a {{ animal.nombre }}</button>
     </div>

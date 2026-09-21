@@ -13,6 +13,7 @@ interface Animal {
   edad: number;
   descripcion: string;
   estado: string;
+  fotoUrl?: string;
 }
 
 @Component({
@@ -64,6 +65,7 @@ export class Catalogo implements OnInit {
       error: () => {
         // Si el backend no responde (403, apagado, etc.), usa los de ejemplo filtrados
         this.animales = this.filtrarEjemplo();
+        this.cdr.detectChanges();
       }
     });
   }

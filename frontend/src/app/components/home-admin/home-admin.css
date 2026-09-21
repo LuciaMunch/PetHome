@@ -1,80 +1,48 @@
 .admin-layout {
   min-height: 100vh;
-  background: #F1FFF0;
+  background: var(--fondo);
 }
 
-.header {
-  background: #012312;
-  padding: 1.5rem 2rem;
-  color: #FFFFFF;
+/* Título del panel */
+.admin-titulo {
+  text-align: center;
+  padding: 32px 24px 8px;
 }
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.brand {
-  display: flex;
-  flex-direction: column;
-}
-
 .title {
   margin: 0;
-  font-size: 1.5rem;
+  font-family: var(--fuente-titulos);
+  font-size: 2rem;
+  color: var(--verde-oscuro);
 }
-
 .subtitle {
-  margin: 0.25rem 0 0;
-  font-size: 0.9rem;
-  color: #FFD581;
+  margin: 4px 0 0;
+  color: var(--texto-suave);
+  font-size: 1rem;
 }
 
-.options {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.option {
-  padding: 0.5rem 1rem;
-  background: transparent;
-  color: #FFFFFF;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
-
-.option:hover {
-  color: #58A787;
-  border-color: #58A787;
-   text-decoration: underline;
-   cursor: pointer;
-}
-
+/* Barra de secciones */
 .nav {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: #FFFFFF;
-  border-bottom: 2px solid #F1FFF0;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 24px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  background: #F1FFF0;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  color: #012312;
-  font-weight: 500;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--blanco);
+  border: 2px solid var(--borde);
+  border-radius: 999px;
+  color: var(--verde-oscuro);
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.15s;
 }
 
 .nav-item .icon {
@@ -82,32 +50,18 @@
 }
 
 .nav-item:hover {
-  background: #FFD581;
+  background: var(--verde-clarito);
+  border-color: var(--verde-menta);
+  transform: translateY(-2px);
 }
 
+/* Sección activa: resaltada en naranja (color de acción de PetHome) */
 .nav-item.active {
-  background: #58A787;
-  border-color: #58A787;
-  color: #FFFFFF;
+  background: var(--naranja);
+  border-color: var(--naranja);
+  color: var(--verde-oscuro);
 }
 
 .content {
-  padding: 2rem;
-}
-
-.section {
-  background: #FFFFFF;
-  border-radius: 12px;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 2px 8px rgba(1, 35, 18, 0.1);
-}
-
-.section h2 {
-  margin: 0 0 0.5rem;
-  color: #012312;
-}
-
-.section p {
-  margin: 0;
-  color: #58A787;
+  padding: 8px 24px 32px;
 }

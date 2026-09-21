@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AnimalService } from '../../services/animal.service';
+import { CatalogoService } from '../../services/catalogo.service';
+import { EventoSanitarioService, EventoSanitarioResponse } from '../../services/evento-sanitario.service';
 import { ModalFormularioAdopcion } from '../modal-formulario-adopcion/modal-formulario-adopcion';
 
 interface Animal {
@@ -13,6 +14,7 @@ interface Animal {
   edad: number;
   descripcion: string;
   estado: string;
+  fotoUrl?: string;
 }
 
 @Component({
@@ -26,7 +28,7 @@ export class FichaAnimal implements OnInit {
 
   animalId!: number;
   animal!: Animal;
-  fotos: string[] = [];
+  eventosSanitarios: EventoSanitarioResponse[] = [];
 
   private ejemplo: Animal[] = [
     { id: 1, nombre: 'Luna',  especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO',  edad: 2, descripcion: 'Le encanta jugar en el patio y es muy sociable con otros perros.', estado: 'DISPONIBLE' },
@@ -39,28 +41,37 @@ export class FichaAnimal implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private animalService: AnimalService
+    private catalogoService: CatalogoService,
+    private eventoSanitarioService: EventoSanitarioService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.animalId = Number(this.route.snapshot.paramMap.get('id'));
     this.cargarAnimal();
-    this.cargarFotos();
+    this.cargarHistorialSanitario();
   }
 
   private cargarAnimal(): void {
-    this.animalService.obtenerPorId(this.animalId).subscribe({
-      next: (data) => this.animal = data,
+    this.catalogoService.obtenerPorId(this.animalId).subscribe({
+      next: (data) => {
+        this.animal = data;
+        this.cdr.detectChanges();
+      },
       error: () => {
         this.animal = this.ejemplo.find(a => a.id === this.animalId) ?? this.ejemplo[0];
+        this.cdr.detectChanges();
       }
     });
   }
 
-  private cargarFotos(): void {
-    this.animalService.obtenerFotos(this.animalId).subscribe({
-      next: (data) => this.fotos = data.map((f: any) => f.url),
-      error: () => this.fotos = []
+  private cargarHistorialSanitario(): void {
+    this.eventoSanitarioService.obtenerHistorial(this.animalId).subscribe({
+      next: (data) => {
+        this.eventosSanitarios = data;
+        this.cdr.detectChanges();
+      },
+      error: () => this.eventosSanitarios = []
     });
   }
 

@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: var(--verde-oscuro, #012312);
+  box-shadow: 0 2px 8px rgba(1, 35, 18, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-link {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: var(--fuente-texto, 'Nunito Sans', sans-serif);
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: background-color 0.15s;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-link--boton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.nav-btn {
+  background: var(--naranja, #FFB031);
+  color: var(--verde-oscuro, #012312);
+  border: none;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 8px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.nav-btn:hover {
+  background: var(--naranja-oscuro, #E89A1C);
+}

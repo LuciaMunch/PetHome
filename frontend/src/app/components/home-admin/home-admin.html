@@ -1,26 +1,12 @@
 <div class="admin-layout">
-  <header class="header">
-    <div class="header-top">
-      <div class="brand">
-        <h1 class="title">Panel de Administración</h1>
-        <p class="subtitle">PetHome</p>
-      </div>
-
-      <nav class="options">
-        <a routerLink="/catalogo" class="option">Catálogo</a>
-        <a routerLink="/" class="option">Inicio</a>
-        <a routerLink="/" class="option">Cerrar Sesión</a>
-      </nav>
-    </div>
-  </header>
+  <div class="admin-titulo">
+    <h1 class="title">Panel de Administracion</h1>
+    <p class="subtitle">Gestiona el refugio desde un solo lugar</p>
+  </div>
 
   <nav class="nav">
     @for (seccion of secciones; track seccion.id) {
-    <a
-      class="nav-item"
-      [class.active]="seccionActiva === seccion.id"
-      (click)="seleccionar(seccion.id)"
-    >
+    <a class="nav-item" [class.active]="seccionActiva === seccion.id" (click)="seleccionar(seccion.id)">
       <span class="icon">{{ seccion.icon }}</span>
       <span>{{ seccion.label }}</span>
     </a>
@@ -31,19 +17,15 @@
     @if (seccionActiva === 'mascotas') {
       <app-admin-animales></app-admin-animales>
     }
-
     @if (seccionActiva === 'sanitario') {
       <app-admin-sanitario></app-admin-sanitario>
     }
-
     @if (seccionActiva === 'usuarios') {
-    <app-admin-usuarios></app-admin-usuarios>
+      <app-admin-usuarios></app-admin-usuarios>
     }
-
     @if (seccionActiva === 'estadisticas') {
       <app-admin-estadisticas></app-admin-estadisticas>
     }
-
     @if (seccionActiva === 'solicitudes') {
       <app-admin-solicitudes></app-admin-solicitudes>
     }
