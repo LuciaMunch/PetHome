@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AnimalService } from '../../services/animal.service';
-import { ModalFormularioAdopcion } from '../modal-formulario-adopcion/modal-formulario-adopcion';
+import { CatalogoService } from '../../services/catalogo.service';
 import { EventoSanitarioService, EventoSanitarioResponse } from '../../services/evento-sanitario.service';
+import { ModalFormularioAdopcion } from '../modal-formulario-adopcion/modal-formulario-adopcion';
 
 interface Animal {
   id: number;
@@ -14,6 +14,7 @@ interface Animal {
   edad: number;
   descripcion: string;
   estado: string;
+  fotoUrl?: string;
 }
 
 @Component({
@@ -26,50 +27,13 @@ interface Animal {
 export class FichaAnimal implements OnInit {
 
   animalId!: number;
-  animal!: Animal;
-  fotos: string[] = [];
+  animal?: Animal;
 
   private ejemplo: Animal[] = [
-    {
-      id: 1,
-      nombre: 'Luna',
-      especie: 'PERRO',
-      sexo: 'HEMBRA',
-      tamanio: 'MEDIANO',
-      edad: 2,
-      descripcion: 'Le encanta jugar en el patio y es muy sociable con otros perros.',
-      estado: 'DISPONIBLE'
-    },
-    {
-      id: 2,
-      nombre: 'Michi',
-      especie: 'GATO',
-      sexo: 'MACHO',
-      tamanio: 'PEQUENIO',
-      edad: 1,
-      descripcion: 'Muy cariñoso, ideal para departamento.',
-      estado: 'EN_PROCESO'
-    },
-    {
-      id: 3,
-      nombre: 'Rocky',
-      especie: 'PERRO',
-      sexo: 'MACHO',
-      tamanio: 'GRANDE',
-      edad: 4,
-      descripcion: 'Ya encontró su hogar. Un perro noble y tranquilo.',
-      estado: 'ADOPTADO'
-    },
-    {
-      id: 4,
-      nombre: 'Coco',
-      especie: 'GATO',
-      sexo: 'HEMBRA',
-      tamanio: 'MEDIANO',
-      edad: 3,
-      descripcion: 'Tranquila, se lleva bien con niños.',
-      estado: 'DISPONIBLE'
-    },
+    { id: 1, nombre: 'Luna', especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO', edad: 2, descripcion: 'Le encanta jugar en el patio y es muy sociable con otros perros.', estado: 'DISPONIBLE' },
+    { id: 2, nombre: 'Michi', especie: 'GATO', sexo: 'MACHO', tamanio: 'PEQUENIO', edad: 1, descripcion: 'Muy cariñoso, ideal para departamento.', estado: 'EN_PROCESO' },
+    { id: 3, nombre: 'Rocky', especie: 'PERRO', sexo: 'MACHO', tamanio: 'GRANDE', edad: 4, descripcion: 'Ya encontró su hogar. Un perro noble y tranquilo.', estado: 'ADOPTADO' },
+    { id: 4, nombre: 'Coco', especie: 'GATO', sexo: 'HEMBRA', tamanio: 'MEDIANO', edad: 3, descripcion: 'Tranquila, se lleva bien con niños.', estado: 'DISPONIBLE' },
   ];
 
   mostrarModalAdopcion = false;
@@ -80,29 +44,26 @@ export class FichaAnimal implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private animalService: AnimalService,
-  private eventoSanitarioService: EventoSanitarioService
+    private catalogoService: CatalogoService,
+    private eventoSanitarioService: EventoSanitarioService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.animalId = Number(this.route.snapshot.paramMap.get('id'));
     this.cargarAnimal();
-    this.cargarFotos();
   }
 
   private cargarAnimal(): void {
-    this.animalService.obtenerPorId(this.animalId).subscribe({
-      next: (data) => this.animal = data,
+    this.catalogoService.obtenerPorId(this.animalId).subscribe({
+      next: (data) => {
+        this.animal = data;
+        this.cdr.detectChanges();
+      },
       error: () => {
         this.animal = this.ejemplo.find(a => a.id === this.animalId) ?? this.ejemplo[0];
+        this.cdr.detectChanges();
       }
-    });
-  }
-
-  private cargarFotos(): void {
-    this.animalService.obtenerFotos(this.animalId).subscribe({
-      next: (data) => this.fotos = data.map((f: any) => f.url),
-      error: () => this.fotos = []
     });
   }
 
@@ -120,16 +81,16 @@ export class FichaAnimal implements OnInit {
       this.cargandoHistorial = true;
       this.eventoSanitarioService.obtenerHistorial(this.animalId).subscribe({
         next: (data) => {
-          console.log('HISTORIAL SANITARIO:', data);
           this.historialSanitario = data;
           this.cargandoHistorial = false;
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('ERROR HISTORIAL SANITARIO:', err);
           this.cargandoHistorial = false;
+          this.cdr.detectChanges();
         }
       });
     }
   }
-
 }

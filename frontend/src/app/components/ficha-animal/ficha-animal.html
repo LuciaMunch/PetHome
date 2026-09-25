@@ -3,18 +3,17 @@
   <!-- Botón volver -->
   <a routerLink="/catalogo" class="volver">← Volver al catálogo</a>
 
+  @if (animal) {
   <div class="ficha-grid">
 
     <!-- GALERÍA -->
     <div class="galeria">
+      @if (animal.fotoUrl) {
+      <img class="foto-principal" [src]="animal.fotoUrl" [alt]="animal.nombre">
+      } @else {
       <div class="foto-principal"></div>
-      <div class="miniaturas">
-        @for (foto of fotos; track foto) {
-        <div class="miniatura"></div>
-        } @empty {
-        <p class="sin-fotos">Este animal todavía no tiene fotos cargadas 🐾</p>
-        }
-      </div>
+      <p class="sin-fotos">Este animal todavía no tiene fotos cargadas 🐾</p>
+      }
     </div>
 
     <!-- DATOS -->
@@ -73,6 +72,9 @@
       <button class="btn-adoptar" (click)="abrirAdopcion()">🐾 Quiero adoptar a {{ animal.nombre }}</button>
     </div>
   </div>
+  } @else {
+  <p>Cargando ficha del animal...</p>
+  }
 </div>
 
 @if (mostrarModalAdopcion) {
