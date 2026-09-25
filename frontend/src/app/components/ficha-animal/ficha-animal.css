@@ -119,6 +119,55 @@
 }
 .btn-adoptar:hover { background: var(--naranja-oscuro); }
 
+
+.info-sanitaria-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  background: #f4f4f4;
+  border-radius: 8px;
+  font-weight: 600;
+  user-select: none;
+}
+
+.info-sanitaria-toggle:hover {
+  background: #ececec;
+}
+
+.icono-toggle {
+  font-size: 1.2rem;
+}
+
+.info-sanitaria-contenido {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid #cceee0;
+}
+
+.lista-sanitaria {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-sanitaria li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.lista-sanitaria li:last-child {
+  border-bottom: none;
+}
+
+.observ {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+
 /* En pantallas chicas, una columna */
 @media (max-width: 720px) {
   .ficha-grid { grid-template-columns: 1fr; }
