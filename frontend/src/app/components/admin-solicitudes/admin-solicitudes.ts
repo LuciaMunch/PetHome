@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SolicitudAdopcionService, SolicitudAdopcionResponse } from '../../services/solicitud-adopcion.service';
 
@@ -17,7 +17,10 @@ export class AdminSolicitudes implements OnInit {
 
   solicitudSeleccionada: SolicitudAdopcionResponse | null = null;
 
-  constructor(private solicitudService: SolicitudAdopcionService) {}
+  constructor(
+    private solicitudService: SolicitudAdopcionService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.cargarSolicitudes();
@@ -29,10 +32,12 @@ export class AdminSolicitudes implements OnInit {
       next: (data) => {
         this.solicitudes = data.content;
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.error = 'No se pudieron cargar las solicitudes.';
         this.cargando = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -51,7 +56,10 @@ export class AdminSolicitudes implements OnInit {
         this.cerrarDetalle();
         this.cargarSolicitudes();
       },
-      error: () => this.error = 'No se pudo aprobar la solicitud.'
+      error: () => {
+        this.error = 'No se pudo aprobar la solicitud.';
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -61,7 +69,10 @@ export class AdminSolicitudes implements OnInit {
         this.cerrarDetalle();
         this.cargarSolicitudes();
       },
-      error: () => this.error = 'No se pudo rechazar la solicitud.'
+      error: () => {
+        this.error = 'No se pudo rechazar la solicitud.';
+        this.cdr.detectChanges();
+      }
     });
   }
 }

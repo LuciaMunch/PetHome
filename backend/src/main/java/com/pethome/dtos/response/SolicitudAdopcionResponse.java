@@ -22,5 +22,8 @@ public class SolicitudAdopcionResponse {
     private boolean experienciaPrevia;
     private String motivo;
     private Long animalId;
+    private String animalNombre;
     private Long usuarioId;
+    private String usuarioNombre;
+    private String usuarioEmail;
 }

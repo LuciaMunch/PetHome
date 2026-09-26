@@ -40,6 +40,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         // El catálogo es público: cualquiera ve los animales disponibles sin registrarse (solo GET)
                         .requestMatchers(HttpMethod.GET, "/api/catalogo/**").permitAll()
+                        // La información sanitaria pública de los animales
+                        .requestMatchers(HttpMethod.GET, "/api/eventos-sanitarios/animal/**").permitAll()
                         // Solo usuarios con rol ADMIN entran a /api/admin/**
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         // TODO lo demás exige estar autenticado con token válido

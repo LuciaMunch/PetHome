@@ -1,5 +1,7 @@
 package com.pethome.services.impl.domain;
 
+import com.pethome.dtos.response.SolicitudAdopcionResponse;
+import com.pethome.mappers.SolicitudAdopcionMapper;
 import com.pethome.models.*;
 import com.pethome.repositories.AnimalRepository;
 import com.pethome.repositories.SolicitudAdopcionRepository;
@@ -23,7 +25,8 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
     private final SolicitudAdopcionRepository solicitudAdopcionRepository;
     private final AnimalRepository animalRepository;
     private final UserRepository userRepository;
-    private final AnimalService animalService; // acá está el marcarAdoptado(id) de Lucía
+    private final AnimalService animalService;
+    private final SolicitudAdopcionMapper mapper;
 
     @Override
     public SolicitudAdopcion enviarSolicitud(SolicitudAdopcion solicitud, Long animalId, Long usuarioId) {
@@ -52,13 +55,20 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
     }
 
     @Override
-    public Page<SolicitudAdopcion> obtenerPendientes(Pageable pageable) {
-        return solicitudAdopcionRepository.findByEstado(EstadoSolicitud.PENDIENTE, pageable);
+    @Transactional(readOnly = true)
+    public Page<SolicitudAdopcionResponse> obtenerPendientes(Pageable pageable) {
+        Page<SolicitudAdopcion> solicitudes =
+                solicitudAdopcionRepository.findByEstado(EstadoSolicitud.PENDIENTE, pageable);
+        return solicitudes.map(mapper::toResponse);
     }
 
     @Override
-    public List<SolicitudAdopcion> obtenerMisSolicitudes(Long usuarioId) {
-        return solicitudAdopcionRepository.findByUsuarioId(usuarioId);
+    @Transactional(readOnly = true)
+    public List<SolicitudAdopcionResponse> obtenerMisSolicitudes(Long usuarioId) {
+        return solicitudAdopcionRepository.findByUsuarioId(usuarioId)
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
     }
 
     @Override
@@ -69,17 +79,14 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
 
         Long animalId = solicitud.getAnimal().getId();
 
-        // 1. Aprobar esta solicitud
         solicitud.setEstado(EstadoSolicitud.APROBADA);
         solicitudAdopcionRepository.save(solicitud);
 
-        // 2. Rechazar las demás pendientes del mismo animal
         List<SolicitudAdopcion> otrasPendientes =
                 solicitudAdopcionRepository.findByAnimalIdAndEstado(animalId, EstadoSolicitud.PENDIENTE);
         otrasPendientes.forEach(s -> s.setEstado(EstadoSolicitud.RECHAZADA));
         solicitudAdopcionRepository.saveAll(otrasPendientes);
 
-        // 3. Marcar el animal como adoptado (delegado al service de Lucía)
         animalService.marcarAdoptado(animalId);
     }
 
