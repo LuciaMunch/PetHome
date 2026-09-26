@@ -31,7 +31,10 @@ public class SolicitudAdopcionMapper {
                 solicitud.isExperienciaPrevia(),
                 solicitud.getMotivo(),
                 solicitud.getAnimal().getId(),
-                solicitud.getUsuario().getId()
+                solicitud.getAnimal().getNombre(),
+                solicitud.getUsuario().getId(),
+                solicitud.getUsuario().getNombreUsuario(),
+                solicitud.getUsuario().getEmail()
         );
     }
 }

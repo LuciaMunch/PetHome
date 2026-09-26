@@ -74,6 +74,7 @@
         <th>Tipo</th>
         <th>Fecha</th>
         <th>Observaciones</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -82,6 +83,9 @@
         <td><span class="badge-tipo">{{ reg.tipo }}</span></td>
         <td>{{ reg.fecha }}</td>
         <td>{{ reg.observaciones || '—' }}</td>
+        <td>
+          <button class="btn-eliminar" (click)="eliminarEvento(reg.id)" title="Eliminar registro">✕</button>
+        </td>
       </tr>
       }
       </tbody>

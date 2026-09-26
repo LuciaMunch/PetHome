@@ -30,4 +30,8 @@ export class EventoSanitarioService {
   obtenerHistorial(animalId: number): Observable<EventoSanitarioResponse[]> {
     return this.http.get<EventoSanitarioResponse[]>(`${this.apiUrl}/animal/${animalId}`);
   }
+  eliminarEvento(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
+

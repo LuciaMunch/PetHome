@@ -88,4 +88,18 @@ export class AdminSanitario implements OnInit {
       error: () => this.mensajeError.set('No se pudo registrar el evento sanitario.')
     });
   }
+
+  eliminarEvento(id: number): void {
+    const confirmado = confirm('¿Seguro que querés eliminar este registro sanitario?');
+    if (!confirmado) return;
+
+    this.eventoService.eliminarEvento(id).subscribe({
+      next: () => {
+        if (this.animalSeleccionadoId) {
+          this.seleccionarAnimal(this.animalSeleccionadoId);
+        }
+      },
+      error: () => this.mensajeError.set('No se pudo eliminar el registro.')
+    });
+  }
 }

@@ -3,6 +3,7 @@
   <!-- Botón volver -->
   <a routerLink="/catalogo" class="volver">← Volver al catálogo</a>
 
+  @if (animal) {
   <div class="ficha-grid">
 
     <!-- GALERÍA -->
@@ -39,25 +40,41 @@
       <h3>Sobre {{ animal.nombre }}</h3>
       <p class="descripcion">{{ animal.descripcion }}</p>
 
-      <!-- HISTORIAL SANITARIO -->
-      <h3>Historial sanitario</h3>
-      <ul class="historial-sanitario">
-        @for (evento of eventosSanitarios; track evento.id) {
-        <li class="evento-sanitario">
-          <span class="evento-tipo">{{ evento.tipo }}</span>
-          <span class="evento-fecha">{{ evento.fecha }}</span>
-          @if (evento.observaciones) {
-          <span class="evento-obs">{{ evento.observaciones }}</span>
-          }
-        </li>
-        } @empty {
-        <p class="sin-historial">Todavía no hay registros sanitarios cargados 🩺</p>
+      <!-- Acordeón de información sanitaria -->
+      <div class="info-sanitaria-toggle" (click)="toggleInfoSanitaria()">
+        <span>Información sanitaria</span>
+        <span class="icono-toggle">{{ mostrarInfoSanitaria ? '−' : '+' }}</span>
+      </div>
+
+      @if (mostrarInfoSanitaria) {
+      <div class="info-sanitaria-contenido">
+        @if (cargandoHistorial) {
+        <p>Cargando...</p>
         }
-      </ul>
+        @if (!cargandoHistorial && historialSanitario.length === 0) {
+        <p class="vacio">Sin registros sanitarios cargados.</p>
+        }
+        @if (!cargandoHistorial && historialSanitario.length > 0) {
+        <ul class="lista-sanitaria">
+          @for (evento of historialSanitario; track evento.id) {
+          <li>
+            <strong>{{ evento.tipo }}</strong> — {{ evento.fecha }}
+            @if (evento.observaciones) {
+            <br><span class="observ">{{ evento.observaciones }}</span>
+            }
+          </li>
+          }
+        </ul>
+        }
+      </div>
+      }
 
       <button class="btn-adoptar" (click)="abrirAdopcion()">🐾 Quiero adoptar a {{ animal.nombre }}</button>
     </div>
   </div>
+  } @else {
+  <p>Cargando ficha del animal...</p>
+  }
 </div>
 
 @if (mostrarModalAdopcion) {
