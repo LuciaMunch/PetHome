@@ -1,0 +1,120 @@
+<div class="topbar">Pet Home familias que se eligen para siempre.</div>
+
+<section class="hero">
+  <div class="hero-texto">
+    <h1><span class="verde">Pet</span> <span class="naranja">Home</span></h1>
+    <p class="subtitulo">una mascota esperándote. siempre</p>
+    <div class="hero-botones">
+      <button class="btn-verde" (click)="irACatalogo()">VER MASCOTAS</button>
+      <button class="btn-outline" (click)="scrollAPasos()">COMO ADOPTAR?</button>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    @if (animalActual) {
+    <img [src]="animalActual.fotoUrl" [alt]="animalActual.nombre" class="hero-foto" />
+    <div class="hero-info">
+      <span class="hero-nombre">{{ animalActual.nombre }}</span>
+      <button class="btn-ver-perfil" (click)="verPerfil()">Ver perfil →</button>
+    </div>
+    } @else if (!cargandoAnimal) {
+    <div class="hero-foto hero-foto--vacia">🐾</div>
+    }
+  </div>
+</section>
+
+<section class="historia" id="historia">
+  <div class="historia-texto">
+    <h2>NUESTRA HISTORIA</h2>
+    <p>
+      Pet Home surge de la necesidad de modernizar y facilitar el trabajo de los refugios
+      y agrupaciones de rescate animal. Sabíamos que el mayor desafío no era solo rescatar,
+      sino conectar eficientemente a cada animal con la familia adecuada. Por eso creamos
+      una plataforma integral que ayuda a las entidades a dar visibilidad a sus animales en
+      adopción y a automatizar el proceso de selección de adoptantes. En Pet Home combinamos
+      tecnología e impacto social para que los refugios ahorren tiempo y más rescatados
+      tengan una segunda oportunidad.
+    </p>
+  </div>
+  <div class="historia-collage">
+    <div class="collage-item">☕</div>
+    <div class="collage-item">🐕</div>
+    <div class="collage-item">🐶</div>
+    <div class="collage-item">🐾</div>
+  </div>
+</section>
+
+<section class="pasos" id="pasos">
+  <div class="pasos-header">
+    <div>
+      <h2>PASOS A SEGUIR PARA <span class="verde">ADOPTAR</span></h2>
+      <p>Sin papelerío, sin costo. Completá el formulario, conocerlo y si hacen click — se va con vos.</p>
+    </div>
+  </div>
+
+  <div class="pasos-grid">
+    <div class="paso-card">
+      <span class="paso-numero">01</span>
+      <p class="paso-titulo">CONOCÉ A TU AMIGO</p>
+      <p class="paso-descripcion">Mirá el catálogo y descubrí a los peludos que están esperando un hogar.</p>
+    </div>
+    <div class="paso-card">
+      <span class="paso-numero">02</span>
+      <p class="paso-titulo">COMPLETÁ EL FORMULARIO</p>
+      <p class="paso-descripcion">Contanos sobre vos y tu hogar para asegurarnos de encontrar la mejor familia para cada animal.</p>
+    </div>
+    <div class="paso-card">
+      <span class="paso-numero">03</span>
+      <p class="paso-titulo">TE CONTACTAMOS</p>
+      <p class="paso-descripcion">Llegó el momento, te contactamos para que conozcas a tu nuevo amigo.</p>
+    </div>
+    <div class="paso-card">
+      <span class="paso-numero">04</span>
+      <p class="paso-titulo">¡A CASA!</p>
+      <p class="paso-descripcion">Si todo salió bien, se va con vos, a empezar una nueva vida juntos.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ayuda-adoptar">
+  <div class="card-ayuda">
+    <h3>¿QUERÉS AYUDAR?</h3>
+    <p>Tu donación cubre pensionados, honorarios veterinarios y el cuidado de los animales que rescatamos. ¡Cada peso importa!</p>
+    <span class="label-transferencias">TRANSFERENCIAS DIRECTAS</span>
+    <div class="dato-transferencia">
+      <div class="dato-textos">
+        <small>Mercado Pago</small>
+        <strong>PETHOME.MP</strong>
+      </div>
+      <button class="btn-copiar" (click)="copiarAlias()">
+        {{ aliasCopiado ? '¡Copiado!' : 'COPIAR' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="card-adoptar">
+    <h3>¿QUERÉS ADOPTAR?</h3>
+    <p>Dale a este peludo la oportunidad de tener la familia que se merece. Es gratis, rápido y sin compromiso.</p>
+    <button class="btn-verde btn-ancho" (click)="irACatalogo()">VER MASCOTAS</button>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-marca">
+    <h3><span class="blanco">Pet</span> <span class="naranja">Home</span></h3>
+    <p>Familias que se eligen para siempre. Rescatamos, sanamos y unimos corazones.</p>
+  </div>
+  <div class="footer-col">
+    <span class="footer-titulo">ORGANIZACIÓN</span>
+    <a (click)="irACatalogo()">Adoptar</a>
+    <a (click)="scrollAPasos()">Cómo Ayudar</a>
+    <a (click)="scrollAHistoria()">Nuestra Historia</a>
+  </div>
+  <div class="footer-col">
+    <span class="footer-titulo">CONTACTO</span>
+    <span>info&#64;pethome.org</span>
+    <span>+54 9 11 5555-1234</span>
+    <span>Villa María, Argentina</span>
+  </div>
+  <p class="footer-copy">© 2026 Pet Home. Todos los derechos reservados.</p>
+</footer>

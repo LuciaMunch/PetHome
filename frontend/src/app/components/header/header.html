@@ -2,6 +2,7 @@
   <a routerLink="/catalogo" class="logo">🐾 PetHome</a>
 
   <nav class="nav">
+    <a routerLink="/" class="nav-link">Inicio</a>
     <a routerLink="/catalogo" class="nav-link">Catálogo</a>
 
     @if (rol === 'ADMIN') {
@@ -10,7 +11,6 @@
 
     @if (rol === 'ADOPTANTE') {
     <a routerLink="/mis-solicitudes" class="nav-link">Mis solicitudes</a>
-    <button class="nav-link nav-link--boton" (click)="irAInicio()">Inicio</button>
     }
 
     @if (rol) {

@@ -22,13 +22,11 @@ export class Header {
   }
 
   irAInicio(): void {
-    // TODO: cuando Guada termine la landing, cambiar '/catalogo' por su ruta
-    this.router.navigate(['/catalogo']);
+    this.router.navigate(['/']);
   }
 
   cerrarSesion(): void {
     this.authService.logout();
-    // TODO: cuando Guada termine la landing, cambiar '/catalogo' por su ruta
-    this.router.navigate(['/catalogo']);
+    this.router.navigate(['/']);
   }
 }
