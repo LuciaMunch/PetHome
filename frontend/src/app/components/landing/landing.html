@@ -3,10 +3,10 @@
 <section class="hero">
   <div class="hero-texto">
     <h1><span class="verde">Pet</span> <span class="naranja">Home</span></h1>
-    <p class="subtitulo">una mascota esperándote. siempre</p>
+    <h3 class="subtitulo">Una mascota esperándote. Siempre</h3>
     <div class="hero-botones">
       <button class="btn-verde" (click)="irACatalogo()">VER MASCOTAS</button>
-      <button class="btn-outline" (click)="scrollAPasos()">COMO ADOPTAR?</button>
+      <button class="btn-outline" (click)="scrollAPasos()">¿COMO ADOPTAR?</button>
     </div>
   </div>
 
@@ -15,6 +15,7 @@
     <img [src]="animalActual.fotoUrl" [alt]="animalActual.nombre" class="hero-foto" />
     <div class="hero-info">
       <span class="hero-nombre">{{ animalActual.nombre }}</span>
+      <p class="hero-datos">{{ animalActual.edad }} años · {{ animalActual.sexo }} · {{ animalActual.tamanio }}</p>
       <button class="btn-ver-perfil" (click)="verPerfil()">Ver perfil →</button>
     </div>
     } @else if (!cargandoAnimal) {
@@ -37,10 +38,10 @@
     </p>
   </div>
   <div class="historia-collage">
-    <div class="collage-item">☕</div>
-    <div class="collage-item">🐕</div>
-    <div class="collage-item">🐶</div>
-    <div class="collage-item">🐾</div>
+    <img src="/historia-1.jpg" alt="Nuestra historia 1" class="collage-item" />
+    <img src="/historia-3.png" alt="Nuestra historia 2" class="collage-item" />
+    <img src="/historia-4.png" alt="Nuestra historia 3" class="collage-item" />
+    <img src="/historia-2.jpg" alt="Nuestra historia 4" class="collage-item" />
   </div>
 </section>
 
@@ -49,6 +50,14 @@
     <div>
       <h2>PASOS A SEGUIR PARA <span class="verde">ADOPTAR</span></h2>
       <p>Sin papelerío, sin costo. Completá el formulario, conocerlo y si hacen click — se va con vos.</p>
+    </div>
+
+    <div class="banner-jornada">
+      <span class="banner-icono">📅</span>
+      <div>
+        <p class="banner-titulo">Jornada de adopción — todos los sábados</p>
+        <p class="banner-detalle">Plaza Centenario · 15 a 18hs · +30 animales · Entrada libre y gratuita</p>
+      </div>
     </div>
   </div>
 

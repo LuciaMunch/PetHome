@@ -29,6 +29,7 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
     private final SolicitudAdopcionMapper mapper;
 
     @Override
+    @Transactional
     public SolicitudAdopcion enviarSolicitud(SolicitudAdopcion solicitud, Long animalId, Long usuarioId) {
         Animal animal = animalRepository.findById(animalId)
                 .orElseThrow(() -> new EntityNotFoundException("Animal no encontrado con id: " + animalId));
@@ -51,7 +52,12 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
         solicitud.setFecha(LocalDate.now());
         solicitud.setEstado(EstadoSolicitud.PENDIENTE);
 
-        return solicitudAdopcionRepository.save(solicitud);
+        SolicitudAdopcion guardada = solicitudAdopcionRepository.save(solicitud);
+
+        // Al entrar una solicitud, el animal pasa a EN_PROCESO
+        animalService.marcarEnProceso(animalId);
+
+        return guardada;
     }
 
     @Override
@@ -91,11 +97,15 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
     }
 
     @Override
+    @Transactional
     public void rechazarSolicitud(Long solicitudId) {
         SolicitudAdopcion solicitud = solicitudAdopcionRepository.findById(solicitudId)
                 .orElseThrow(() -> new EntityNotFoundException("Solicitud no encontrada con id: " + solicitudId));
 
         solicitud.setEstado(EstadoSolicitud.RECHAZADA);
         solicitudAdopcionRepository.save(solicitud);
+
+        // Al rechazar, el animal vuelve a estar disponible
+        animalService.marcarDisponible(solicitud.getAnimal().getId());
     }
 }

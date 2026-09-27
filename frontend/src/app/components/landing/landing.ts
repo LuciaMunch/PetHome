@@ -8,6 +8,9 @@ interface AnimalDestacado {
   nombre: string;
   fotoUrl?: string;
   estado?: string;
+  edad?: number;
+  sexo?: string;
+  tamanio?: string;
 }
 
 @Component({

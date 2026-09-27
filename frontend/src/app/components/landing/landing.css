@@ -8,8 +8,8 @@
   background: #14532d;
   color: white;
   text-align: center;
-  font-size: 0.85rem;
-  padding: 6px 0;
+  font-size: 0.90rem;
+  padding: 5px 0;
 }
 
 /* ===== SECCIÓN HERO (título Pet Home + botones + card del animal destacado) ===== */
@@ -18,20 +18,21 @@
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
-  background: #eaf5ea;
+  background: #eaf5ea url('/patitas.png') repeat;
   padding: 6rem 4rem;
   flex-wrap: wrap;
 }
 
 .hero-texto h1 {
-  font-size: 3rem;
+  font-size: 4rem; /* antes 3rem */
   margin: 0;
 }
 
 .subtitulo {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   color: #333;
-  margin: 0.5rem 0 1.5rem;
+  margin: 0.75rem 0 2rem;
+  font-weight: 600;
 }
 
 .hero-botones {
@@ -43,9 +44,10 @@
   background: #1b4332;
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
+  padding: 1.1rem 2rem; /* antes 0.8rem 1.5rem */
   border-radius: 8px;
   font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -53,9 +55,10 @@
   background: #fde9c8;
   color: #d97706;
   border: none;
-  padding: 0.8rem 1.5rem;
+  padding: 1.1rem 2rem; /* antes 0.8rem 1.5rem */
   border-radius: 8px;
   font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -66,7 +69,7 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  animation: flotar 3s ease-in-out infinite; /* efecto de flotación sutil */
+  animation: flotar 3s ease-in-out infinite;
 }
 
 /* Animación de flotación: sube y baja la card, con sombra que crece al subir */
@@ -83,7 +86,7 @@
 
 .hero-foto {
   width: 100%;
-  height: 320px;
+  height: 420px; /* antes 320px */
   object-fit: cover;
   display: block;
 }
@@ -102,10 +105,10 @@
   bottom: 0;
   width: 100%;
   background: #f4941e;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1.1rem 0.9rem;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.2rem;
 }
 
 .hero-nombre {
@@ -118,11 +121,13 @@
   background: white;
   color: #1b4332;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.35rem 0.8rem;
   border-radius: 8px;
   font-weight: 700;
+  font-size: 0.85rem;
   cursor: pointer;
   align-self: flex-start;
+  margin-top: 0.2rem;
 }
 
 /* ===== SECCIÓN "NUESTRA HISTORIA" (texto + collage de fotos) ===== */
@@ -151,13 +156,11 @@
 }
 
 .collage-item {
-  background: #f1f1f1;
-  border-radius: 12px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
 }
 
 /* ===== SECCIÓN "PASOS PARA ADOPTAR" (las 4 tarjetas numeradas 01-04) ===== */
@@ -166,8 +169,56 @@
   padding: 6rem 4rem;
 }
 
+.pasos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.pasos-header > div:first-child {
+  flex: 1;
+  min-width: 280px;
+}
+
+.banner-jornada {
+  flex-shrink: 0;
+}
+
 .pasos-header h2 {
   margin: 0;
+}
+
+/* Banner destacado de la jornada de adopción */
+.banner-jornada {
+  background: #1b4332;
+  color: white;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 420px;
+}
+
+.banner-icono {
+  font-size: 1.8rem;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+}
+
+.banner-titulo {
+  margin: 0 0 0.3rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.banner-detalle {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
 }
 
 .pasos-grid {
@@ -350,5 +401,14 @@
   }
   .pasos-grid, .ayuda-adoptar, .footer {
     grid-template-columns: 1fr;
+  }
+  /* Overlay con datos del animal, tapa la foto al pasar el mouse por la card */
+  .hero-datos {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0;
+    text-transform: capitalize;
+    opacity: 0.95;
   }
 }
