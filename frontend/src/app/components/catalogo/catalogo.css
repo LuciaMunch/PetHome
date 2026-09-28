@@ -124,7 +124,11 @@
 .card-desc { color: var(--texto-suave); font-size: 0.9rem; margin: 0 0 16px; }
 
 .btn-adoptar {
+  display: block;
   width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
   background: var(--naranja);
   color: var(--verde-oscuro);
   border: none;
