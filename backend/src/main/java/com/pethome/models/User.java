@@ -28,4 +28,22 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role rol;
+
+    @Column(name = "nombre_completo")
+    private String nombreCompleto;
+
+    @Column(name = "direccion")
+    private String direccion;
+
+    @Column(name = "ciudad")
+    private String ciudad;
+
+    @Column(name = "provincia")
+    private String provincia;
+
+    @Column(name = "telefono")
+    private String telefono;
+
+    @Column(name = "edad")
+    private Integer edad;
 }

@@ -2,12 +2,14 @@ package com.pethome.services.impl.domain;
 
 import com.pethome.dtos.response.AnimalResponse;
 import com.pethome.mappers.AnimalMapper;
+import com.pethome.models.Animal;
 import com.pethome.models.EstadoAnimal;
 import com.pethome.models.Especie;
 import com.pethome.models.Sexo;
 import com.pethome.models.Tamanio;
 import com.pethome.repositories.AnimalRepository;
 import com.pethome.services.interfaces.domain.CatalogoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,5 +34,12 @@ public class CatalogoServiceImpl implements CatalogoService {
         return animalRepository
                 .buscarCatalogo(EstadoAnimal.DISPONIBLE, especie, sexo, tamanio, edadMax, pageable)
                 .map(animalMapper::toResponse);
+    }
+
+    @Override
+    public AnimalResponse obtenerDetalle(Long id) {
+        Animal animal = animalRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Animal no encontrado con id " + id));
+        return animalMapper.toResponse(animal);
     }
 }

@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { Auth } from './components/auth/auth';
 import { HomeAdmin } from './components/home-admin/home-admin';
-import { HomeAdoptante } from './components/home-adoptante/home-adoptante';
+import { Landing } from './components/landing/landing';
 import { Catalogo } from './components/catalogo/catalogo';
 import { authGuard, adminGuard } from './services/auth.guard';
 import { FichaAnimal } from './components/ficha-animal/ficha-animal';
@@ -12,15 +12,14 @@ import { AdminSolicitudes } from './components/admin-solicitudes/admin-solicitud
 import { AdminSanitario } from './components/admin-sanitario/admin-sanitario';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/auth', pathMatch: 'full' },
+  { path: '', component: Landing },
   { path: 'auth', component: Auth },
   { path: 'home-admin', component: HomeAdmin, canActivate: [adminGuard] },
-  { path: 'home-adoptante', component: HomeAdoptante, canActivate: [authGuard] },
-  { path: 'catalogo', component: Catalogo },                                    // público
-  { path: 'animal/:id', component: FichaAnimal },                               // público (ficha)
-  { path: 'admin/animales', component: AdminAnimales, canActivate: [adminGuard] },  // solo admin
+  { path: 'catalogo', component: Catalogo },
+  { path: 'animal/:id', component: FichaAnimal },
+  { path: 'admin/animales', component: AdminAnimales, canActivate: [adminGuard] },
   { path: 'admin/solicitudes', component: AdminSolicitudes, canActivate: [adminGuard] },
   { path: 'admin/sanitario', component: AdminSanitario, canActivate: [adminGuard] },
   { path: 'mis-solicitudes', component: MisSolicitudes, canActivate: [authGuard] },
-  { path: '**', redirectTo: '/auth' },
+  { path: '**', redirectTo: '/' },
 ];

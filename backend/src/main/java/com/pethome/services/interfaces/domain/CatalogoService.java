@@ -14,4 +14,6 @@ public interface CatalogoService {
                                            Tamanio tamanio,
                                            Integer edadMax,
                                            Pageable pageable);
+
+    AnimalResponse obtenerDetalle(Long id);
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CatalogoService } from '../../services/catalogo.service';
@@ -13,6 +13,7 @@ interface Animal {
   edad: number;
   descripcion: string;
   estado: string;
+  fotoUrl?: string;
 }
 
 @Component({
@@ -39,7 +40,10 @@ export class Catalogo implements OnInit {
   filtroTamanio = '';
   filtroEdadMax: number | null = null;
 
-  constructor(private catalogoService: CatalogoService) {}
+  constructor(
+    private catalogoService: CatalogoService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   // Al arrancar el componente, trae los animales
   ngOnInit(): void {
@@ -56,10 +60,12 @@ export class Catalogo implements OnInit {
       next: (respuesta) => {
         // El backend devuelve una página; los animales están en "content"
         this.animales = respuesta.content ?? respuesta;
+        this.cdr.detectChanges();  // avisa a Angular que actualice la vista
       },
       error: () => {
         // Si el backend no responde (403, apagado, etc.), usa los de ejemplo filtrados
         this.animales = this.filtrarEjemplo();
+        this.cdr.detectChanges();
       }
     });
   }

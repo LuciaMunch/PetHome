@@ -1,13 +1,7 @@
 :host {
-  --verde-oscuro: #012312;
-  --verde-menta:  #58A787;
-  --naranja:      #FFB031;
-  --texto-suave:  #4B6358;
-  --borde:        #DCEEE2;
   display: block;
-  background: #fff;
+  background: var(--blanco);
   min-height: 100vh;
-  font-family: system-ui, sans-serif;
   color: var(--verde-oscuro);
 }
 
@@ -24,7 +18,7 @@
   margin-bottom: 24px;
 }
 .admin-header h1 {
-  font-family: 'Baloo 2', sans-serif;
+  font-family: var(--fuente-titulos);
   margin: 0;
 }
 .btn-nuevo {
@@ -36,19 +30,19 @@
   font-weight: 700;
   cursor: pointer;
 }
-.btn-nuevo:hover { background: #E89A1C; }
+.btn-nuevo:hover { background: var(--naranja-oscuro); }
 
 /* Tabla */
 .tabla {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
+  background: var(--blanco);
   border: 1px solid var(--borde);
   border-radius: 12px;
   overflow: hidden;
 }
 .tabla th {
-  background: #F1FFF0;
+  background: var(--verde-clarito);
   text-align: left;
   padding: 12px 16px;
   font-size: 0.85rem;
@@ -71,9 +65,9 @@
   padding: 3px 10px;
   border-radius: 999px;
 }
-.badge--disponible { background: #DFF5E8; color: #1E7A4B; }
-.badge--en-proceso { background: #FFD581; color: #8A5B00; }
-.badge--adoptado   { background: #E5E5E5; color: #666; }
+.badge--disponible { background: var(--estado-disponible-bg); color: var(--estado-disponible-tx); }
+.badge--en-proceso { background: var(--estado-proceso-bg); color: var(--estado-proceso-tx); }
+.badge--adoptado   { background: var(--estado-adoptado-bg); color: var(--estado-adoptado-tx); }
 
 /* Acciones */
 .acciones { display: flex; gap: 8px; }
@@ -85,7 +79,7 @@
   cursor: pointer;
   font-size: 0.85rem;
 }
-.btn-editar { background: var(--verde-menta); color: #fff; }
+.btn-editar { background: var(--verde-menta); color: var(--blanco); }
 .btn-editar:hover { background: #48926f; }
 .btn-borrar { background: #F8D7DA; color: #B02A37; }
 .btn-borrar:hover { background: #f1c2c6; }
@@ -101,7 +95,7 @@
   z-index: 100;
 }
 .modal {
-  background: #fff;
+  background: var(--blanco);
   border-radius: 16px;
   padding: 32px;
   width: 90%;
@@ -110,7 +104,7 @@
   overflow-y: auto;
 }
 .modal h2 {
-  font-family: 'Baloo 2', sans-serif;
+  font-family: var(--fuente-titulos);
   margin: 0 0 24px;
 }
 .campo { margin-bottom: 16px; }
@@ -137,7 +131,7 @@
   margin-top: 24px;
 }
 .btn-cancelar {
-  background: #fff;
+  background: var(--blanco);
   border: 1.5px solid var(--borde);
   padding: 10px 20px;
   border-radius: 999px;
@@ -153,7 +147,7 @@
   font-weight: 700;
   cursor: pointer;
 }
-.btn-guardar:hover { background: #E89A1C; }
+.btn-guardar:hover { background: var(--naranja-oscuro); }
 
 .lista-fotos {
   list-style: none;
@@ -165,7 +159,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 6px 10px;
-  background: #F1FFF0;
+  background: var(--verde-clarito);
   border-radius: 8px;
   margin-bottom: 4px;
   font-size: 0.9rem;

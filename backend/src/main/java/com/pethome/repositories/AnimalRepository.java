@@ -27,4 +27,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
                                 @Param("tamanio") Tamanio tamanio,
                                 @Param("edadMax") Integer edadMax,
                                 Pageable pageable);
+
+    long countByEstado(EstadoAnimal estado);
+
+    long countByEspecie(Especie especie);
+
+    long countByTamanio(Tamanio tamanio);
 }

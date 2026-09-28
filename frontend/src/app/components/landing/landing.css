@@ -1,0 +1,414 @@
+/* ===== COLORES DE MARCA (reutilizables en toda la landing) ===== */
+.verde { color: #1b4332; }
+.naranja { color: #f4941e; }
+.blanco { color: white; }
+
+/* ===== BARRA SUPERIOR (franja verde angosta con la frase de arriba de todo) ===== */
+.topbar {
+  background: #14532d;
+  color: white;
+  text-align: center;
+  font-size: 0.90rem;
+  padding: 5px 0;
+}
+
+/* ===== SECCIÓN HERO (título Pet Home + botones + card del animal destacado) ===== */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  background: #eaf5ea url('/patitas.png') repeat;
+  padding: 6rem 4rem;
+  flex-wrap: wrap;
+}
+
+.hero-texto h1 {
+  font-size: 4rem; /* antes 3rem */
+  margin: 0;
+}
+
+.subtitulo {
+  font-size: 1.4rem;
+  color: #333;
+  margin: 0.75rem 0 2rem;
+  font-weight: 600;
+}
+
+.hero-botones {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-verde {
+  background: #1b4332;
+  color: white;
+  border: none;
+  padding: 1.1rem 2rem; /* antes 0.8rem 1.5rem */
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-outline {
+  background: #fde9c8;
+  color: #d97706;
+  border: none;
+  padding: 1.1rem 2rem; /* antes 0.8rem 1.5rem */
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Card del animal destacado en el hero (rota entre animales cada 6 segundos) */
+.hero-card {
+  position: relative;
+  width: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  animation: flotar 3s ease-in-out infinite;
+}
+
+/* Animación de flotación: sube y baja la card, con sombra que crece al subir */
+@keyframes flotar {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.hero-foto {
+  width: 100%;
+  height: 420px; /* antes 320px */
+  object-fit: cover;
+  display: block;
+}
+
+.hero-foto--vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  background: #ddd;
+}
+
+/* Franja naranja con nombre del animal + botón "Ver perfil", superpuesta abajo de la foto */
+.hero-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #f4941e;
+  padding: 0.75rem 1.1rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hero-nombre {
+  color: white;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+
+.btn-ver-perfil {
+  background: white;
+  color: #1b4332;
+  border: none;
+  padding: 0.35rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 0.2rem;
+}
+
+/* ===== SECCIÓN "NUESTRA HISTORIA" (texto + collage de fotos) ===== */
+.historia {
+  display: flex;
+  gap: 3rem;
+  padding: 6rem 4rem;
+  flex-wrap: wrap;
+}
+
+.historia-texto {
+  flex: 1;
+  min-width: 280px;
+}
+
+.historia-texto h2 {
+  color: #f4941e;
+}
+
+.historia-collage {
+  flex: 1;
+  min-width: 280px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.collage-item {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== SECCIÓN "PASOS PARA ADOPTAR" (las 4 tarjetas numeradas 01-04) ===== */
+.pasos {
+  background: #eaf5ea;
+  padding: 6rem 4rem;
+}
+
+.pasos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.pasos-header > div:first-child {
+  flex: 1;
+  min-width: 280px;
+}
+
+.banner-jornada {
+  flex-shrink: 0;
+}
+
+.pasos-header h2 {
+  margin: 0;
+}
+
+/* Banner destacado de la jornada de adopción */
+.banner-jornada {
+  background: #1b4332;
+  color: white;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 420px;
+}
+
+.banner-icono {
+  font-size: 1.8rem;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+}
+
+.banner-titulo {
+  margin: 0 0 0.3rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.banner-detalle {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.pasos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Tarjeta de cada paso: se levanta un poco al pasar el mouse */
+.paso-card {
+  position: relative;
+  background: #fde9c8;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden; /* recorta el overlay de descripción para que no se salga de los bordes redondeados */
+  box-sizing: border-box;
+  transition: transform 0.2s ease;
+}
+
+.paso-card:hover {
+  transform: translateY(-4px);
+}
+
+.paso-numero {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #f4941e;
+}
+
+.paso-titulo {
+  font-weight: 700; /* título en negrita */
+  margin: 0;
+}
+
+/* Overlay naranja con la descripción del paso, oculto por default */
+.paso-descripcion {
+  position: absolute;
+  inset: 0; /* ocupa exactamente el mismo tamaño que la card padre, sin desbordarse */
+  box-sizing: border-box;
+  background: #f4941e;
+  color: white;
+  font-weight: 600;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 12px; /* mismo redondeo que .paso-card, para que no se vea un rectángulo recto */
+  opacity: 0;
+  transform: translateY(100%); /* arranca oculto, desplazado hacia abajo */
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Al pasar el mouse por la card, sube el overlay y aparece */
+.paso-card:hover .paso-descripcion {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== SECCIÓN "QUERÉS AYUDAR / QUERÉS ADOPTAR" (las dos cards grandes) ===== */
+.ayuda-adoptar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 6rem 4rem;
+}
+
+.card-ayuda,
+.card-adoptar {
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.card-ayuda {
+  background: #f4941e;
+  color: white;
+}
+
+.card-adoptar {
+  background: #fde9c8;
+  color: #333;
+}
+
+.label-transferencias {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+}
+
+/* Caja con el alias de Mercado Pago y el botón de copiar */
+.dato-transferencia {
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* "Mercado Pago" y "PETHOME.MP" en líneas separadas, uno abajo del otro */
+.dato-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dato-textos small {
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.dato-textos strong {
+  font-size: 1rem;
+}
+
+.btn-copiar {
+  background: #1b4332;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-ancho {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* ===== FOOTER (franja verde de abajo con marca, links y contacto) ===== */
+.footer {
+  background: #14532d;
+  color: white;
+  padding: 3rem 4rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2rem;
+}
+
+.footer-titulo {
+  display: block;
+  color: #f4941e;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.footer-col a {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.footer-copy {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 1rem;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* ===== RESPONSIVE: pantallas chicas (celular/tablet) ===== */
+@media (max-width: 768px) {
+  .hero, .historia, .pasos, .ayuda-adoptar, .footer {
+    padding: 2rem 1.5rem;
+  }
+  .pasos-grid, .ayuda-adoptar, .footer {
+    grid-template-columns: 1fr;
+  }
+  /* Overlay con datos del animal, tapa la foto al pasar el mouse por la card */
+  .hero-datos {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0;
+    text-transform: capitalize;
+    opacity: 0.95;
+  }
+}

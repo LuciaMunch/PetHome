@@ -1,0 +1,67 @@
+.admin-layout {
+  min-height: 100vh;
+  background: var(--fondo);
+}
+
+/* Título del panel */
+.admin-titulo {
+  text-align: center;
+  padding: 32px 24px 8px;
+}
+.title {
+  margin: 0;
+  font-family: var(--fuente-titulos);
+  font-size: 2rem;
+  color: var(--verde-oscuro);
+}
+.subtitle {
+  margin: 4px 0 0;
+  color: var(--texto-suave);
+  font-size: 1rem;
+}
+
+/* Barra de secciones */
+.nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 24px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--blanco);
+  border: 2px solid var(--borde);
+  border-radius: 999px;
+  color: var(--verde-oscuro);
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.nav-item .icon {
+  font-size: 1.1rem;
+}
+
+.nav-item:hover {
+  background: var(--verde-clarito);
+  border-color: var(--verde-menta);
+  transform: translateY(-2px);
+}
+
+/* Sección activa: resaltada en naranja (color de acción de PetHome) */
+.nav-item.active {
+  background: var(--naranja);
+  border-color: var(--naranja);
+  color: var(--verde-oscuro);
+}
+
+.content {
+  padding: 8px 24px 32px;
+}

@@ -49,7 +49,11 @@
   @for (animal of animales; track animal.id) {
   <article class="card">
     <a [routerLink]="['/animal', animal.id]" class="card-link">
-      <div class="card-foto"></div>
+      @if (animal.fotoUrl) {
+      <img class="card-foto" [src]="animal.fotoUrl" [alt]="animal.nombre">
+      } @else {
+      <div class="card-foto card-foto--vacia">🐾</div>
+      }
       <div class="card-cuerpo">
         <div class="card-header">
           <h3>{{ animal.nombre }}</h3>

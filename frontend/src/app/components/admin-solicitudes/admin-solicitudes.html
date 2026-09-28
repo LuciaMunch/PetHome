@@ -1,46 +1,37 @@
 <div class="admin-container">
-  <h2>📋 Gestión de Solicitudes de Adopción (HU-11)</h2>
-  <p class="subtitulo">Revisá y administrá las solicitudes recibidas.</p>
+  <h2>📋 Gestión de solicitudes de adopción</h2>
+  <p class="subtitulo">Revisá y administrá las solicitudes pendientes.</p>
 
   @if (cargando) {
   <p>Cargando solicitudes...</p>
-  } @else {
+  }
+
+  @if (error) {
+  <p class="error">{{ error }}</p>
+  }
+
+  @if (!cargando && solicitudes.length === 0) {
+  <p class="vacio">No hay solicitudes pendientes para revisar.</p>
+  }
+
+  @if (!cargando && solicitudes.length > 0) {
   <div class="tabla-responsive">
     <table class="tabla-admin">
       <thead>
       <tr>
         <th>Animal</th>
         <th>Solicitante</th>
-        <th>Vivienda</th>
-        <th>Patio</th>
-        <th>Motivo</th>
-        <th>Estado</th>
-        <th>Acciones</th>
+        <th>Detalle</th>
       </tr>
       </thead>
       <tbody>
       @for (sol of solicitudes; track sol.id) {
       <tr>
         <td><strong>{{ sol.animalNombre }}</strong></td>
-        <td>{{ sol.solicitanteEmail }}</td>
-        <td>{{ sol.tipoVivienda }}</td>
-        <td>{{ sol.tienePatio ? 'Sí' : 'No' }}</td>
-        <td>{{ sol.motivo }}</td>
+        <td>{{ sol.usuarioNombre }}</td>
         <td>
-          <span class="badge" [ngClass]="sol.estado.toLowerCase()">{{ sol.estado }}</span>
+          <button class="btn-detalle" (click)="verDetalle(sol)">Ver más</button>
         </td>
-        <td class="acciones-cell">
-          @if (sol.estado === 'PENDIENTE') {
-          <button class="btn-aprobar" (click)="cambiarEstado(sol.id, 'APROBADA')">Aprobar</button>
-          <button class="btn-rechazar" (click)="cambiarEstado(sol.id, 'RECHAZADA')">Rechazar</button>
-          } @else {
-          <span class="gestionado">-</span>
-          }
-        </td>
-      </tr>
-      } @empty {
-      <tr>
-        <td colspan="7" class="vacio">No hay solicitudes para revisar.</td>
       </tr>
       }
       </tbody>
@@ -48,3 +39,31 @@
   </div>
   }
 </div>
+
+@if (solicitudSeleccionada) {
+<div class="overlay" (click)="cerrarDetalle()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <h3>🐾 Solicitud para {{ solicitudSeleccionada.animalNombre }}</h3>
+
+    <h4>Datos del adoptante</h4>
+    <p><strong>Nombre de usuario:</strong> {{ solicitudSeleccionada.usuarioNombre }}</p>
+    <p><strong>Email:</strong> {{ solicitudSeleccionada.usuarioEmail }}</p>
+
+    <h4>Formulario de adopción</h4>
+    <p><strong>Tipo de vivienda:</strong> {{ solicitudSeleccionada.tipoVivienda }}</p>
+    <p><strong>¿Tiene patio?:</strong> {{ solicitudSeleccionada.tienePatio ? 'Sí' : 'No' }}</p>
+    <p><strong>Integrantes del hogar:</strong> {{ solicitudSeleccionada.integrantesHogar }}</p>
+    <p><strong>¿Tiene otras mascotas?:</strong> {{ solicitudSeleccionada.otrasMascotas ? 'Sí' : 'No' }}</p>
+    <p><strong>¿Experiencia previa?:</strong> {{ solicitudSeleccionada.experienciaPrevia ? 'Sí' : 'No' }}</p>
+    <p><strong>Motivo:</strong> {{ solicitudSeleccionada.motivo || '—' }}</p>
+
+    <div class="acciones-modal">
+      <button class="btn-rechazar" (click)="rechazar(solicitudSeleccionada.id)">Rechazar</button>
+      <button class="btn-aprobar" (click)="aprobar(solicitudSeleccionada.id)">Aprobar</button>
+    </div>
+
+    <button class="btn-cerrar" (click)="cerrarDetalle()">Cerrar</button>
+  </div>
+</div>
+}

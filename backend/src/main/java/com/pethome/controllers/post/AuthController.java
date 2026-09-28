@@ -41,8 +41,13 @@ public class AuthController {
                 .contraseña(passwordEncoder.encode(request.getContraseña()))
                 .email(request.getEmail())
                 .rol(request.getRol() != null ? request.getRol() : Role.ADOPTANTE)
+                .nombreCompleto(request.getNombre_completo())
+                .direccion(request.getDireccion())
+                .ciudad(request.getCiudad())
+                .provincia(request.getProvincia())
+                .telefono(request.getTelefono())
+                .edad(request.getEdad())
                 .build();
-
         userRepository.save(user);
 
         return ResponseEntity.ok(new LoginResponse(

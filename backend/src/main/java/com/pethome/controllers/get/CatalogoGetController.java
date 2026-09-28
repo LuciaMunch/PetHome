@@ -31,4 +31,9 @@ public class CatalogoGetController {
         return ResponseEntity.ok(
                 catalogoService.listarDisponibles(especie, sexo, tamanio, edadMax, pageable));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AnimalResponse> obtenerDetalle(@PathVariable Long id) {
+        return ResponseEntity.ok(catalogoService.obtenerDetalle(id));
+    }
 }

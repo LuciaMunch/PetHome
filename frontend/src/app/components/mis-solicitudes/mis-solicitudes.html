@@ -6,17 +6,11 @@
 
   @if (cargando) {
   <p>Cargando...</p>
-  }
-
-  @if (error) {
+  } @else if (error) {
   <p class="error">{{ error }}</p>
-  }
-
-  @if (!cargando && !error && solicitudes.length === 0) {
+  } @else if (solicitudes.length === 0) {
   <p class="vacio">Todavía no enviaste ninguna solicitud de adopción.</p>
-  }
-
-  @if (!cargando && solicitudes.length > 0) {
+  } @else {
   <div class="lista">
     @for (solicitud of solicitudes; track solicitud.id) {
     <div class="tarjeta">

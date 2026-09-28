@@ -1,0 +1,109 @@
+<div class="stats">
+  @if (cargando()) {
+  <p>Cargando estadísticas...</p>
+  } @else if (error()) {
+  <p class="error-stats">{{ error() }}</p>
+  } @else {
+  <div class="stats-header">
+    <h2>Estadísticas</h2>
+    <p class="stats-subtitle">Métricas generales de la plataforma PetHome</p>
+  </div>
+
+  <div class="cards">
+    @for (tarjeta of tarjetas(); track tarjeta.etiqueta) {
+    <div class="card">
+      <div class="card-icon">{{ tarjeta.icono }}</div>
+      <p class="card-value">{{ tarjeta.valor }}</p>
+      <p class="card-label">{{ tarjeta.etiqueta }}</p>
+    </div>
+    }
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>Mascotas por estado</h3>
+      @for (item of estados(); track item.nombre) {
+      <div class="metric-row">
+        <span class="metric-name">{{ item.nombre }}</span>
+        <div class="bar">
+          <div
+            class="bar-fill"
+            [style.width.%]="ancho(item.cantidad, total(estados()))"
+            [style.background]="item.color"
+          ></div>
+        </div>
+        <span class="metric-value">{{ item.cantidad }}</span>
+      </div>
+      }
+    </div>
+
+    <div class="panel">
+      <h3>Adopciones por mes</h3>
+      <div class="chart">
+        @for (item of adopcionesMes(); track item.mes) {
+        <div class="chart-col">
+          <div
+            class="chart-bar"
+            [style.height.%]="ancho(item.cantidad, maxMes)"
+          ></div>
+          <span class="chart-label">{{ item.mes }}</span>
+          <span class="chart-value">{{ item.cantidad }}</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Mascotas por especie</h3>
+      @for (item of especies(); track item.nombre) {
+      <div class="metric-row">
+        <span class="metric-name">{{ item.nombre }}</span>
+        <div class="bar">
+          <div
+            class="bar-fill"
+            [style.width.%]="ancho(item.cantidad, total(especies()))"
+            [style.background]="item.color"
+          ></div>
+        </div>
+        <span class="metric-value">{{ item.cantidad }}</span>
+      </div>
+      }
+    </div>
+
+    <div class="panel">
+      <h3>Solicitudes aprobadas vs rechazadas</h3>
+      @for (item of solicitudesResueltas(); track item.nombre) {
+      <div class="metric-row">
+        <span class="metric-name">{{ item.nombre }}</span>
+        <div class="bar">
+          <div
+            class="bar-fill"
+            [style.width.%]="ancho(item.cantidad, total(solicitudesResueltas()))"
+            [style.background]="item.color"
+          ></div>
+        </div>
+        <span class="metric-value">{{ item.cantidad }}</span>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="progress-cards">
+    @for (item of progresos(); track item.etiqueta) {
+    <div class="progress-card">
+      <div class="progress-top">
+        <span>{{ item.etiqueta }}</span>
+        <strong>{{ item.texto }}</strong>
+      </div>
+      <div class="bar">
+        <div
+          class="bar-fill"
+          [style.width.%]="item.valor"
+          [style.background]="'#58A787'"
+        ></div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

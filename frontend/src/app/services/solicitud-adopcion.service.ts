@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface SolicitudAdopcionRequest {
@@ -23,7 +23,16 @@ export interface SolicitudAdopcionResponse {
   experienciaPrevia: boolean;
   motivo: string;
   animalId: number;
+  animalNombre: string;
   usuarioId: number;
+  usuarioNombre: string;
+  usuarioEmail: string;
+}
+
+interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -39,4 +48,18 @@ export class SolicitudAdopcionService {
   misSolicitudes(): Observable<SolicitudAdopcionResponse[]> {
     return this.http.get<SolicitudAdopcionResponse[]>(`${this.apiUrl}/mis-solicitudes`);
   }
+
+  obtenerPendientes(page = 0, size = 20): Observable<PageResponse<SolicitudAdopcionResponse>> {
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http.get<PageResponse<SolicitudAdopcionResponse>>(`${this.apiUrl}/pendientes`, { params });
+  }
+
+  aprobar(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/aprobar`, {});
+  }
+
+  rechazar(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/rechazar`, {});
+  }
 }
+

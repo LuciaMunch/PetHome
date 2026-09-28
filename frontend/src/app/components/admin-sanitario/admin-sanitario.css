@@ -105,3 +105,19 @@ input, select, textarea {
   color: #888;
   padding: 2rem;
 }
+
+.btn-eliminar {
+  background: transparent;
+  border: none;
+  color: #dc3545;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.btn-eliminar:hover {
+  background: #f8d7da;
+}

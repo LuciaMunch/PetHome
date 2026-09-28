@@ -1,17 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SolicitudAdopcionService } from '../../services/solicitud-adopcion.service';
-
-interface SolicitudAdmin {
-  id: number;
-  animalNombre: string;
-  solicitanteEmail: string;
-  tipoVivienda: string;
-  tienePatio: boolean;
-  motivo: string;
-  estado: 'PENDIENTE' | 'APROBADA' | 'RECHAZADA';
-  fechaCreacion: string;
-}
+import { SolicitudAdopcionService, SolicitudAdopcionResponse } from '../../services/solicitud-adopcion.service';
 
 @Component({
   selector: 'app-admin-solicitudes',
@@ -22,39 +11,67 @@ interface SolicitudAdmin {
 })
 export class AdminSolicitudes implements OnInit {
 
-  solicitudes: SolicitudAdmin[] = [];
+  solicitudes: SolicitudAdopcionResponse[] = [];
   cargando = true;
+  error = '';
 
-  constructor(private solicitudService: SolicitudAdopcionService) {}
+  solicitudSeleccionada: SolicitudAdopcionResponse | null = null;
+
+  constructor(
+    private solicitudService: SolicitudAdopcionService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.cargarSolicitudes();
   }
 
   cargarSolicitudes(): void {
-    this.solicitudService.obtenerTodas().subscribe({
+    this.cargando = true;
+    this.solicitudService.obtenerPendientes().subscribe({
       next: (data) => {
-        this.solicitudes = data;
+        this.solicitudes = data.content;
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: () => {
-        // Fallback / Datos MOCK por si no hay conexión al backend
-        this.solicitudes = [
-          { id: 101, animalNombre: 'Luna', solicitanteEmail: 'adoptante1@gmail.com', tipoVivienda: 'CASA', tienePatio: true, motivo: 'Tengo espacio y ganas de cuidar una mascota.', estado: 'PENDIENTE', fechaCreacion: '2026-05-12' },
-          { id: 102, animalNombre: 'Michi', solicitanteEmail: 'adoptante2@gmail.com', tipoVivienda: 'DEPARTAMENTO', tienePatio: false, motivo: 'Trabajo desde casa y busco compañía.', estado: 'PENDIENTE', fechaCreacion: '2026-05-11' }
-        ];
+        this.error = 'No se pudieron cargar las solicitudes.';
         this.cargando = false;
+        this.cdr.detectChanges();
       }
     });
   }
 
-  cambiarEstado(id: number, nuevoEstado: 'APROBADA' | 'RECHAZADA'): void {
-    this.solicitudService.actualizarEstado(id, nuevoEstado).subscribe({
-      next: () => this.cargarSolicitudes(),
+  verDetalle(solicitud: SolicitudAdopcionResponse): void {
+    this.solicitudSeleccionada = solicitud;
+  }
+
+  cerrarDetalle(): void {
+    this.solicitudSeleccionada = null;
+  }
+
+  aprobar(id: number): void {
+    this.solicitudService.aprobar(id).subscribe({
+      next: () => {
+        this.cerrarDetalle();
+        this.cargarSolicitudes();
+      },
       error: () => {
-        // Actualización local en pantalla
-        const item = this.solicitudes.find(s => s.id === id);
-        if (item) item.estado = nuevoEstado;
+        this.error = 'No se pudo aprobar la solicitud.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  rechazar(id: number): void {
+    this.solicitudService.rechazar(id).subscribe({
+      next: () => {
+        this.cerrarDetalle();
+        this.cargarSolicitudes();
+      },
+      error: () => {
+        this.error = 'No se pudo rechazar la solicitud.';
+        this.cdr.detectChanges();
       }
     });
   }

@@ -5,6 +5,8 @@ import com.pethome.models.SolicitudAdopcion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +25,15 @@ public interface SolicitudAdopcionRepository extends JpaRepository<SolicitudAdop
 
     // Para HU-11: al aprobar una, hay que rechazar las demás pendientes del mismo animal
     List<SolicitudAdopcion> findByAnimalIdAndEstado(Long animalId, EstadoSolicitud estado);
+
+    long countByEstado(EstadoSolicitud estado);
+
+    @Query("""
+            SELECT year(s.fecha), month(s.fecha), COUNT(s)
+            FROM SolicitudAdopcion s
+            WHERE s.estado = :estado
+            GROUP BY year(s.fecha), month(s.fecha)
+            ORDER BY year(s.fecha), month(s.fecha)
+            """)
+    List<Object[]> contarAprobadasPorMes(@Param("estado") EstadoSolicitud estado);
 }

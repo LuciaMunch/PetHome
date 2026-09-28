@@ -1,0 +1,167 @@
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stats-header h2 {
+  margin: 0;
+  color: #012312;
+}
+
+.stats-subtitle {
+  margin: 0.25rem 0 0;
+  color: #58A787;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(1, 35, 18, 0.08);
+}
+
+.card-icon {
+  font-size: 1.75rem;
+}
+
+.card-value {
+  margin: 0.5rem 0 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #012312;
+}
+
+.card-label {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #58A787;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.panel {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(1, 35, 18, 0.08);
+}
+
+.panel h3 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  color: #012312;
+}
+
+.metric-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.metric-name {
+  width: 130px;
+  font-size: 0.875rem;
+  color: #012312;
+  text-align: right;
+}
+
+.bar {
+  flex: 1;
+  height: 12px;
+  background: #F1FFF0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.metric-value {
+  width: 40px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #012312;
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.35rem;
+  height: 160px;
+  padding-top: 0.5rem;
+}
+
+.chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.chart-bar {
+  width: 60%;
+  background: #58A787;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+}
+
+.chart-label {
+  font-size: 0.7rem;
+  color: #012312;
+}
+
+.chart-value {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #58A787;
+}
+
+.progress-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.progress-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(1, 35, 18, 0.08);
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: #012312;
+}
+
+.progress-top strong {
+  color: #012312;
+}
+
+.error-stats {
+  color: #d32f2f;
+  font-size: 0.9rem;
+}

@@ -20,11 +20,22 @@ export class AuthService {
       .pipe(tap((res) => this.saveSession(res)));
   }
 
-  register(data: { nombre_usuario: string; contraseña: string; email: string; rol: string }): Observable<any> {
-    return this.http
-      .post<any>(`${this.apiUrl}/register`, data)
-      .pipe(tap((res) => this.saveSession(res)));
-  }
+     register(data: {
+       nombre_usuario: string;
+       contraseña: string;
+       email: string;
+       rol: string;
+       nombre_completo?: string;
+       direccion?: string;
+       ciudad?: string;
+       provincia?: string;
+       telefono?: string;
+       edad?: number | null;
+     }): Observable<any> {
+       return this.http
+         .post<any>(`${this.apiUrl}/register`, data)
+         .pipe(tap((res) => this.saveSession(res)));
+     }
 
   private saveSession(res: any): void {
     localStorage.setItem(this.TOKEN_KEY, res.token);
