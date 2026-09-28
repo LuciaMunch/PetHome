@@ -76,4 +76,20 @@ public class AnimalServiceImpl implements AnimalService {
         animal.setEstado(EstadoAnimal.ADOPTADO);
         animalRepository.save(animal);
     }
+
+    @Override
+    public void marcarEnProceso(Long id) {
+        Animal animal = animalRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Animal no encontrado con id " + id));
+        animal.setEstado(EstadoAnimal.EN_PROCESO);
+        animalRepository.save(animal);
+    }
+
+    @Override
+    public void marcarDisponible(Long id) {
+        Animal animal = animalRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Animal no encontrado con id " + id));
+        animal.setEstado(EstadoAnimal.DISPONIBLE);
+        animalRepository.save(animal);
+    }
 }
