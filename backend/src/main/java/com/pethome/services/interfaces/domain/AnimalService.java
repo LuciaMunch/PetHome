@@ -4,17 +4,21 @@ import com.pethome.dtos.response.AnimalResponse;
 
 import java.util.List;
 
-    public interface AnimalService {
+public interface AnimalService {
 
-        AnimalResponse crear(AnimalRequest request);
+    AnimalResponse crear(AnimalRequest request);
 
-        List<AnimalResponse> listarTodos();
+    List<AnimalResponse> listarTodos();
 
-        AnimalResponse obtenerPorId(Long id);
+    AnimalResponse obtenerPorId(Long id);
 
-        AnimalResponse actualizar(Long id, AnimalRequest request);
+    AnimalResponse actualizar(Long id, AnimalRequest request);
 
-        void eliminar(Long id);
+    void eliminar(Long id);
 
-        void marcarAdoptado(Long id);
-    }
+    void marcarAdoptado(Long id);
+
+    void marcarEnProceso(Long id);
+
+    void marcarDisponible(Long id);
+}
