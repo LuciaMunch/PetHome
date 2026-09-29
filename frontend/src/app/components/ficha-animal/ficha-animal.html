@@ -1,7 +1,7 @@
 <div class="ficha">
 
   <!-- Botón volver -->
-  <a routerLink="/catalogo" class="volver">← Volver al catálogo</a>
+  <a routerLink="/catalogo" class="volver">← Volver a Mascotas</a>
 
   @if (animal) {
   <div class="ficha-grid">
@@ -69,7 +69,9 @@
       </div>
       }
 
+      @if (authService.getRol() !== 'ADMIN') {
       <button class="btn-adoptar" (click)="abrirAdopcion()">🐾 Quiero adoptar a {{ animal.nombre }}</button>
+      }
     </div>
   </div>
   } @else {

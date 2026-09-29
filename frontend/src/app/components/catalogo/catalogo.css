@@ -64,6 +64,7 @@
   padding: 32px 24px;
   max-width: 1120px;
   margin: 0 auto;
+  align-items: stretch;
 }
 
 /* ---- Tarjeta ---- */
@@ -74,6 +75,8 @@
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(1, 35, 18, 0.08);
   transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
 }
 .card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(1, 35, 18, 0.14); }
 
@@ -121,10 +124,22 @@
 .badge--adoptado    { background: var(--estado-adoptado-bg); color: var(--estado-adoptado-tx); }
 
 .card-datos { color: var(--texto-suave); font-size: 0.85rem; margin: 0 0 8px; }
-.card-desc { color: var(--texto-suave); font-size: 0.9rem; margin: 0 0 16px; }
+.card-desc {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .btn-adoptar {
+  display: block;
   width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
   background: var(--naranja);
   color: var(--verde-oscuro);
   border: none;
@@ -159,8 +174,11 @@
   color: var(--texto-suave);
   font-size: 1.1rem;
 }
+
 .card-link {
   text-decoration: none;
   color: inherit;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }

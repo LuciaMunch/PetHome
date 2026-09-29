@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CatalogoService } from '../../services/catalogo.service';
+import { AuthService } from '../../services/auth.service';
 import { EventoSanitarioService, EventoSanitarioResponse } from '../../services/evento-sanitario.service';
 import { ModalFormularioAdopcion } from '../modal-formulario-adopcion/modal-formulario-adopcion';
 
@@ -46,7 +47,8 @@ export class FichaAnimal implements OnInit {
     private route: ActivatedRoute,
     private catalogoService: CatalogoService,
     private eventoSanitarioService: EventoSanitarioService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {

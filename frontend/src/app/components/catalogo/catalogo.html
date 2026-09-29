@@ -72,9 +72,11 @@
         <p class="card-desc">{{ animal.descripcion }}</p>
       </div>
     </a>
+    @if (authService.getRol() !== 'ADMIN') {
     <div class="card-cuerpo" style="padding-top:0;">
-      <button class="btn-adoptar">Adoptar</button>
+      <a [routerLink]="['/animal', animal.id]" class="btn-adoptar">Adoptar</a>
     </div>
+    }
   </article>
   } @empty {
   <p class="sin-resultados">No se encontraron animales con esos filtros. 🐾</p>
