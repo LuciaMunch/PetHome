@@ -32,6 +32,68 @@
 }
 .btn-nuevo:hover { background: var(--naranja-oscuro); }
 
+/* Barra de búsqueda y filtros */
+.filtros-admin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.filtros-admin .buscador {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 16px;
+  border: 1.5px solid var(--borde);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--texto);
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+.filtros-admin select {
+  padding: 10px 40px 10px 16px;
+  border: 1.5px solid var(--borde);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--texto);
+  background: var(--blanco);
+  cursor: pointer;
+  line-height: 1.2;
+  box-sizing: border-box;
+  height: 40px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234B6358' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+.filtros-admin .buscador:focus,
+.filtros-admin select:focus {
+  outline: none;
+  border-color: var(--verde-menta);
+}
+.btn-limpiar {
+  padding: 10px 18px;
+  background: var(--blanco);
+  border: 1.5px solid var(--borde);
+  border-radius: 999px;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  color: var(--texto);
+  cursor: pointer;
+  transition: background-color 0.15s;
+  line-height: 1.2;
+  box-sizing: border-box;
+  height: 40px;
+}
+.btn-limpiar:hover {
+  background: var(--verde-clarito);
+}
+
 /* Tabla */
 .tabla {
   width: 100%;

@@ -67,3 +67,22 @@
   font-size: 0.8rem;
   font-weight: 700;
 }
+
+/* Buscador */
+.filtros-usuarios {
+  margin-bottom: 1rem;
+}
+.filtros-usuarios .buscador {
+  width: 100%;
+  max-width: 340px;
+  padding: 10px 16px;
+  border: 1.5px solid #DCEEE2;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.filtros-usuarios .buscador:focus {
+  outline: none;
+  border-color: #58A787;
+}
