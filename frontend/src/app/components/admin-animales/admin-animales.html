@@ -4,6 +4,37 @@
     <button class="btn-nuevo" (click)="nuevo()">+ Nuevo animal</button>
   </div>
 
+  <!-- BUSCADOR Y FILTROS -->
+  <div class="filtros-admin">
+    <input
+      type="text"
+      class="buscador"
+      placeholder="Buscar por nombre..."
+      [ngModel]="buscarNombre()"
+      (ngModelChange)="buscarNombre.set($event)">
+
+    <select [ngModel]="filtroEspecie()" (ngModelChange)="filtroEspecie.set($event)">
+      <option value="">Todas las especies</option>
+      <option value="PERRO">Perro</option>
+      <option value="GATO">Gato</option>
+    </select>
+
+    <select [ngModel]="filtroSexo()" (ngModelChange)="filtroSexo.set($event)">
+      <option value="">Ambos sexos</option>
+      <option value="MACHO">Macho</option>
+      <option value="HEMBRA">Hembra</option>
+    </select>
+
+    <select [ngModel]="filtroEstado()" (ngModelChange)="filtroEstado.set($event)">
+      <option value="">Todos los estados</option>
+      <option value="DISPONIBLE">Disponibles</option>
+      <option value="EN_PROCESO">En proceso</option>
+      <option value="ADOPTADO">Adoptados</option>
+    </select>
+
+    <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar</button>
+  </div>
+
   <table class="tabla">
     <thead>
     <tr>
@@ -17,7 +48,7 @@
     </tr>
     </thead>
     <tbody>
-    @for (animal of animales(); track animal.id) {
+    @for (animal of animalesFiltrados(); track animal.id) {
     <tr>
       <td>{{ animal.nombre }}</td>
       <td>{{ animal.especie }}</td>
@@ -37,7 +68,7 @@
       </td>
     </tr>
     } @empty {
-    <tr><td colspan="7" class="vacio">No hay animales cargados</td></tr>
+    <tr><td colspan="7" class="vacio">No se encontraron animales</td></tr>
     }
     </tbody>
   </table>

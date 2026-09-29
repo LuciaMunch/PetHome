@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AnimalService } from '../../services/animal.service';
@@ -25,6 +25,27 @@ export class AdminAnimales implements OnInit {
 
   animales = signal<Animal[]>([]);
 
+  // Filtros de búsqueda
+  buscarNombre = signal('');
+  filtroEspecie = signal('');
+  filtroSexo = signal('');
+  filtroEstado = signal('');
+
+  // Lista filtrada: se recalcula sola cuando cambia la lista o algún filtro
+  animalesFiltrados = computed(() => {
+    const nombre = this.buscarNombre().toLowerCase().trim();
+    const especie = this.filtroEspecie();
+    const sexo = this.filtroSexo();
+    const estado = this.filtroEstado();
+
+    return this.animales().filter(a =>
+      (!nombre || a.nombre.toLowerCase().includes(nombre)) &&
+      (!especie || a.especie === especie) &&
+      (!sexo || a.sexo === sexo) &&
+      (!estado || a.estado === estado)
+    );
+  });
+
   // Datos de ejemplo (plan B, si el backend no responde)
   private ejemplo: Animal[] = [
     { id: 1, nombre: 'Luna',  especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO',  edad: 2, descripcion: 'Le encanta jugar en el patio', estado: 'DISPONIBLE' },
@@ -49,6 +70,13 @@ export class AdminAnimales implements OnInit {
       next: (data) => this.animales.set(data),
       error: () => this.animales.set([...this.ejemplo])
     });
+  }
+
+  limpiarFiltros(): void {
+    this.buscarNombre.set('');
+    this.filtroEspecie.set('');
+    this.filtroSexo.set('');
+    this.filtroEstado.set('');
   }
 
   private animalVacio(): Animal {
