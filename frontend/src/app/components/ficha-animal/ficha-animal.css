@@ -196,6 +196,66 @@
   font-size: 0.9rem;
 }
 
+/* Aviso de login (cartel propio) */
+.aviso-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(1, 35, 18, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.aviso-caja {
+  background: var(--blanco);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(1, 35, 18, 0.25);
+}
+.aviso-icono {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+.aviso-caja h3 {
+  font-family: var(--fuente-titulos);
+  color: var(--verde-oscuro);
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+.aviso-caja p {
+  color: var(--texto-suave);
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+.aviso-botones {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.aviso-btn-secundario {
+  background: var(--blanco);
+  border: 1.5px solid var(--borde);
+  color: var(--texto);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  cursor: pointer;
+}
+.aviso-btn-principal {
+  background: var(--naranja);
+  border: none;
+  color: var(--verde-oscuro);
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  cursor: pointer;
+}
+.aviso-btn-principal:hover { background: var(--naranja-oscuro); }
 
 /* En pantallas chicas, una columna */
 @media (max-width: 720px) {

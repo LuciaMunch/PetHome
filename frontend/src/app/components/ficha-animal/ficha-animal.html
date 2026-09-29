@@ -85,3 +85,17 @@
   (cerrar)="cerrarAdopcion()">
 </app-modal-formulario-adopcion>
 }
+
+@if (mostrarAvisoLogin) {
+<div class="aviso-fondo" (click)="cerrarAvisoLogin()">
+  <div class="aviso-caja" (click)="$event.stopPropagation()">
+    <div class="aviso-icono">🐾</div>
+    <h3>Necesitás una cuenta</h3>
+    <p>Para adoptar primero debés iniciar sesión o registrarte.</p>
+    <div class="aviso-botones">
+      <button class="aviso-btn-secundario" (click)="cerrarAvisoLogin()">Cancelar</button>
+      <button class="aviso-btn-principal" (click)="irALogin()">Iniciar sesión</button>
+    </div>
+  </div>
+</div>
+}
