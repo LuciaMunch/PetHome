@@ -69,8 +69,16 @@
       </div>
       }
 
-      @if (authService.getRol() !== 'ADMIN') {
+      @if (authService.getRol() !== 'ADMIN' && animal.estado === 'DISPONIBLE') {
       <button class="btn-adoptar" (click)="abrirAdopcion()">🐾 Quiero adoptar a {{ animal.nombre }}</button>
+      } @else if (animal.estado !== 'DISPONIBLE') {
+      <p class="no-disponible">
+        @if (animal.estado === 'ADOPTADO') {
+        Este animal ya encontró su hogar 💚
+        } @else {
+        Este animal está en proceso de adopción 🐾
+        }
+      </p>
       }
     </div>
   </div>

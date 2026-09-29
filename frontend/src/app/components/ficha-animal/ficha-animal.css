@@ -148,6 +148,19 @@
 }
 .btn-adoptar:hover { background: var(--naranja-oscuro); }
 
+/* Mensaje cuando el animal no está disponible */
+.no-disponible {
+  width: 100%;
+  text-align: center;
+  padding: 14px;
+  background: var(--verde-clarito);
+  color: var(--verde-oscuro);
+  border-radius: 999px;
+  font-weight: 600;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 
 .info-sanitaria-toggle {
   display: flex;
