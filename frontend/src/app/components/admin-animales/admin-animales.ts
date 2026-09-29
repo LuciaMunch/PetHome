@@ -78,8 +78,8 @@ export class AdminAnimales implements OnInit {
           // Si hay una foto seleccionada, la subimos al animal recién creado
           if (this.archivoFoto) {
             this.animalService.subirFoto(creado.id, this.archivoFoto).subscribe({
-              next: () => console.log('Foto subida'),
-              error: () => console.log('No se pudo subir la foto (login pendiente)')
+              next: () => { console.log('Foto subida'); this.cargarAnimales(); },
+              error: () => console.log('No se pudo subir la foto')
             });
           }
           this.cerrarFormulario();
@@ -95,6 +95,13 @@ export class AdminAnimales implements OnInit {
       this.animalService.actualizar(this.animalActual.id, this.animalActual).subscribe({
         next: (actualizado) => {
           this.animales.update(lista => lista.map(a => a.id === actualizado.id ? actualizado : a));
+          // Si hay una foto seleccionada, la subimos al animal editado
+          if (this.archivoFoto) {
+            this.animalService.subirFoto(actualizado.id, this.archivoFoto).subscribe({
+              next: () => { console.log('Foto subida'); this.cargarAnimales(); },
+              error: () => console.log('No se pudo subir la foto')
+            });
+          }
           this.cerrarFormulario();
         },
         error: () => {

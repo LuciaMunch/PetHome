@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CatalogoService } from '../../services/catalogo.service';
+import { AuthService } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 
 interface Animal {
@@ -42,7 +43,8 @@ export class Catalogo implements OnInit {
 
   constructor(
     private catalogoService: CatalogoService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public authService: AuthService
   ) {}
 
   // Al arrancar el componente, trae los animales
