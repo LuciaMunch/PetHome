@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CatalogoService } from '../../services/catalogo.service';
 import { AuthService } from '../../services/auth.service';
 import { EventoSanitarioService, EventoSanitarioResponse } from '../../services/evento-sanitario.service';
@@ -38,6 +38,7 @@ export class FichaAnimal implements OnInit {
   ];
 
   mostrarModalAdopcion = false;
+  mostrarAvisoLogin = false;
 
   mostrarInfoSanitaria = false;
   historialSanitario: EventoSanitarioResponse[] = [];
@@ -48,7 +49,8 @@ export class FichaAnimal implements OnInit {
     private catalogoService: CatalogoService,
     private eventoSanitarioService: EventoSanitarioService,
     private cdr: ChangeDetectorRef,
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -70,11 +72,24 @@ export class FichaAnimal implements OnInit {
   }
 
   abrirAdopcion(): void {
+    // Si no está logueado, mostramos el aviso lindo
+    if (!this.authService.getToken()) {
+      this.mostrarAvisoLogin = true;
+      return;
+    }
     this.mostrarModalAdopcion = true;
   }
 
   cerrarAdopcion(): void {
     this.mostrarModalAdopcion = false;
+  }
+
+  cerrarAvisoLogin(): void {
+    this.mostrarAvisoLogin = false;
+  }
+
+  irALogin(): void {
+    this.router.navigate(['/auth']);
   }
 
   toggleInfoSanitaria(): void {
