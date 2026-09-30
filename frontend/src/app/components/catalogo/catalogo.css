@@ -8,8 +8,14 @@
 
 /* ---- Hero ---- */
 .hero {
-  background: var(--verde-clarito);
-  padding: 48px 24px;
+  position: relative;
+  background:
+    linear-gradient(
+      rgba(234, 245, 234, 0.65),
+      rgba(234, 245, 234, 0.65)
+    ),
+    url('/catalogo-banner.png') center / cover no-repeat;
+  padding: 64px 24px;
   text-align: center;
 }
 .hero h1 {
@@ -20,7 +26,6 @@
   margin: 0;
 }
 .hero p { color: var(--texto-suave); font-size: 1.2rem; margin-top: 8px; }
-
 /* ---- Filtros ---- */
 .filtros {
   display: flex;
