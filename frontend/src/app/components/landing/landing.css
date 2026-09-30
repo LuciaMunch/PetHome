@@ -396,19 +396,117 @@
 
 /* ===== RESPONSIVE: pantallas chicas (celular/tablet) ===== */
 @media (max-width: 768px) {
-  .hero, .historia, .pasos, .ayuda-adoptar, .footer {
-    padding: 2rem 1.5rem;
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    gap: 2.5rem;
   }
-  .pasos-grid, .ayuda-adoptar, .footer {
+
+  .hero-texto h1 {
+    font-size: 2.6rem;
+  }
+
+  .subtitulo {
+    font-size: 1.1rem;
+  }
+
+  .hero-botones {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .btn-verde, .btn-outline {
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .hero-card {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .hero-foto {
+    height: 300px;
+  }
+
+  /* Historia: apila texto y collage */
+  .historia {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem 1.5rem;
+  }
+
+  .historia-collage {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .collage-item {
+    height: 140px;
+  }
+
+  /* Pasos */
+  .pasos {
+    padding: 3rem 1.5rem;
+  }
+
+  .pasos-header {
+    flex-direction: column;
+  }
+
+  .banner-jornada {
+    flex-direction: column;
+    text-align: center;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pasos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* En mobile no hay hover: la descripción se ve siempre */
+  .paso-descripcion {
+    position: static;
+    transform: none;
+    opacity: 1;
+    margin-top: 0.75rem;
+    border-radius: 8px;
+    padding: 0.75rem;
+  }
+
+  .paso-card:hover {
+    transform: none;
+  }
+
+  /* Cards ayuda/adoptar y footer en 1 columna */
+  .ayuda-adoptar,
+  .footer {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem;
+  }
+
+  .card-ayuda,
+  .card-adoptar {
+    padding: 1.5rem;
+  }
+
+  .footer {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-texto h1 {
+    font-size: 2.2rem;
+  }
+
+  .pasos-grid {
     grid-template-columns: 1fr;
   }
-  /* Overlay con datos del animal, tapa la foto al pasar el mouse por la card */
-  .hero-datos {
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin: 0;
-    text-transform: capitalize;
-    opacity: 0.95;
-  }
+}
 }

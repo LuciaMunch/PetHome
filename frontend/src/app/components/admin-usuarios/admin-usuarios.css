@@ -86,3 +86,68 @@
   outline: none;
   border-color: #58A787;
 }
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 1rem;
+  }
+
+  .filtros-usuarios .buscador {
+    max-width: 100%;
+  }
+
+  /* Tabla → tarjetas apiladas */
+  .tabla-responsive {
+    overflow: visible;
+  }
+
+  .tabla-admin,
+  .tabla-admin tbody,
+  .tabla-admin tr,
+  .tabla-admin td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tabla-admin thead {
+    display: none;
+  }
+
+  .tabla-admin {
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .tabla-admin tr {
+    background: var(--blanco, #fff);
+    border: 1px solid var(--borde, #dceeee);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(1, 35, 18, 0.06);
+  }
+
+  .tabla-admin td {
+    border-bottom: 1px solid var(--borde, #eef4ec);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .tabla-admin tr:nth-child(even) {
+    background: var(--blanco, #fff);
+  }
+
+  .tabla-admin td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--texto-suave, #4b6358);
+  }
+

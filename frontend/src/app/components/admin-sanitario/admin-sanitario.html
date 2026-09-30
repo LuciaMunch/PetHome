@@ -80,10 +80,10 @@
       <tbody>
       @for (reg of historial(); track reg.id) {
       <tr>
-        <td><span class="badge-tipo">{{ reg.tipo }}</span></td>
-        <td>{{ reg.fecha }}</td>
-        <td>{{ reg.observaciones || '—' }}</td>
-        <td>
+        <td data-label="Tipo"><span class="badge-tipo">{{ reg.tipo }}</span></td>
+        <td data-label="Fecha">{{ reg.fecha }}</td>
+        <td data-label="Observaciones">{{ reg.observaciones || '—' }}</td>
+        <td data-label="" class="celda-eliminar">
           <button class="btn-eliminar" (click)="eliminarEvento(reg.id)" title="Eliminar registro">✕</button>
         </td>
       </tr>

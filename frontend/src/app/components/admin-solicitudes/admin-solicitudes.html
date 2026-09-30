@@ -36,9 +36,9 @@
       <tbody>
       @for (sol of solicitudesFiltradas(); track sol.id) {
       <tr>
-        <td><strong>{{ sol.animalNombre }}</strong></td>
-        <td>{{ sol.usuarioNombre }}</td>
-        <td>
+        <td data-label="Animal"><strong>{{ sol.animalNombre }}</strong></td>
+        <td data-label="Solicitante">{{ sol.usuarioNombre }}</td>
+        <td data-label="Detalle">
           <button class="btn-detalle" (click)="verDetalle(sol)">Ver más</button>
         </td>
       </tr>

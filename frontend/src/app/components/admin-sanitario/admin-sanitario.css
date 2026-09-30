@@ -43,6 +43,13 @@ input, select, textarea {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 0.9rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  appearance: auto;
+  -webkit-appearance: auto;
+  background: #fff;
+  height: 40px;
 }
 
 .btn-guardar {
@@ -120,4 +127,84 @@ input, select, textarea {
 
 .btn-eliminar:hover {
   background: #f8d7da;
+}
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .admin-container {
+    margin: 1rem auto;
+    padding: 0 1rem;
+  }
+  select {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    appearance: auto;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  .card-form {
+    padding: 1.25rem;
+  }
+
+  /* Tabla → tarjetas apiladas */
+  .tabla-responsive {
+    overflow: visible;
+  }
+
+  .tabla-admin,
+  .tabla-admin tbody,
+  .tabla-admin tr,
+  .tabla-admin td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tabla-admin thead {
+    display: none;
+  }
+
+  .tabla-admin {
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .tabla-admin tr {
+    background: none;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .tabla-admin td {
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .tabla-admin td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #666;
+  }
+
+  .celda-eliminar {
+    justify-content: flex-end;
+    border-bottom: none;
+  }
+  .celda-eliminar::before {
+    content: none;
+  }
 }

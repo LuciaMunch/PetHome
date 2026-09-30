@@ -50,19 +50,19 @@
     <tbody>
     @for (animal of animalesFiltrados(); track animal.id) {
     <tr>
-      <td>{{ animal.nombre }}</td>
-      <td>{{ animal.especie }}</td>
-      <td>{{ animal.sexo }}</td>
-      <td>{{ animal.tamanio }}</td>
-      <td>{{ animal.edad }} años</td>
-      <td>
+      <td data-label="Nombre">{{ animal.nombre }}</td>
+      <td data-label="Especie">{{ animal.especie }}</td>
+      <td data-label="Sexo">{{ animal.sexo }}</td>
+      <td data-label="Tamaño">{{ animal.tamanio }}</td>
+      <td data-label="Edad">{{ animal.edad }} años</td>
+      <td data-label="Estado">
             <span class="badge" [ngClass]="{
               'badge--disponible': animal.estado === 'DISPONIBLE',
               'badge--en-proceso': animal.estado === 'EN_PROCESO',
               'badge--adoptado': animal.estado === 'ADOPTADO'
             }">{{ animal.estado }}</span>
       </td>
-      <td class="acciones">
+      <td data-label="Acciones" class="acciones">
         <button class="btn-editar" (click)="editar(animal)">Editar</button>
         <button class="btn-borrar" (click)="borrar(animal)">Borrar</button>
       </td>

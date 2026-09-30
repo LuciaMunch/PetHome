@@ -1,0 +1,125 @@
+<main class="contenedor">
+
+  <h1 class="titulo">Mi perfil</h1>
+
+  <!-- Card de datos personales -->
+  <section class="card">
+
+    @if (cargandoPerfil()) {
+    <p class="estado">Cargando perfil...</p>
+    } @else if (errorPerfil()) {
+    <p class="error">{{ errorPerfil() }}</p>
+    } @else if (perfil(); as p) {
+    <div class="card-header">
+      <div class="avatar">🐾</div>
+      <div class="nombre-completo">
+        <h2>{{ p.nombreCompleto || p.nombreUsuario }}</h2>
+        <p class="rol">{{ p.rol }}</p>
+      </div>
+      @if (!editando()) {
+      <button class="btn-editar" (click)="iniciarEdicion()">Editar</button>
+      }
+    </div>
+
+    @if (!editando()) {
+    <div class="datos">
+      <div class="dato">
+        <span class="etiqueta">Nombre de usuario</span>
+        <span class="valor">{{ p.nombreUsuario }}</span>
+      </div>
+      <div class="dato">
+        <span class="etiqueta">Email</span>
+        <span class="valor">{{ p.email }}</span>
+      </div>
+      <div class="dato">
+        <span class="etiqueta">Teléfono</span>
+        <span class="valor">{{ p.telefono || '—' }}</span>
+      </div>
+      <div class="dato">
+        <span class="etiqueta">Edad</span>
+        <span class="valor">{{ p.edad ? p.edad + ' años' : '—' }}</span>
+      </div>
+      <div class="dato">
+        <span class="etiqueta">Dirección</span>
+        <span class="valor">{{ p.direccion || '—' }}</span>
+      </div>
+      <div class="dato">
+        <span class="etiqueta">Ciudad</span>
+        <span class="valor">{{ p.ciudad || '—' }}</span>
+      </div>
+      <div class="dato">
+        <span class="etiqueta">Provincia</span>
+        <span class="valor">{{ p.provincia || '—' }}</span>
+      </div>
+    </div>
+    } @else {
+    <form class="form-edicion" (ngSubmit)="guardar()">
+      <div class="campo">
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" type="text" name="telefono" [(ngModel)]="formulario.telefono">
+      </div>
+      <div class="campo">
+        <label for="edad">Edad</label>
+        <input id="edad" type="number" name="edad" min="0" [(ngModel)]="formulario.edad">
+      </div>
+      <div class="campo">
+        <label for="direccion">Dirección</label>
+        <input id="direccion" type="text" name="direccion" [(ngModel)]="formulario.direccion">
+      </div>
+      <div class="campo">
+        <label for="ciudad">Ciudad</label>
+        <input id="ciudad" type="text" name="ciudad" [(ngModel)]="formulario.ciudad">
+      </div>
+      <div class="campo">
+        <label for="provincia">Provincia</label>
+        <input id="provincia" type="text" name="provincia" [(ngModel)]="formulario.provincia">
+      </div>
+
+      @if (mensajeEdicion()) {
+      <p class="mensaje-edicion">{{ mensajeEdicion() }}</p>
+      }
+
+      <div class="acciones">
+        <button type="button" class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+        <button type="submit" class="btn-guardar" [disabled]="guardando()">
+          {{ guardando() ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+    </form>
+    }
+    }
+  </section>
+
+  <!-- Apartado de mis solicitudes -->
+  <section class="card">
+    <h2>Mis solicitudes</h2>
+
+    @if (cargandoSolicitudes()) {
+    <p class="estado">Cargando solicitudes...</p>
+    } @else if (errorSolicitudes()) {
+    <p class="error">{{ errorSolicitudes() }}</p>
+    } @else if (solicitudes().length === 0) {
+    <p class="estado">Todavía no enviaste ninguna solicitud de adopción.</p>
+    } @else {
+    <ul class="lista">
+      @for (sol of solicitudes(); track sol.id) {
+      <li class="solicitud">
+        <div class="solicitud-header">
+          <span class="animal">{{ sol.animalNombre }}</span>
+          <span
+            class="estado-badge"
+            [ngClass]="{
+              'estado-badge--pendiente': sol.estado === 'PENDIENTE',
+              'estado-badge--aprobada': sol.estado === 'APROBADA',
+              'estado-badge--rechazada': sol.estado === 'RECHAZADA'
+            }"
+          >{{ sol.estado }}</span>
+        </div>
+        <span class="fecha">{{ sol.fecha }}</span>
+      </li>
+      }
+    </ul>
+    }
+  </section>
+
+</main>

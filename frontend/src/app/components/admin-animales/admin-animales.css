@@ -233,3 +233,107 @@
   cursor: pointer;
   font-weight: 700;
 }
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .admin {
+    padding: 20px 16px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .btn-nuevo {
+    width: 100%;
+  }
+
+  /* Filtros apilados a ancho completo */
+  .filtros-admin {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filtros-admin .buscador,
+  .filtros-admin select,
+  .btn-limpiar {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Tabla → tarjetas apiladas */
+  .tabla,
+  .tabla tbody,
+  .tabla tr,
+  .tabla td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tabla thead {
+    display: none;
+  }
+
+  .tabla {
+    border: none;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .tabla tr {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .tabla td {
+    border-top: 1px solid var(--borde);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .tabla td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--texto-suave);
+  }
+
+  .acciones {
+    justify-content: flex-end;
+  }
+
+  /* Modal tipo bottom-sheet */
+  .modal-fondo {
+    align-items: flex-end;
+  }
+
+  .modal {
+    width: 100%;
+    max-width: none;
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+    padding: 24px 20px;
+  }
+
+  .campo-fila {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .modal-acciones {
+    flex-direction: column-reverse;
+  }
+  .modal-acciones .btn-cancelar,
+  .modal-acciones .btn-guardar {
+    width: 100%;
+  }
+}

@@ -165,3 +165,43 @@
   color: #d32f2f;
   font-size: 0.9rem;
 }
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Filas de métrica: el nombre pasa a 2 líneas y se reduce */
+  .metric-name {
+    width: 92px;
+    font-size: 0.8rem;
+  }
+
+  .metric-value {
+    width: 32px;
+    font-size: 0.8rem;
+  }
+
+  /* Gráfico de barras con menos altura y etiquetas más chicas */
+  .chart {
+    height: 130px;
+    gap: 0.2rem;
+  }
+
+  .chart-bar {
+    width: 55%;
+  }
+
+  .chart-label,
+  .chart-value {
+    font-size: 0.6rem;
+  }
+
+  .progress-cards {
+    grid-template-columns: 1fr;
+  }
+}

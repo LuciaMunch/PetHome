@@ -1,22 +1,26 @@
 <header class="header">
   <a routerLink="/catalogo" class="logo">🐾 PetHome</a>
 
-  <nav class="nav">
-    <a routerLink="/" class="nav-link">Inicio</a>
-    <a routerLink="/catalogo" class="nav-link">Mascotas</a>
+  <button class="hamburguesa" (click)="toggleMenu()" [attr.aria-expanded]="menuAbierto()">
+    ☰
+  </button>
+
+  <nav [ngClass]="menuAbierto() ? 'nav nav--abierto' : 'nav'">
+    <a routerLink="/" class="nav-link" (click)="cerrarMenu()">Inicio</a>
+    <a routerLink="/catalogo" class="nav-link" (click)="cerrarMenu()">Mascotas</a>
 
     @if (rol === 'ADMIN') {
-    <a routerLink="/home-admin" class="nav-link">Panel</a>
+    <a routerLink="/home-admin" class="nav-link" (click)="cerrarMenu()">Panel</a>
     }
 
     @if (rol === 'ADOPTANTE') {
-    <a routerLink="/mis-solicitudes" class="nav-link">Mis solicitudes</a>
+    <a routerLink="/home-adoptante" class="nav-link" (click)="cerrarMenu()">Mi perfil</a>
     }
 
     @if (rol) {
     <button class="nav-btn" (click)="cerrarSesion()">Cerrar sesión</button>
     } @else {
-    <a routerLink="/auth" class="nav-btn">Iniciar sesión</a>
+    <a routerLink="/auth" class="nav-btn" (click)="cerrarMenu()">Iniciar sesión</a>
     }
   </nav>
 </header>

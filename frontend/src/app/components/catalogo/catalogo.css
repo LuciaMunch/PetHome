@@ -182,3 +182,55 @@
   flex-direction: column;
   flex: 1;
 }
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .hero {
+    padding: 32px 16px;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  /* Filtros: apilados a ancho completo */
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .filtro select,
+  .filtro input {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  .btn-buscar {
+    width: 100%;
+  }
+
+  /* Grilla: una sola columna en pantallas angostas */
+  .grilla {
+    grid-template-columns: 1fr;
+    padding: 20px 16px;
+    gap: 16px;
+  }
+
+  /* Contador y sin-resultados con el padding alineado */
+  .contador {
+    padding: 0 16px;
+  }
+
+  .sin-resultados {
+    padding: 32px 16px;
+  }
+}
