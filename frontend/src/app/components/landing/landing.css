@@ -15,16 +15,24 @@
 /* ===== SECCIÓN HERO (título Pet Home + botones + card del animal destacado) ===== */
 .hero {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 5rem;
+  max-width: 1300px;
+  margin: 0 auto;
   background: #eaf5ea url('/patitas.png') repeat;
-  padding: 6rem 4rem;
+  padding: 3rem 4rem;
   flex-wrap: wrap;
 }
 
+.hero-texto {
+  flex: 1;
+  min-width: 320px;
+  max-width: 480px;
+}
+
 .hero-texto h1 {
-  font-size: 4rem; /* antes 3rem */
+  font-size: 4rem;
   margin: 0;
 }
 
@@ -44,7 +52,7 @@
   background: #1b4332;
   color: white;
   border: none;
-  padding: 1.1rem 2rem; /* antes 0.8rem 1.5rem */
+  padding: 1.1rem 2rem;
   border-radius: 8px;
   font-weight: 700;
   font-size: 1rem;
@@ -55,7 +63,7 @@
   background: #fde9c8;
   color: #d97706;
   border: none;
-  padding: 1.1rem 2rem; /* antes 0.8rem 1.5rem */
+  padding: 1.1rem 2rem;
   border-radius: 8px;
   font-weight: 700;
   font-size: 1rem;
@@ -65,11 +73,12 @@
 /* Card del animal destacado en el hero (rota entre animales cada 6 segundos) */
 .hero-card {
   position: relative;
-  width: 320px;
+  width: 400px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   animation: flotar 3s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 /* Animación de flotación: sube y baja la card, con sombra que crece al subir */
@@ -86,7 +95,7 @@
 
 .hero-foto {
   width: 100%;
-  height: 420px; /* antes 320px */
+  height: 480px;
   object-fit: cover;
   display: block;
 }
@@ -145,6 +154,13 @@
 
 .historia-texto h2 {
   color: #f4941e;
+  font-size: 2.2rem;
+}
+
+.historia-texto p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #333;
 }
 
 .historia-collage {
@@ -182,12 +198,15 @@
   min-width: 280px;
 }
 
-.banner-jornada {
-  flex-shrink: 0;
-}
-
 .pasos-header h2 {
   margin: 0;
+  font-size: 2rem;
+}
+
+.pasos-header p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-top: 0.5rem;
 }
 
 /* Banner destacado de la jornada de adopción */
@@ -200,6 +219,7 @@
   align-items: center;
   gap: 1rem;
   max-width: 420px;
+  flex-shrink: 0;
 }
 
 .banner-icono {
@@ -236,7 +256,7 @@
   padding: 1.5rem 1rem;
   text-align: center;
   cursor: pointer;
-  overflow: hidden; /* recorta el overlay de descripción para que no se salga de los bordes redondeados */
+  overflow: hidden;
   box-sizing: border-box;
   transition: transform 0.2s ease;
 }
@@ -253,14 +273,14 @@
 }
 
 .paso-titulo {
-  font-weight: 700; /* título en negrita */
+  font-weight: 700;
   margin: 0;
 }
 
 /* Overlay naranja con la descripción del paso, oculto por default */
 .paso-descripcion {
   position: absolute;
-  inset: 0; /* ocupa exactamente el mismo tamaño que la card padre, sin desbordarse */
+  inset: 0;
   box-sizing: border-box;
   background: #f4941e;
   color: white;
@@ -272,13 +292,12 @@
   justify-content: center;
   text-align: center;
   padding: 1rem;
-  border-radius: 12px; /* mismo redondeo que .paso-card, para que no se vea un rectángulo recto */
+  border-radius: 12px;
   opacity: 0;
-  transform: translateY(100%); /* arranca oculto, desplazado hacia abajo */
+  transform: translateY(100%);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-/* Al pasar el mouse por la card, sube el overlay y aparece */
 .paso-card:hover .paso-descripcion {
   opacity: 1;
   transform: translateY(0);
@@ -403,6 +422,10 @@
     gap: 2.5rem;
   }
 
+  .hero-texto {
+    max-width: 100%;
+  }
+
   .hero-texto h1 {
     font-size: 2.6rem;
   }
@@ -508,5 +531,4 @@
   .pasos-grid {
     grid-template-columns: 1fr;
   }
-}
 }
