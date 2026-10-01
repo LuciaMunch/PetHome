@@ -10,11 +10,20 @@
   <p class="error">{{ error }}</p>
   }
 
-  @if (!cargando && solicitudes.length === 0) {
+  @if (!cargando && solicitudes().length === 0) {
   <p class="vacio">No hay solicitudes pendientes para revisar.</p>
   }
 
-  @if (!cargando && solicitudes.length > 0) {
+  @if (!cargando && solicitudes().length > 0) {
+  <div class="filtros-solicitudes">
+    <input
+      type="text"
+      class="buscador"
+      placeholder="Buscar por adoptante o animal..."
+      [ngModel]="buscar()"
+      (ngModelChange)="buscar.set($event)">
+  </div>
+
   <div class="tabla-responsive">
     <table class="tabla-admin">
       <thead>
@@ -25,14 +34,16 @@
       </tr>
       </thead>
       <tbody>
-      @for (sol of solicitudes; track sol.id) {
+      @for (sol of solicitudesFiltradas(); track sol.id) {
       <tr>
-        <td><strong>{{ sol.animalNombre }}</strong></td>
-        <td>{{ sol.usuarioNombre }}</td>
-        <td>
+        <td data-label="Animal"><strong>{{ sol.animalNombre }}</strong></td>
+        <td data-label="Solicitante">{{ sol.usuarioNombre }}</td>
+        <td data-label="Detalle">
           <button class="btn-detalle" (click)="verDetalle(sol)">Ver más</button>
         </td>
       </tr>
+      } @empty {
+      <tr><td colspan="3" class="vacio">No se encontraron solicitudes con esa búsqueda.</td></tr>
       }
       </tbody>
     </table>
@@ -64,6 +75,16 @@
     </div>
 
     <button class="btn-cerrar" (click)="cerrarDetalle()">Cerrar</button>
+  </div>
+</div>
+}
+
+@if (mensajeConfirmacion) {
+<div class="conf-fondo" (click)="cerrarConfirmacion()">
+  <div class="conf-caja" (click)="$event.stopPropagation()">
+    <div class="conf-icono">✅</div>
+    <p>{{ mensajeConfirmacion }}</p>
+    <button class="conf-btn" (click)="cerrarConfirmacion()">Entendido</button>
   </div>
 </div>
 }

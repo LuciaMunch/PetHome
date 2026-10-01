@@ -10,6 +10,7 @@ import { AdminAnimales } from './components/admin-animales/admin-animales';
 import { MisSolicitudes } from './components/mis-solicitudes/mis-solicitudes';
 import { AdminSolicitudes } from './components/admin-solicitudes/admin-solicitudes';
 import { AdminSanitario } from './components/admin-sanitario/admin-sanitario';
+import { HomeAdoptante } from './components/home-adoptante/home-adoptante';
 
 export const routes: Routes = [
   { path: '', component: Landing },
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'admin/solicitudes', component: AdminSolicitudes, canActivate: [adminGuard] },
   { path: 'admin/sanitario', component: AdminSanitario, canActivate: [adminGuard] },
   { path: 'mis-solicitudes', component: MisSolicitudes, canActivate: [authGuard] },
+  { path: 'home-adoptante', component: HomeAdoptante, canActivate: [authGuard] },
   { path: '**', redirectTo: '/' },
 ];

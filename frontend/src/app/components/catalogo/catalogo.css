@@ -8,8 +8,14 @@
 
 /* ---- Hero ---- */
 .hero {
-  background: var(--verde-clarito);
-  padding: 48px 24px;
+  position: relative;
+  background:
+    linear-gradient(
+      rgba(234, 245, 234, 0.65),
+      rgba(234, 245, 234, 0.65)
+    ),
+    url('/catalogo-banner.png') center / cover no-repeat;
+  padding: 64px 24px;
   text-align: center;
 }
 .hero h1 {
@@ -20,7 +26,6 @@
   margin: 0;
 }
 .hero p { color: var(--texto-suave); font-size: 1.2rem; margin-top: 8px; }
-
 /* ---- Filtros ---- */
 .filtros {
   display: flex;
@@ -64,6 +69,7 @@
   padding: 32px 24px;
   max-width: 1120px;
   margin: 0 auto;
+  align-items: stretch;
 }
 
 /* ---- Tarjeta ---- */
@@ -74,6 +80,8 @@
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(1, 35, 18, 0.08);
   transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
 }
 .card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(1, 35, 18, 0.14); }
 
@@ -121,10 +129,22 @@
 .badge--adoptado    { background: var(--estado-adoptado-bg); color: var(--estado-adoptado-tx); }
 
 .card-datos { color: var(--texto-suave); font-size: 0.85rem; margin: 0 0 8px; }
-.card-desc { color: var(--texto-suave); font-size: 0.9rem; margin: 0 0 16px; }
+.card-desc {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .btn-adoptar {
+  display: block;
   width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
   background: var(--naranja);
   color: var(--verde-oscuro);
   border: none;
@@ -159,8 +179,63 @@
   color: var(--texto-suave);
   font-size: 1.1rem;
 }
+
 .card-link {
   text-decoration: none;
   color: inherit;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .hero {
+    padding: 32px 16px;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  /* Filtros: apilados a ancho completo */
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .filtro select,
+  .filtro input {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  .btn-buscar {
+    width: 100%;
+  }
+
+  /* Grilla: una sola columna en pantallas angostas */
+  .grilla {
+    grid-template-columns: 1fr;
+    padding: 20px 16px;
+    gap: 16px;
+  }
+
+  /* Contador y sin-resultados con el padding alineado */
+  .contador {
+    padding: 0 16px;
+  }
+
+  .sin-resultados {
+    padding: 32px 16px;
+  }
 }

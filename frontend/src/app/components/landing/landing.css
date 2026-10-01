@@ -1,92 +1,380 @@
-/* ===== COLORES DE MARCA (reutilizables en toda la landing) ===== */
-.verde { color: #1b4332; }
-.naranja { color: #f4941e; }
-.blanco { color: white; }
+/* ===== CONFIGURACIÓN DEL COMPONENTE ===== */
+/* La forma de patita se guarda en una variable para reutilizarla en todas las secciones */
+:host {
+  display: block;
+  font-family: var(--fuente-texto, 'Nunito Sans', sans-serif);
+  color: var(--verde-oscuro, #012312);
+  --patita-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cellipse cx='50' cy='68' rx='22' ry='19'/%3E%3Cellipse cx='22' cy='42' rx='9' ry='12'/%3E%3Cellipse cx='40' cy='25' rx='9' ry='12'/%3E%3Cellipse cx='60' cy='25' rx='9' ry='12'/%3E%3Cellipse cx='78' cy='42' rx='9' ry='12'/%3E%3C/svg%3E");
+}
 
-/* ===== BARRA SUPERIOR (franja verde angosta con la frase de arriba de todo) ===== */
+/* ===== COLORES DE MARCA (reutilizables en toda la landing) ===== */
+.verde { color: var(--verde-oscuro, #012312); }
+.naranja { color: var(--naranja-oscuro, #E89A1C); }
+
+/* ===== ELEMENTOS COMPARTIDOS ===== */
+
+/* Contenedor de dos columnas centrado (lo usan Historia y Ayuda) */
+.seccion-dos-columnas {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 4rem;
+}
+
+/* Textito verde menta arriba de cada título de sección */
+.seccion-etiqueta {
+  margin: 0 0 0.5rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--verde-menta, #58A787);
+}
+
+.seccion-titulo {
+  margin: 0 0 1.25rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--verde-oscuro, #012312);
+}
+
+/* Botones */
+.btn {
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.85rem 1.9rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn--principal {
+  background: var(--naranja, #FFB031);
+  border-color: var(--naranja, #FFB031);
+  color: var(--verde-oscuro, #012312);
+}
+
+.btn--principal:hover {
+  background: var(--naranja-oscuro, #E89A1C);
+  border-color: var(--naranja-oscuro, #E89A1C);
+  transform: translateY(-2px);
+}
+
+.btn--secundario {
+  background: transparent;
+  border-color: var(--verde-oscuro, #012312);
+  color: var(--verde-oscuro, #012312);
+}
+
+.btn--secundario:hover {
+  background: var(--verde-oscuro, #012312);
+  color: white;
+}
+
+.btn--oscuro {
+  background: var(--verde-oscuro, #012312);
+  border-color: var(--verde-oscuro, #012312);
+  color: white;
+  padding: 0.6rem 1.3rem;
+  font-size: 0.95rem;
+}
+
+.btn--oscuro:hover {
+  background: var(--verde-menta, #58A787);
+  border-color: var(--verde-menta, #58A787);
+  color: var(--verde-oscuro, #012312);
+}
+
+/* Botón con pinta de link (como "Pricing >" de la referencia) */
+.btn-texto {
+  background: none;
+  border: none;
+  padding: 0.85rem 0.5rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--verde-oscuro, #012312);
+  text-decoration: underline;
+  text-decoration-color: var(--naranja, #FFB031);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+  cursor: pointer;
+}
+
+.btn-texto:hover {
+  text-decoration-color: var(--naranja-oscuro, #E89A1C);
+}
+
+.btn:focus-visible,
+.btn-texto:focus-visible,
+.btn-ver-perfil:focus-visible,
+.footer-link:focus-visible {
+  outline: 3px solid var(--verde-menta, #58A787);
+  outline-offset: 3px;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+/* Manchas orgánicas (el border-radius asimétrico les da la forma) */
+.mancha {
+  position: absolute;
+  border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
+}
+
+.mancha--naranja { background: var(--naranja, #FFB031); }
+.mancha--menta { background: var(--verde-menta, #58A787); }
+
+/* Patitas: el SVG se usa como máscara, así se pintan con cualquier color */
+.patita {
+  position: absolute;
+  display: block;
+  background-color: var(--verde-menta, #58A787);
+  -webkit-mask: var(--patita-svg) center / contain no-repeat;
+  mask: var(--patita-svg) center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* Capa que cubre toda la sección y contiene las patitas sueltas del fondo */
+.patitas-fondo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.patitas-fondo .patita { opacity: 0.18; }
+
+.patita--1 { top: 8%;     left: 3%;  width: 46px; height: 46px; transform: rotate(-20deg); }
+.patita--2 { top: 52%;    left: 1%;  width: 34px; height: 34px; transform: rotate(15deg); }
+.patita--3 { bottom: 6%;  left: 26%; width: 40px; height: 40px; transform: rotate(-8deg); }
+.patita--4 { top: 10%;    left: 46%; width: 28px; height: 28px; transform: rotate(25deg); }
+.patita--5 { bottom: 12%; right: 2%; width: 36px; height: 36px; transform: rotate(20deg); }
+.patita--6  { top: 28%;    left: 18%; width: 30px; height: 30px; transform: rotate(10deg); }
+.patita--7  { top: 70%;    left: 14%; width: 38px; height: 38px; transform: rotate(-30deg); }
+.patita--8  { top: 20%;    left: 68%; width: 32px; height: 32px; transform: rotate(-15deg); }
+.patita--9  { bottom: 20%; left: 40%; width: 42px; height: 42px; transform: rotate(22deg); }
+.patita--10 { top: 40%;    left: 32%; width: 26px; height: 26px; transform: rotate(-12deg); }
+.patita--11 { top: 60%;    left: 58%; width: 36px; height: 36px; transform: rotate(18deg); }
+.patita--12 { bottom: 8%;  left: 60%; width: 30px; height: 30px; transform: rotate(-22deg); }
+.patita--13 { top: 6%;     left: 30%; width: 28px; height: 28px; transform: rotate(35deg); }
+.patita--14 { top: 85%;    left: 50%; width: 32px; height: 32px; transform: rotate(-18deg); }
+.patita--15 { top: 48%;    left: 8%;  width: 30px; height: 30px; transform: rotate(28deg); }
+.patita--16 { top: 32%;    left: 85%; width: 34px; height: 34px; transform: rotate(-25deg); }
+.patita--17 { bottom: 30%; left: 72%; width: 26px; height: 26px; transform: rotate(12deg); }
+.patita--18 { top: 16%;    left: 55%; width: 24px; height: 24px; transform: rotate(-30deg); }
+.patita--19 { bottom: 40%; left: 24%; width: 38px; height: 38px; transform: rotate(16deg); }
+.patita--20 { top: 78%;    left: 34%; width: 28px; height: 28px; transform: rotate(-10deg); }
+.patita--21 { top: 12%;    left: 8%;   width: 26px; height: 26px; transform: rotate(-28deg); }
+.patita--22 { top: 38%;    left: 48%;  width: 30px; height: 30px; transform: rotate(20deg); }
+.patita--23 { bottom: 14%; left: 10%;  width: 32px; height: 32px; transform: rotate(-16deg); }
+.patita--24 { top: 64%;    left: 78%;  width: 28px; height: 28px; transform: rotate(24deg); }
+.patita--25 { top: 4%;     left: 62%;  width: 24px; height: 24px; transform: rotate(-12deg); }
+.patita--26 { bottom: 24%; left: 52%;  width: 34px; height: 34px; transform: rotate(32deg); }
+.patita--27 { top: 54%;    left: 40%;  width: 22px; height: 22px; transform: rotate(-20deg); }
+.patita--28 { top: 24%;    left: 38%;  width: 28px; height: 28px; transform: rotate(14deg); }
+.patita--29 { bottom: 4%;  left: 44%;  width: 26px; height: 26px; transform: rotate(-26deg); }
+.patita--30 { top: 88%;    left: 20%;  width: 30px; height: 30px; transform: rotate(18deg); }
+.patita--31 { top: 2%;     left: 44%; width: 24px; height: 24px; transform: rotate(14deg); }
+.patita--32 { top: 16%;    left: 22%; width: 28px; height: 28px; transform: rotate(-18deg); }
+.patita--33 { top: 34%;    left: 6%;  width: 26px; height: 26px; transform: rotate(26deg); }
+.patita--34 { top: 46%;    left: 62%; width: 30px; height: 30px; transform: rotate(-22deg); }
+.patita--35 { top: 56%;    left: 24%; width: 24px; height: 24px; transform: rotate(10deg); }
+.patita--36 { top: 66%;    left: 46%; width: 28px; height: 28px; transform: rotate(-14deg); }
+.patita--37 { top: 76%;    left: 66%; width: 26px; height: 26px; transform: rotate(20deg); }
+.patita--38 { bottom: 16%; left: 34%; width: 30px; height: 30px; transform: rotate(-28deg); }
+.patita--39 { bottom: 2%;  left: 72%; width: 24px; height: 24px; transform: rotate(16deg); }
+.patita--40 { top: 24%;    left: 76%; width: 26px; height: 26px; transform: rotate(-10deg); }
+.patita--41 { top: 8%;     left: 80%; width: 22px; height: 22px; transform: rotate(24deg); }
+.patita--42 { top: 44%;    left: 88%; width: 28px; height: 28px; transform: rotate(-20deg); }
+.patita--43 { bottom: 34%; left: 4%;  width: 26px; height: 26px; transform: rotate(12deg); }
+.patita--44 { top: 72%;    left: 6%;  width: 24px; height: 24px; transform: rotate(-24deg); }
+.patita--45 { top: 50%;    left: 52%; width: 22px; height: 22px; transform: rotate(18deg); }
+
+/* En Pasos el título está centrado: corro esta patita para que no lo tape */
+.pasos .patita--4 { left: auto; right: 18%; }
+
+/* Patitas encima de las manchas */
+.patita--sobre-naranja {
+  background-color: var(--naranja-oscuro, #E89A1C);
+  opacity: 0.6;
+}
+
+.patita--sobre-menta {
+  background-color: var(--verde-oscuro, #012312);
+  opacity: 0.15;
+}
+
+/* Burbujitas redondas blancas (equivalen a las fotitos de perros de la referencia) */
+.burbuja {
+  position: absolute;
+  z-index: 2;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--fondo-claro, #F1FFF0);
+  box-shadow: 0 6px 16px rgba(1, 35, 18, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.burbuja--chica {
+  width: 46px;
+  height: 46px;
+  font-size: 1.2rem;
+}
+
+/* ===== BARRA SUPERIOR ===== */
 .topbar {
-  background: #14532d;
+  background: var(--verde-oscuro, #012312);
   color: white;
   text-align: center;
-  font-size: 0.90rem;
+  font-size: 0.9rem;
   padding: 5px 0;
 }
 
-/* ===== SECCIÓN HERO (título Pet Home + botones + card del animal destacado) ===== */
+/* ===== SECCIÓN HERO ===== */
 .hero {
-  display: flex;
-  justify-content: space-between;
+  position: relative;
+  background: var(--fondo-claro, #F1FFF0);
+  padding: 4rem 2rem 5rem;
+  overflow: hidden;
+}
+
+.hero-contenido {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 2rem;
-  background: #eaf5ea url('/patitas.png') repeat;
-  padding: 6rem 4rem;
-  flex-wrap: wrap;
+  gap: 4rem;
+  min-height: 540px;
 }
 
-.hero-texto h1 {
-  font-size: 4rem; /* antes 3rem */
-  margin: 0;
+.hero-texto {
+  max-width: 500px;
+  justify-self: center;
 }
 
-.subtitulo {
-  font-size: 1.4rem;
-  color: #333;
-  margin: 0.75rem 0 2rem;
-  font-weight: 600;
+.hero-marca {
+  margin: 0 0 1rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--verde-menta, #58A787);
+}
+
+.hero-titulo {
+  margin: 0 0 1.25rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: clamp(2.3rem, 4.4vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--verde-oscuro, #012312);
+}
+
+.hero-descripcion {
+  margin: 0 0 2rem;
+  max-width: 42ch;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.8;
 }
 
 .hero-botones {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
-.btn-verde {
-  background: #1b4332;
-  color: white;
-  border: none;
-  padding: 1.1rem 2rem; /* antes 0.8rem 1.5rem */
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 540px;
 }
 
-.btn-outline {
-  background: #fde9c8;
-  color: #d97706;
-  border: none;
-  padding: 1.1rem 2rem; /* antes 0.8rem 1.5rem */
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
+.hero-mancha {
+  width: 520px;
+  height: 500px;
 }
 
-/* Card del animal destacado en el hero (rota entre animales cada 6 segundos) */
+.hero-mancha-menta {
+  position: absolute;
+  top: 2%;
+  left: 4%;
+  width: 150px;
+  height: 140px;
+  background: var(--verde-menta, #58A787);
+  opacity: 0.35;
+  border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
+}
+
+.hero .patita--b1 { top: 14%;    left: 12%;  width: 38px; height: 38px; transform: rotate(-25deg); }
+.hero .patita--b2 { bottom: 16%; right: 10%; width: 44px; height: 44px; transform: rotate(15deg); }
+.hero .patita--b3 { top: 42%;    right: 4%;  width: 30px; height: 30px; transform: rotate(30deg); }
+.hero .patita--b4 { top: 30%;    left: 30%;  width: 32px; height: 32px; transform: rotate(-15deg); }
+.hero .patita--b5 { bottom: 30%; left: 20%;  width: 36px; height: 36px; transform: rotate(22deg); }
+.hero .patita--b6 { top: 60%;    right: 20%; width: 34px; height: 34px; transform: rotate(-28deg); }
+.hero .patita--b7 { top: 20%;    right: 28%; width: 28px; height: 28px; transform: rotate(18deg); }
+.hero .patita--b8 { bottom: 10%; left: 40%;  width: 30px; height: 30px; transform: rotate(-20deg); }
+.hero .patita--b9  { top: 44%;    left: 14%;  width: 28px; height: 28px; transform: rotate(16deg); }
+.hero .patita--b10 { top: 12%;    left: 44%;  width: 26px; height: 26px; transform: rotate(-24deg); }
+.hero .patita--b11 { bottom: 20%; right: 34%; width: 30px; height: 30px; transform: rotate(20deg); }
+.hero .patita--b12 { top: 70%;    left: 24%;  width: 24px; height: 24px; transform: rotate(-16deg); }
+.hero .patita--b13 { top: 36%;    right: 10%; width: 32px; height: 32px; transform: rotate(28deg); }
+.hero .patita--b14 { bottom: 40%; left: 48%;  width: 26px; height: 26px; transform: rotate(-20deg); }
+.hero .patita--b15 { top: 54%;    left: 60%;  width: 28px; height: 28px; transform: rotate(12deg); }
+.hero .patita--b16 { top: 24%;    left: 16%;  width: 24px; height: 24px; transform: rotate(-30deg); }
+
+.hero .burbuja--1 { top: 8%;    right: 4%; }
+.hero .burbuja--2 { bottom: 10%; left: 2%; }
+.hero .burbuja--3 { bottom: 4%; right: 12%; }
+
+/* Card del animal destacado (rota entre animales cada 6 segundos) */
 .hero-card {
   position: relative;
-  width: 320px;
-  border-radius: 16px;
+  z-index: 1;
+  width: 330px;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  border: 6px solid white;
+  box-shadow: 0 8px 24px rgba(1, 35, 18, 0.18);
   animation: flotar 3s ease-in-out infinite;
 }
 
-/* Animación de flotación: sube y baja la card, con sombra que crece al subir */
 @keyframes flotar {
   0%, 100% {
     transform: translateY(0);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(1, 35, 18, 0.18);
   }
   50% {
     transform: translateY(-12px);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 30px rgba(1, 35, 18, 0.24);
   }
 }
 
 .hero-foto {
   width: 100%;
-  height: 420px; /* antes 320px */
+  height: 420px;
   object-fit: cover;
   display: block;
 }
@@ -96,139 +384,231 @@
   align-items: center;
   justify-content: center;
   font-size: 4rem;
-  background: #ddd;
+  background: var(--fondo-claro, #F1FFF0);
 }
 
-/* Franja naranja con nombre del animal + botón "Ver perfil", superpuesta abajo de la foto */
 .hero-info {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: #f4941e;
-  padding: 0.75rem 1.1rem 0.9rem;
+  box-sizing: border-box;
+  background: var(--verde-oscuro, #012312);
+  padding: 0.8rem 1.1rem 0.95rem;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
 }
 
 .hero-nombre {
   color: white;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.hero-datos {
+  margin: 0;
+  color: white;
+  opacity: 0.85;
+  font-size: 0.9rem;
 }
 
 .btn-ver-perfil {
-  background: white;
-  color: #1b4332;
+  background: var(--naranja, #FFB031);
+  color: var(--verde-oscuro, #012312);
   border: none;
-  padding: 0.35rem 0.8rem;
-  border-radius: 8px;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   cursor: pointer;
   align-self: flex-start;
-  margin-top: 0.2rem;
+  margin-top: 0.35rem;
+  transition: background-color 0.2s ease;
 }
 
-/* ===== SECCIÓN "NUESTRA HISTORIA" (texto + collage de fotos) ===== */
-.historia {
+.btn-ver-perfil:hover {
+  background: var(--naranja-oscuro, #E89A1C);
+}
+
+/* ===== FRANJA DE DESTACADOS (fila de íconos debajo del hero) ===== */
+.destacados {
+  background: white;
+  padding: 1.75rem 2rem;
+  border-bottom: 1px solid rgba(88, 167, 135, 0.25);
+}
+
+.destacados-lista {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  gap: 3rem;
-  padding: 6rem 4rem;
   flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1.5rem 2.5rem;
 }
 
-.historia-texto {
-  flex: 1;
-  min-width: 280px;
-}
-
-.historia-texto h2 {
-  color: #f4941e;
-}
-
-.historia-collage {
-  flex: 1;
-  min-width: 280px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.destacado {
+  display: flex;
+  align-items: center;
   gap: 0.75rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 
-.collage-item {
-  width: 100%;
-  height: 200px;
-  border-radius: 8px;
+.destacado-icono {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--fondo-claro, #F1FFF0);
+  border: 2px solid var(--verde-menta, #58A787);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+/* ===== SECCIONES CON FOTO EN MANCHA (Historia y Ayuda) ===== */
+.historia,
+.ayuda {
+  position: relative;
+  background: white;
+  padding: 6rem 2rem;
+  overflow: hidden;
+}
+
+.historia-texto,
+.ayuda-texto {
+  max-width: 520px;
+  justify-self: center;
+}
+
+.historia-texto p:not(.seccion-etiqueta),
+.ayuda-texto p:not(.seccion-etiqueta) {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+  opacity: 0.85;
+}
+
+/* Bloque visual: mancha de color + foto principal recortada + fotitos redondas */
+.foto-mancha {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 460px;
+}
+
+.foto-mancha .mancha {
+  width: 440px;
+  height: 420px;
+}
+
+.foto-mancha-principal {
+  position: relative;
+  z-index: 1;
+  width: 340px;
+  height: 340px;
   object-fit: cover;
-  display: block;
+  border: 6px solid white;
+  border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%;
+  box-shadow: 0 10px 28px rgba(1, 35, 18, 0.15);
 }
 
-/* ===== SECCIÓN "PASOS PARA ADOPTAR" (las 4 tarjetas numeradas 01-04) ===== */
+.foto-mini {
+  position: absolute;
+  z-index: 2;
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid white;
+  box-shadow: 0 6px 16px rgba(1, 35, 18, 0.15);
+}
+
+.foto-mini--1 { top: 4%;    right: 6%; }
+.foto-mini--2 { bottom: 6%; left: 4%; }
+
+.foto-mancha .patita--m1 { top: 10%;    left: 12%;  width: 40px; height: 40px; transform: rotate(-20deg); }
+.foto-mancha .patita--m2 { bottom: 12%; right: 10%; width: 46px; height: 46px; transform: rotate(18deg); }
+
+/* Caja con el alias de Mercado Pago y el botón de copiar */
+.label-transferencias {
+  display: block;
+  margin: 1.5rem 0 0.5rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-weight: 700;
+  color: var(--verde-menta, #58A787);
+}
+
+.dato-transferencia {
+  background: var(--fondo-claro, #F1FFF0);
+  border: 2px dashed var(--verde-menta, #58A787);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dato-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.dato-textos small {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.dato-textos strong {
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+}
+
+/* ===== SECCIÓN "PASOS PARA ADOPTAR" (como "What's interesting about dogs?") ===== */
 .pasos {
-  background: #eaf5ea;
-  padding: 6rem 4rem;
+  position: relative;
+  background: var(--fondo-claro, #F1FFF0);
+  padding: 6rem 2rem;
+  overflow: hidden;
+}
+
+.pasos-contenido {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .pasos-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  flex-wrap: wrap;
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 3rem;
 }
 
-.pasos-header > div:first-child {
-  flex: 1;
-  min-width: 280px;
-}
-
-.banner-jornada {
-  flex-shrink: 0;
-}
-
-.pasos-header h2 {
+.pasos-intro {
   margin: 0;
-}
-
-/* Banner destacado de la jornada de adopción */
-.banner-jornada {
-  background: #1b4332;
-  color: white;
-  border-radius: 14px;
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  max-width: 420px;
-}
-
-.banner-icono {
-  font-size: 1.8rem;
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-  padding: 0.5rem 0.7rem;
-}
-
-.banner-titulo {
-  margin: 0 0 0.3rem;
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.banner-detalle {
-  margin: 0;
-  font-size: 0.85rem;
-  opacity: 0.9;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.85;
 }
 
 .pasos-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: 1.5rem;
 }
 
-/* Tarjeta de cada paso: se levanta un poco al pasar el mouse */
+/* Tarjeta de cada paso: se levanta un poco al pasar el mouse (efecto original de Guada) */
 .paso-card {
   position: relative;
   background: #fde9c8;
@@ -236,7 +616,7 @@
   padding: 1.5rem 1rem;
   text-align: center;
   cursor: pointer;
-  overflow: hidden; /* recorta el overlay de descripción para que no se salga de los bordes redondeados */
+  overflow: hidden;
   box-sizing: border-box;
   transition: transform 0.2s ease;
 }
@@ -253,14 +633,14 @@
 }
 
 .paso-titulo {
-  font-weight: 700; /* título en negrita */
+  font-weight: 700;
   margin: 0;
 }
 
 /* Overlay naranja con la descripción del paso, oculto por default */
 .paso-descripcion {
   position: absolute;
-  inset: 0; /* ocupa exactamente el mismo tamaño que la card padre, sin desbordarse */
+  inset: 0;
   box-sizing: border-box;
   background: #f4941e;
   color: white;
@@ -272,143 +652,371 @@
   justify-content: center;
   text-align: center;
   padding: 1rem;
-  border-radius: 12px; /* mismo redondeo que .paso-card, para que no se vea un rectángulo recto */
+  border-radius: 12px;
   opacity: 0;
-  transform: translateY(100%); /* arranca oculto, desplazado hacia abajo */
+  transform: translateY(100%);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-/* Al pasar el mouse por la card, sube el overlay y aparece */
 .paso-card:hover .paso-descripcion {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ===== SECCIÓN "QUERÉS AYUDAR / QUERÉS ADOPTAR" (las dos cards grandes) ===== */
-.ayuda-adoptar {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  padding: 6rem 4rem;
-}
-
-.card-ayuda,
-.card-adoptar {
-  border-radius: 16px;
-  padding: 2rem;
-}
-
-.card-ayuda {
-  background: #f4941e;
+/* Banner de la jornada de adopción */
+.banner-jornada {
+  max-width: 680px;
+  margin: 3rem auto 0;
+  background: var(--verde-oscuro, #012312);
   color: white;
-}
-
-.card-adoptar {
-  background: #fde9c8;
-  color: #333;
-}
-
-.label-transferencias {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin: 1rem 0 0.5rem;
-}
-
-/* Caja con el alias de Mercado Pago y el botón de copiar */
-.dato-transferencia {
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
+  border-radius: 20px;
+  padding: 1.25rem 1.75rem;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.banner-icono {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--naranja, #FFB031);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.banner-titulo {
+  margin: 0 0 0.2rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.banner-detalle {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* ===== SECCIÓN "¿QUERÉS ADOPTAR?" (centrada con burbujas alrededor) ===== */
+.adoptar-cta {
+  background: white;
+  padding: 1rem 2rem 6rem;
+}
+
+.adoptar-cta-contenido {
+  position: relative;
+  max-width: 940px;
+  min-height: 380px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-/* "Mercado Pago" y "PETHOME.MP" en líneas separadas, uno abajo del otro */
-.dato-textos {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.adoptar-cta-caja {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+  text-align: center;
+  padding: 3.5rem 3rem;
+  background: rgba(88, 167, 135, 0.14);
+  border-radius: 48% 52% 50% 50% / 42% 42% 58% 58%;
 }
 
-.dato-textos small {
-  font-size: 0.75rem;
-  opacity: 0.9;
+.adoptar-cta-caja p {
+  margin: 0 0 1.75rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.85;
 }
 
-.dato-textos strong {
-  font-size: 1rem;
-}
+.adoptar-cta .burbuja--c1 { top: 4%;     left: 12%; }
+.adoptar-cta .burbuja--c2 { top: 0;      left: 48%; }
+.adoptar-cta .burbuja--c3 { top: 10%;    right: 10%; }
+.adoptar-cta .burbuja--c4 { bottom: 12%; left: 4%; }
+.adoptar-cta .burbuja--c5 { bottom: 6%;  right: 4%; }
 
-.btn-copiar {
-  background: #1b4332;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.9rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-ancho {
-  width: 100%;
-  margin-top: 1rem;
-}
-
-/* ===== FOOTER (franja verde de abajo con marca, links y contacto) ===== */
+/* ===== FOOTER (claro y con borde superior curvo, como la referencia) ===== */
 .footer {
-  background: #14532d;
-  color: white;
-  padding: 3rem 4rem;
+  background: #E2F2E8;
+  color: var(--verde-oscuro, #012312);
+  padding: 4.5rem 2rem 2rem;
+  border-top-left-radius: 50% 70px;
+  border-top-right-radius: 50% 70px;
+}
+
+.footer-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 2rem;
 }
 
+.footer-logo {
+  margin: 0 0 0.5rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.9rem;
+  font-weight: 800;
+}
+
+.footer-marca p:not(.footer-logo) {
+  margin: 0;
+  max-width: 36ch;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
 .footer-titulo {
   display: block;
-  color: #f4941e;
-  font-weight: 700;
   margin-bottom: 0.5rem;
-  font-size: 0.85rem;
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-weight: 700;
+  color: var(--verde-menta, #58A787);
 }
 
 .footer-col {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 0.4rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
-.footer-col a {
-  color: white;
+/* Botones con pinta de link (antes eran <a> sin href, que no se podían usar con teclado) */
+.footer-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
   cursor: pointer;
-  text-decoration: none;
+  text-align: left;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--naranja-oscuro, #E89A1C);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.footer-dato-destacado {
+  font-family: var(--fuente-titulos, 'Baloo 2', sans-serif);
+  font-size: 1.3rem;
+  font-weight: 800;
 }
 
 .footer-copy {
-  grid-column: 1 / -1;
-  border-top: 1px solid rgba(255,255,255,0.2);
+  max-width: 1200px;
+  margin: 2.5rem auto 0;
+  border-top: 1px solid rgba(1, 35, 18, 0.12);
   padding-top: 1rem;
-  font-size: 0.8rem;
-  opacity: 0.8;
+  font-size: 0.85rem;
+  opacity: 0.75;
 }
 
-/* ===== RESPONSIVE: pantallas chicas (celular/tablet) ===== */
-@media (max-width: 768px) {
-  .hero, .historia, .pasos, .ayuda-adoptar, .footer {
-    padding: 2rem 1.5rem;
+/* ===== RESPONSIVE: tablet ===== */
+@media (max-width: 900px) {
+  /* Todas las secciones de dos columnas pasan a una, centradas */
+  .hero-contenido,
+  .seccion-dos-columnas {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    min-height: auto;
+    text-align: center;
   }
-  .pasos-grid, .ayuda-adoptar, .footer {
+
+  .hero-descripcion {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-botones,
+  .acciones {
+    justify-content: center;
+  }
+
+  .pasos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-contenido {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-marca {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ===== RESPONSIVE: celular ===== */
+@media (max-width: 768px) {
+  .hero {
+    padding: 3rem 1.5rem 3.5rem;
+  }
+
+  .hero-botones {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .hero-visual {
+    min-height: 420px;
+  }
+
+  .hero-mancha {
+    width: 340px;
+    height: 330px;
+  }
+
+  .hero-mancha-menta {
+    width: 100px;
+    height: 95px;
+  }
+
+  .hero-card {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .hero-foto {
+    height: 330px;
+  }
+
+  .hero-info {
+    text-align: left;
+  }
+
+  .burbuja {
+    width: 46px;
+    height: 46px;
+    font-size: 1.25rem;
+  }
+
+  .burbuja--chica {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  /* Menos patitas y más chicas */
+  .patita--1, .patita--2, .patita--3, .patita--5,
+  .hero .patita--b1, .hero .patita--b2, .hero .patita--b3,
+  .foto-mancha .patita--m1, .foto-mancha .patita--m2 {
+    width: 28px;
+    height: 28px;
+  }
+
+  .patita--4 {
+    display: none;
+  }
+
+  .destacados-lista {
+    justify-content: flex-start;
+    max-width: 320px;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .historia,
+  .ayuda,
+  .pasos {
+    padding: 4rem 1.5rem;
+  }
+
+  .foto-mancha {
+    min-height: 340px;
+  }
+
+  .foto-mancha .mancha {
+    width: 320px;
+    height: 300px;
+  }
+
+  .foto-mancha-principal {
+    width: 240px;
+    height: 240px;
+  }
+
+  .foto-mini {
+    width: 72px;
+    height: 72px;
+  }
+
+  .banner-jornada {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .adoptar-cta {
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  .adoptar-cta-caja {
+    padding: 3rem 2rem;
+  }
+
+  .adoptar-cta .burbuja--c2,
+  .adoptar-cta .burbuja--c4 {
+    display: none;
+  }
+
+  .footer {
+    padding: 3.5rem 1.5rem 1.5rem;
+    border-top-left-radius: 50% 40px;
+    border-top-right-radius: 50% 40px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-mancha {
+    width: 290px;
+    height: 290px;
+  }
+
+  .hero .burbuja--3 {
+    display: none;
+  }
+
+  .pasos-grid {
     grid-template-columns: 1fr;
   }
-  /* Overlay con datos del animal, tapa la foto al pasar el mouse por la card */
-  .hero-datos {
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin: 0;
-    text-transform: capitalize;
-    opacity: 0.95;
+
+  .paso-card {
+    padding: 1.5rem 1rem;
+  }
+
+  /* En celular no hay hover: la mancha blanca se ve siempre, más suave */
+  .paso-card::before {
+    opacity: 0.7;
+    transform: none;
+    border-radius: 24px;
+  }
+
+  .adoptar-cta-caja {
+    border-radius: 32px;
+  }
+
+  .footer-contenido {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Si el usuario pidió reducir animaciones, todo queda quieto */
+@media (prefers-reduced-motion: reduce) {
+  .hero-card {
+    animation: none;
+  }
+
+  .btn,
+  .btn-ver-perfil,
+  .paso-card::before {
+    transition: none;
   }
 }

@@ -65,3 +65,38 @@
 .content {
   padding: 8px 24px 32px;
 }
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .admin-titulo {
+    padding: 24px 16px 4px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  /* Pestañas de sección: fila con scroll lateral */
+  .nav {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .nav-item {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .content {
+    padding: 8px 16px 24px;
+  }
+}
