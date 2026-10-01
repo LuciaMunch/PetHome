@@ -25,6 +25,7 @@ export class AdminSanitario implements OnInit {
   cargandoAnimales = signal(true);
   cargandoHistorial = signal(false);
   mensajeError = signal('');
+  guardadoExitoso = signal(false);
 
   form;
 
@@ -83,7 +84,18 @@ export class AdminSanitario implements OnInit {
         if (this.animalSeleccionadoId === valores.animalId) {
           this.seleccionarAnimal(valores.animalId!);
         }
-        this.form.patchValue({ observaciones: '' });
+
+        // Limpia todo el formulario, dejando la fecha en hoy de nuevo
+        this.form.reset({
+          animalId: null,
+          tipo: 'VACUNA',
+          fecha: new Date().toISOString().substring(0, 10),
+          observaciones: '',
+        });
+
+        // Muestra el mensaje de éxito por 3 segundos
+        this.guardadoExitoso.set(true);
+        setTimeout(() => this.guardadoExitoso.set(false), 3000);
       },
       error: () => this.mensajeError.set('No se pudo registrar el evento sanitario.')
     });

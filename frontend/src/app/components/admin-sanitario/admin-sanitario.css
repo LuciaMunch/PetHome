@@ -208,3 +208,11 @@ input, select, textarea {
     content: none;
   }
 }
+.exito {
+  background: #d1f5d3;
+  color: #1b5e20;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}

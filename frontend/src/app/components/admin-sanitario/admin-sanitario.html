@@ -5,6 +5,17 @@
   <p class="error">{{ mensajeError() }}</p>
   }
 
+    @if (mensajeError()) {
+    <p class="error">{{ mensajeError() }}</p>
+    }
+
+    @if (guardadoExitoso()) {
+    <p class="exito">✅ Evento sanitario guardado con éxito</p>
+    }
+
+    <!-- HU-13: Registro de Evento Sanitario -->
+    <div class="card-form">
+
   <!-- HU-13: Registro de Evento Sanitario -->
   <div class="card-form">
     <h3>📌 Registrar nuevo evento</h3>
