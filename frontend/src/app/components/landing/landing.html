@@ -1,129 +1,301 @@
 <div class="topbar">Pet Home familias que se eligen para siempre.</div>
 
+<!-- ===================== HERO ===================== -->
 <section class="hero">
-  <div class="hero-texto">
-    <h1><span class="verde">Pet</span> <span class="naranja">Home</span></h1>
-    <h3 class="subtitulo">Una mascota esperándote. Siempre</h3>
-    <div class="hero-botones">
-      <button class="btn-verde" (click)="irACatalogo()">VER MASCOTAS</button>
-      <button class="btn-outline" (click)="scrollAPasos()">¿COMO ADOPTAR?</button>
-    </div>
+  <!-- Patitas decorativas del fondo -->
+  <div class="patitas-fondo" aria-hidden="true">
+    <span class="patita patita--1"></span>
+    <span class="patita patita--2"></span>
+    <span class="patita patita--3"></span>
+    <span class="patita patita--4"></span>
+    <span class="patita patita--5"></span>
+    <span class="patita patita--6"></span>
+    <span class="patita patita--7"></span>
+    <span class="patita patita--8"></span>
+    <span class="patita patita--9"></span>
+    <span class="patita patita--10"></span>
+    <span class="patita patita--11"></span>
+    <span class="patita patita--12"></span>
+    <span class="patita patita--13"></span>
+    <span class="patita patita--14"></span>
+    <span class="patita patita--15"></span>
+    <span class="patita patita--16"></span>
+    <span class="patita patita--17"></span>
+    <span class="patita patita--18"></span>
+    <span class="patita patita--19"></span>
+    <span class="patita patita--20"></span>
+    <span class="patita patita--21"></span>
+    <span class="patita patita--22"></span>
+    <span class="patita patita--23"></span>
+    <span class="patita patita--24"></span>
+    <span class="patita patita--25"></span>
+    <span class="patita patita--26"></span>
+    <span class="patita patita--27"></span>
+    <span class="patita patita--28"></span>
+    <span class="patita patita--29"></span>
+    <span class="patita patita--30"></span>
   </div>
 
-  <div class="hero-card">
-    @if (animalActual) {
-    <img [src]="animalActual.fotoUrl" [alt]="animalActual.nombre" class="hero-foto" />
-    <div class="hero-info">
-      <span class="hero-nombre">{{ animalActual.nombre }}</span>
-      <p class="hero-datos">{{ animalActual.edad }} años · {{ animalActual.sexo }} · {{ animalActual.tamanio }}</p>
-      <button class="btn-ver-perfil" (click)="verPerfil()">Ver perfil →</button>
+  <div class="hero-contenido">
+    <div class="hero-texto">
+      <p class="hero-marca">🐾 Pet Home</p>
+      <h1 class="hero-titulo">Cuidamos a cada peludo como si fuera nuestro.</h1>
+      <p class="hero-descripcion">
+        Perros y gatos rescatados esperan una familia que los elija para siempre.
+        Conocelos, completá el formulario y empezá una nueva historia juntos.
+      </p>
+      <div class="hero-botones">
+        <button type="button" class="btn btn--principal" (click)="irACatalogo()">Ver mascotas</button>
+        <button type="button" class="btn btn--secundario" (click)="scrollAPasos()">¿Cómo adoptar?</button>
+      </div>
     </div>
-    } @else if (!cargandoAnimal) {
-    <div class="hero-foto hero-foto--vacia">🐾</div>
-    }
+
+    <div class="hero-visual">
+      <div class="mancha mancha--naranja hero-mancha" aria-hidden="true"></div>
+      <div class="hero-mancha-menta" aria-hidden="true"></div>
+      <span class="patita patita--sobre-naranja patita--b1" aria-hidden="true"></span>
+      <span class="patita patita--sobre-naranja patita--b2" aria-hidden="true"></span>
+      <span class="patita patita--sobre-naranja patita--b3" aria-hidden="true"></span>
+      <span class="patita patita--sobre-naranja patita--b4" aria-hidden="true"></span>
+      <span class="patita patita--sobre-naranja patita--b5" aria-hidden="true"></span>
+      <span class="patita patita--sobre-naranja patita--b6" aria-hidden="true"></span>
+      <span class="patita patita--sobre-naranja patita--b7" aria-hidden="true"></span>
+      <span class="patita patita--sobre-naranja patita--b8" aria-hidden="true"></span>
+      <span class="burbuja burbuja--1" aria-hidden="true">🐶</span>
+      <span class="burbuja burbuja--2" aria-hidden="true">🐱</span>
+      <span class="burbuja burbuja--3 burbuja--chica" aria-hidden="true">🐾</span>
+
+      <div class="hero-card">
+        @if (animalActual) {
+        <img [src]="animalActual.fotoUrl" [alt]="animalActual.nombre" class="hero-foto" />
+        <div class="hero-info">
+          <span class="hero-nombre">{{ animalActual.nombre }}</span>
+          <p class="hero-datos">{{ animalActual.edad }} años · {{ animalActual.sexo }} · {{ animalActual.tamanio }}</p>
+          <button type="button" class="btn-ver-perfil" (click)="verPerfil()">Ver perfil</button>
+        </div>
+        } @else if (!cargandoAnimal) {
+        <div class="hero-foto hero-foto--vacia">🐾</div>
+        }
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- ===================== FRANJA DE DESTACADOS ===================== -->
+<section class="destacados" aria-label="Por qué adoptar en Pet Home">
+  <div class="destacados-lista">
+    <div class="destacado">
+      <span class="destacado-icono" aria-hidden="true">💚</span>
+      <span>Adopción sin costo</span>
+    </div>
+    <div class="destacado">
+      <span class="destacado-icono" aria-hidden="true">📝</span>
+      <span>Sin papelerío</span>
+    </div>
+    <div class="destacado">
+      <span class="destacado-icono" aria-hidden="true">📅</span>
+      <span>Jornadas todos los sábados</span>
+    </div>
+    <div class="destacado">
+      <span class="destacado-icono" aria-hidden="true">🐶</span>
+      <span>Más de 30 animales por jornada</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NUESTRA HISTORIA ===================== -->
 <section class="historia" id="historia">
-  <div class="historia-texto">
-    <h2>NUESTRA HISTORIA</h2>
-    <p>
-      Pet Home surge de la necesidad de modernizar y facilitar el trabajo de los refugios
-      y agrupaciones de rescate animal. Sabíamos que el mayor desafío no era solo rescatar,
-      sino conectar eficientemente a cada animal con la familia adecuada. Por eso creamos
-      una plataforma integral que ayuda a las entidades a dar visibilidad a sus animales en
-      adopción y a automatizar el proceso de selección de adoptantes. En Pet Home combinamos
-      tecnología e impacto social para que los refugios ahorren tiempo y más rescatados
-      tengan una segunda oportunidad.
-    </p>
+  <div class="patitas-fondo" aria-hidden="true">
+    <span class="patita patita--1"></span>
+    <span class="patita patita--2"></span>
+    <span class="patita patita--3"></span>
+    <span class="patita patita--6"></span>
+    <span class="patita patita--7"></span>
+    <span class="patita patita--9"></span>
+    <span class="patita patita--11"></span>
+    <span class="patita patita--13"></span>
+    <span class="patita patita--16"></span>
+    <span class="patita patita--19"></span>
+    <span class="patita patita--22"></span>
+    <span class="patita patita--25"></span>
+    <span class="patita patita--28"></span>
   </div>
-  <div class="historia-collage">
-    <img src="/historia-1.jpg" alt="Nuestra historia 1" class="collage-item" />
-    <img src="/historia-3.png" alt="Nuestra historia 2" class="collage-item" />
-    <img src="/historia-4.png" alt="Nuestra historia 3" class="collage-item" />
-    <img src="/historia-2.jpg" alt="Nuestra historia 4" class="collage-item" />
+
+  <div class="seccion-dos-columnas">
+    <div class="historia-texto">
+      <p class="seccion-etiqueta">Nuestra historia</p>
+      <h2 class="seccion-titulo">Cada rescatado merece una segunda oportunidad.</h2>
+      <p>
+        Pet Home surge de la necesidad de modernizar y facilitar el trabajo de los refugios
+        y agrupaciones de rescate animal. Sabíamos que el mayor desafío no era solo rescatar,
+        sino conectar eficientemente a cada animal con la familia adecuada. Por eso creamos
+        una plataforma integral que ayuda a las entidades a dar visibilidad a sus animales en
+        adopción y a automatizar el proceso de selección de adoptantes.
+      </p>
+      <p>
+        En Pet Home combinamos tecnología e impacto social para que los refugios ahorren tiempo
+        y más rescatados tengan una segunda oportunidad.
+      </p>
+      <div class="acciones">
+        <button type="button" class="btn btn--principal" (click)="irACatalogo()">Ver mascotas</button>
+        <button type="button" class="btn-texto" (click)="scrollAPasos()">¿Cómo adoptar?</button>
+      </div>
+    </div>
+
+    <div class="foto-mancha">
+      <div class="mancha mancha--menta" aria-hidden="true"></div>
+      <span class="patita patita--sobre-menta patita--m1" aria-hidden="true"></span>
+      <span class="patita patita--sobre-menta patita--m2" aria-hidden="true"></span>
+      <img src="/historia-1.jpg" alt="Nuestra historia 1" class="foto-mancha-principal" />
+      <img src="/historia-3.png" alt="Nuestra historia 2" class="foto-mini foto-mini--1" />
+      <img src="/historia-4.png" alt="Nuestra historia 3" class="foto-mini foto-mini--2" />
+    </div>
   </div>
 </section>
 
+<!-- ===================== PASOS PARA ADOPTAR ===================== -->
 <section class="pasos" id="pasos">
-  <div class="pasos-header">
-    <div>
-      <h2>PASOS A SEGUIR PARA <span class="verde">ADOPTAR</span></h2>
-      <p>Sin papelerío, sin costo. Completá el formulario, conocerlo y si hacen click — se va con vos.</p>
+  <div class="patitas-fondo" aria-hidden="true">
+    <span class="patita patita--1"></span>
+    <span class="patita patita--4"></span>
+    <span class="patita patita--5"></span>
+    <span class="patita patita--8"></span>
+    <span class="patita patita--10"></span>
+    <span class="patita patita--12"></span>
+    <span class="patita patita--15"></span>
+    <span class="patita patita--17"></span>
+    <span class="patita patita--21"></span>
+    <span class="patita patita--24"></span>
+    <span class="patita patita--27"></span>
+    <span class="patita patita--30"></span>
+  </div>
+
+  <div class="pasos-contenido">
+    <div class="pasos-header">
+      <p class="seccion-etiqueta">Cómo adoptar</p>
+      <h2 class="seccion-titulo">Pasos para adoptar</h2>
+      <p class="pasos-intro">
+        Sin papelerío, sin costo. Completá el formulario, conocelo y, si hacen click, se va con vos.
+      </p>
+    </div>
+
+    <div class="pasos-grid">
+      <div class="paso-card">
+        <span class="paso-numero">01</span>
+        <p class="paso-titulo">Conocé a tu amigo</p>
+        <p class="paso-descripcion">Mirá el catálogo y descubrí a los peludos que están esperando un hogar.</p>
+      </div>
+      <div class="paso-card">
+        <span class="paso-numero">02</span>
+        <p class="paso-titulo">Completá el formulario</p>
+        <p class="paso-descripcion">Contanos sobre vos y tu hogar para asegurarnos de encontrar la mejor familia para cada animal.</p>
+      </div>
+      <div class="paso-card">
+        <span class="paso-numero">03</span>
+        <p class="paso-titulo">Te contactamos</p>
+        <p class="paso-descripcion">Llegó el momento, te contactamos para que conozcas a tu nuevo amigo.</p>
+      </div>
+      <div class="paso-card">
+        <span class="paso-numero">04</span>
+        <p class="paso-titulo">¡A casa!</p>
+        <p class="paso-descripcion">Si todo salió bien, se va con vos, a empezar una nueva vida juntos.</p>
+      </div>
     </div>
 
     <div class="banner-jornada">
-      <span class="banner-icono">📅</span>
+      <span class="banner-icono" aria-hidden="true">📅</span>
       <div>
-        <p class="banner-titulo">Jornada de adopción — todos los sábados</p>
-        <p class="banner-detalle">Plaza Centenario · 15 a 18hs · +30 animales · Entrada libre y gratuita</p>
+        <p class="banner-titulo">Jornada de adopción: todos los sábados</p>
+        <p class="banner-detalle">Plaza Centenario · 15 a 18 hs · más de 30 animales · Entrada libre y gratuita</p>
       </div>
-    </div>
-  </div>
-
-  <div class="pasos-grid">
-    <div class="paso-card">
-      <span class="paso-numero">01</span>
-      <p class="paso-titulo">CONOCÉ A TU AMIGO</p>
-      <p class="paso-descripcion">Mirá el catálogo y descubrí a los peludos que están esperando un hogar.</p>
-    </div>
-    <div class="paso-card">
-      <span class="paso-numero">02</span>
-      <p class="paso-titulo">COMPLETÁ EL FORMULARIO</p>
-      <p class="paso-descripcion">Contanos sobre vos y tu hogar para asegurarnos de encontrar la mejor familia para cada animal.</p>
-    </div>
-    <div class="paso-card">
-      <span class="paso-numero">03</span>
-      <p class="paso-titulo">TE CONTACTAMOS</p>
-      <p class="paso-descripcion">Llegó el momento, te contactamos para que conozcas a tu nuevo amigo.</p>
-    </div>
-    <div class="paso-card">
-      <span class="paso-numero">04</span>
-      <p class="paso-titulo">¡A CASA!</p>
-      <p class="paso-descripcion">Si todo salió bien, se va con vos, a empezar una nueva vida juntos.</p>
     </div>
   </div>
 </section>
 
-<section class="ayuda-adoptar">
-  <div class="card-ayuda">
-    <h3>¿QUERÉS AYUDAR?</h3>
-    <p>Tu donación cubre pensionados, honorarios veterinarios y el cuidado de los animales que rescatamos. ¡Cada peso importa!</p>
-    <span class="label-transferencias">TRANSFERENCIAS DIRECTAS</span>
-    <div class="dato-transferencia">
-      <div class="dato-textos">
-        <small>Mercado Pago</small>
-        <strong>PETHOME.MP</strong>
-      </div>
-      <button class="btn-copiar" (click)="copiarAlias()">
-        {{ aliasCopiado ? '¡Copiado!' : 'COPIAR' }}
-      </button>
-    </div>
+<!-- ===================== ¿QUERÉS AYUDAR? ===================== -->
+<section class="ayuda" id="ayuda">
+  <div class="patitas-fondo" aria-hidden="true">
+    <span class="patita patita--2"></span>
+    <span class="patita patita--4"></span>
+    <span class="patita patita--6"></span>
+    <span class="patita patita--9"></span>
+    <span class="patita patita--12"></span>
+    <span class="patita patita--14"></span>
+    <span class="patita patita--18"></span>
+    <span class="patita patita--20"></span>
+    <span class="patita patita--23"></span>
+    <span class="patita patita--26"></span>
+    <span class="patita patita--29"></span>
   </div>
 
-  <div class="card-adoptar">
-    <h3>¿QUERÉS ADOPTAR?</h3>
-    <p>Dale a este peludo la oportunidad de tener la familia que se merece. Es gratis, rápido y sin compromiso.</p>
-    <button class="btn-verde btn-ancho" (click)="irACatalogo()">VER MASCOTAS</button>
+  <div class="seccion-dos-columnas">
+    <div class="foto-mancha">
+      <div class="mancha mancha--naranja" aria-hidden="true"></div>
+      <span class="patita patita--sobre-naranja patita--m1" aria-hidden="true"></span>
+      <span class="patita patita--sobre-naranja patita--m2" aria-hidden="true"></span>
+      <img src="/historia-2.jpg" alt="Nuestra historia 4" class="foto-mancha-principal" />
+    </div>
+
+    <div class="ayuda-texto">
+      <p class="seccion-etiqueta">Donaciones</p>
+      <h2 class="seccion-titulo">¿Querés ayudar?</h2>
+      <p>
+        Tu donación cubre pensionados, honorarios veterinarios y el cuidado de los animales
+        que rescatamos. ¡Cada peso importa!
+      </p>
+      <span class="label-transferencias">Transferencias directas</span>
+      <div class="dato-transferencia">
+        <div class="dato-textos">
+          <small>Mercado Pago</small>
+          <strong>PETHOME.MP</strong>
+        </div>
+        <button type="button" class="btn btn--oscuro" (click)="copiarAlias()">
+          {{ aliasCopiado ? '¡Copiado!' : 'Copiar alias' }}
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- ===================== ¿QUERÉS ADOPTAR? ===================== -->
+<section class="adoptar-cta">
+  <div class="adoptar-cta-contenido">
+    <span class="burbuja burbuja--c1" aria-hidden="true">🐶</span>
+    <span class="burbuja burbuja--c2 burbuja--chica" aria-hidden="true">🐾</span>
+    <span class="burbuja burbuja--c3" aria-hidden="true">🐱</span>
+    <span class="burbuja burbuja--c4 burbuja--chica" aria-hidden="true">💚</span>
+    <span class="burbuja burbuja--c5" aria-hidden="true">🐕</span>
+
+    <div class="adoptar-cta-caja">
+      <h2 class="seccion-titulo">¿Querés adoptar?</h2>
+      <p>
+        Dale a un peludo la oportunidad de tener la familia que se merece.
+        Es gratis, rápido y sin compromiso.
+      </p>
+      <button type="button" class="btn btn--principal" (click)="irACatalogo()">Ver mascotas</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
 <footer class="footer">
-  <div class="footer-marca">
-    <h3><span class="blanco">Pet</span> <span class="naranja">Home</span></h3>
-    <p>Familias que se eligen para siempre. Rescatamos, sanamos y unimos corazones.</p>
-  </div>
-  <div class="footer-col">
-    <span class="footer-titulo">ORGANIZACIÓN</span>
-    <a (click)="irACatalogo()">Adoptar</a>
-    <a (click)="scrollAPasos()">Cómo Ayudar</a>
-    <a (click)="scrollAHistoria()">Nuestra Historia</a>
-  </div>
-  <div class="footer-col">
-    <span class="footer-titulo">CONTACTO</span>
-    <span>info&#64;pethome.org</span>
-    <span>+54 9 11 5555-1234</span>
-    <span>Villa María, Argentina</span>
+  <div class="footer-contenido">
+    <div class="footer-marca">
+      <p class="footer-logo"><span class="verde">Pet</span> <span class="naranja">Home</span></p>
+      <p>Familias que se eligen para siempre. Rescatamos, sanamos y unimos corazones.</p>
+    </div>
+    <div class="footer-col">
+      <span class="footer-titulo">Organización</span>
+      <button type="button" class="footer-link" (click)="irACatalogo()">Adoptar</button>
+      <button type="button" class="footer-link" (click)="scrollAPasos()">Cómo adoptar</button>
+      <button type="button" class="footer-link" (click)="scrollAHistoria()">Nuestra historia</button>
+    </div>
+    <div class="footer-col">
+      <span class="footer-titulo">Contacto</span>
+      <span class="footer-dato-destacado">+54 9 11 5555-1234</span>
+      <span>info&#64;pethome.org</span>
+      <span>Villa María, Argentina</span>
+    </div>
   </div>
   <p class="footer-copy">© 2026 Pet Home. Todos los derechos reservados.</p>
 </footer>
