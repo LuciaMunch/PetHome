@@ -26,4 +26,18 @@ public class SolicitudAdopcionResponse {
     private Long usuarioId;
     private String usuarioNombre;
     private String usuarioEmail;
+    private String usuarioNombreCompleto;
+    private String usuarioTelefono;
+    private String usuarioDireccion;
+    private String usuarioCiudad;
+    private String usuarioProvincia;
+
+    // Preguntas adicionales del formulario
+    private Integer cantidadOtrasMascotas;
+    private String cualesOtrasMascotas;
+    private String cualesMascotasActuales;
+    private Boolean tieneTrabajo;
+    private String cualTrabajo;
+    private Boolean viajaSeguido;
+    private String quienCuidaEnViajes;
 }

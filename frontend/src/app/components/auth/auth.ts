@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -19,19 +19,20 @@ export class Auth {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
-        this.form = this.fb.group({
-          nombre_usuario: ['', Validators.required],
-          contraseña: ['', Validators.required],
-          email: ['', this.modo === 'registro' ? Validators.required : Validators.nullValidator],
-          nombre_completo: ['', this.modo === 'registro' ? Validators.required : Validators.nullValidator],
-          direccion: [''],
-          ciudad: [''],
-          provincia: [''],
-          telefono: [''],
-          edad: [null]
-        });
+    this.form = this.fb.group({
+      nombre_usuario: ['', Validators.required],
+      contraseña: ['', Validators.required],
+      email: ['', this.modo === 'registro' ? Validators.required : Validators.nullValidator],
+      nombre_completo: ['', this.modo === 'registro' ? Validators.required : Validators.nullValidator],
+      direccion: [''],
+      ciudad: [''],
+      provincia: [''],
+      telefono: [''],
+      edad: [null]
+    });
   }
 
   cambiarModo(): void {
@@ -46,20 +47,20 @@ export class Auth {
 
     const { nombre_usuario, contraseña, email } = this.form.value;
 
-        const request = this.modo === 'login'
-          ? this.authService.login(nombre_usuario, contraseña)
-          : this.authService.register({
-              nombre_usuario,
-              contraseña,
-              email,
-              rol: 'ADOPTANTE',
-              nombre_completo: this.form.value.nombre_completo,
-              direccion: this.form.value.direccion,
-              ciudad: this.form.value.ciudad,
-              provincia: this.form.value.provincia,
-              telefono: this.form.value.telefono,
-              edad: this.form.value.edad ? Number(this.form.value.edad) : null,
-            });
+    const request = this.modo === 'login'
+      ? this.authService.login(nombre_usuario, contraseña)
+      : this.authService.register({
+        nombre_usuario,
+        contraseña,
+        email,
+        rol: 'ADOPTANTE',
+        nombre_completo: this.form.value.nombre_completo,
+        direccion: this.form.value.direccion,
+        ciudad: this.form.value.ciudad,
+        provincia: this.form.value.provincia,
+        telefono: this.form.value.telefono,
+        edad: this.form.value.edad ? Number(this.form.value.edad) : null,
+      });
 
     request.subscribe({
       next: (res) => {
@@ -68,7 +69,8 @@ export class Auth {
       },
       error: (err) => {
         this.loading = false;
-        this.error = err.error || 'Error en el servidor';
+        this.error = err.error?.detail || 'Error en el servidor';
+        this.cdr.detectChanges();
       }
     });
   }

@@ -1,6 +1,7 @@
 <div class="overlay" (click)="cancelar()">
   <div class="modal" (click)="$event.stopPropagation()">
 
+    @if (!enviadoConExito) {
     <h2>🐾 Formulario de Adopción</h2>
     <p class="subtitulo">Contanos un poco sobre tu hogar para evaluar la adopción.</p>
 
@@ -21,19 +22,66 @@
       <label>Integrantes del hogar</label>
       <input type="number" formControlName="integrantesHogar" min="1" />
 
+      <!-- ¿Tenés otras mascotas? -->
       <label>¿Tenés otras mascotas?</label>
       <select formControlName="otrasMascotas">
         <option [ngValue]="true">Sí</option>
         <option [ngValue]="false">No</option>
       </select>
 
+      @if (form.value.otrasMascotas) {
+      <div class="campo-condicional">
+        <label>¿Cuántas?</label>
+        <input type="number" formControlName="cantidadOtrasMascotas" min="1" />
+
+        <label>¿Cuáles? (especie, por ejemplo: 2 perros y 1 gato)</label>
+        <input type="text" formControlName="cualesOtrasMascotas" />
+      </div>
+      }
+
+      <!-- Experiencia previa -->
       <label>¿Tenés experiencia previa con mascotas?</label>
       <select formControlName="experienciaPrevia">
         <option [ngValue]="true">Sí</option>
         <option [ngValue]="false">No</option>
       </select>
 
-      <label>Contanos por qué querés adoptar (viajes, presupuesto, compromiso, etc.)</label>
+      @if (form.value.experienciaPrevia) {
+      <div class="campo-condicional">
+        <label>¿Qué tipo de mascotas tuviste?</label>
+        <input type="text" formControlName="cualesMascotasActuales" placeholder="Ej: tuve un perro durante 8 años" />
+      </div>
+      }
+
+      <!-- Trabajo -->
+      <label>¿Tenés trabajo actualmente?</label>
+      <select formControlName="tieneTrabajo">
+        <option [ngValue]="true">Sí</option>
+        <option [ngValue]="false">No</option>
+      </select>
+
+      @if (form.value.tieneTrabajo) {
+      <div class="campo-condicional">
+        <label>¿Cuál?</label>
+        <input type="text" formControlName="cualTrabajo" />
+      </div>
+      }
+
+      <!-- Viajes -->
+      <label>¿Viajás seguido?</label>
+      <select formControlName="viajaSeguido">
+        <option [ngValue]="true">Sí</option>
+        <option [ngValue]="false">No</option>
+      </select>
+
+      @if (form.value.viajaSeguido) {
+      <div class="campo-condicional">
+        <label>¿Tenés familiares o amigos que puedan cuidarlo en ese tiempo?</label>
+        <input type="text" formControlName="quienCuidaEnViajes" placeholder="Ej: mi hermana, un vecino..." />
+      </div>
+      }
+
+      <label>Contanos por qué querés adoptar (compromiso, expectativas, etc.)</label>
       <textarea formControlName="motivo" rows="4"></textarea>
 
       @if (mensajeError) {
@@ -48,5 +96,14 @@
       </div>
 
     </form>
+    } @else {
+    <div class="pantalla-exito">
+      <div class="icono-exito">✅</div>
+      <h2>¡Solicitud enviada con éxito!</h2>
+      <p>Tus datos fueron enviados correctamente. Pronto te llegará la respuesta de aceptación o rechazo a tu correo.</p>
+      <button type="button" class="btn-entendido" (click)="cerrarTodo()">Entendido</button>
+    </div>
+    }
+
   </div>
 </div>

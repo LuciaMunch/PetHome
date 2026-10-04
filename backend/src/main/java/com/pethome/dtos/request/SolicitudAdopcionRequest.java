@@ -21,9 +21,18 @@ public class SolicitudAdopcionRequest {
 
     @NotNull(message = "Debe indicar si tiene otras mascotas")
     private Boolean otrasMascotas;
+    private Integer cantidadOtrasMascotas;
+    private String cualesOtrasMascotas;
 
     @NotNull(message = "Debe indicar si tiene experiencia previa")
     private Boolean experienciaPrevia;
+    private String cualesMascotasActuales;
+
+    private Boolean tieneTrabajo;
+    private String cualTrabajo;
+
+    private Boolean viajaSeguido;
+    private String quienCuidaEnViajes;
 
     private String motivo;
 

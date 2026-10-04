@@ -15,6 +15,15 @@
   }
 
   @if (!cargando() && usuarios().length > 0) {
+  <div class="filtros-usuarios">
+    <input
+      type="text"
+      class="buscador"
+      placeholder="Buscar por nombre o email..."
+      [ngModel]="buscar()"
+      (ngModelChange)="buscar.set($event)">
+  </div>
+
   <div class="tabla-responsive">
     <table class="tabla-admin">
       <thead>
@@ -26,13 +35,15 @@
       </tr>
       </thead>
       <tbody>
-      @for (usuario of usuarios(); track usuario.id) {
+      @for (usuario of usuariosFiltrados(); track usuario.id) {
       <tr>
-        <td>{{ usuario.id }}</td>
-        <td>{{ usuario.nombreUsuario }}</td>
-        <td>{{ usuario.email }}</td>
-        <td><span class="badge-rol">{{ usuario.rol }}</span></td>
+        <td data-label="ID">{{ usuario.id }}</td>
+        <td data-label="Usuario">{{ usuario.nombreUsuario }}</td>
+        <td data-label="Email">{{ usuario.email }}</td>
+        <td data-label="Rol"><span class="badge-rol">{{ usuario.rol }}</span></td>
       </tr>
+      } @empty {
+      <tr><td colspan="4" class="vacio">No se encontraron usuarios con esa búsqueda.</td></tr>
       }
       </tbody>
     </table>

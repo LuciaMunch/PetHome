@@ -7,7 +7,14 @@ export interface SolicitudAdopcionRequest {
   tienePatio: boolean;
   integrantesHogar: number;
   otrasMascotas: boolean;
+  cantidadOtrasMascotas: number | null;
+  cualesOtrasMascotas: string;
   experienciaPrevia: boolean;
+  cualesMascotasActuales: string;
+  tieneTrabajo: boolean;
+  cualTrabajo: string;
+  viajaSeguido: boolean;
+  quienCuidaEnViajes: string;
   motivo: string;
   animalId: number;
 }
@@ -27,6 +34,18 @@ export interface SolicitudAdopcionResponse {
   usuarioId: number;
   usuarioNombre: string;
   usuarioEmail: string;
+  usuarioNombreCompleto: string;
+  usuarioTelefono: string;
+  usuarioDireccion: string;
+  usuarioCiudad: string;
+  usuarioProvincia: string;
+  cantidadOtrasMascotas: number | null;
+  cualesOtrasMascotas: string;
+  cualesMascotasActuales: string;
+  tieneTrabajo: boolean | null;
+  cualTrabajo: string;
+  viajaSeguido: boolean | null;
+  quienCuidaEnViajes: string;
 }
 
 interface PageResponse<T> {
@@ -62,4 +81,3 @@ export class SolicitudAdopcionService {
     return this.http.patch<void>(`${this.apiUrl}/${id}/rechazar`, {});
   }
 }
-

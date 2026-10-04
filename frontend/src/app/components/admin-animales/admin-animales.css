@@ -32,6 +32,68 @@
 }
 .btn-nuevo:hover { background: var(--naranja-oscuro); }
 
+/* Barra de búsqueda y filtros */
+.filtros-admin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.filtros-admin .buscador {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 16px;
+  border: 1.5px solid var(--borde);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--texto);
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+.filtros-admin select {
+  padding: 10px 40px 10px 16px;
+  border: 1.5px solid var(--borde);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--texto);
+  background: var(--blanco);
+  cursor: pointer;
+  line-height: 1.2;
+  box-sizing: border-box;
+  height: 40px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234B6358' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+.filtros-admin .buscador:focus,
+.filtros-admin select:focus {
+  outline: none;
+  border-color: var(--verde-menta);
+}
+.btn-limpiar {
+  padding: 10px 18px;
+  background: var(--blanco);
+  border: 1.5px solid var(--borde);
+  border-radius: 999px;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  color: var(--texto);
+  cursor: pointer;
+  transition: background-color 0.15s;
+  line-height: 1.2;
+  box-sizing: border-box;
+  height: 40px;
+}
+.btn-limpiar:hover {
+  background: var(--verde-clarito);
+}
+
 /* Tabla */
 .tabla {
   width: 100%;
@@ -170,4 +232,135 @@
   color: #B02A37;
   cursor: pointer;
   font-weight: 700;
+}
+
+/* Modal de confirmación de borrado */
+.modal-confirmacion {
+  max-width: 420px;
+}
+
+.modal-confirmacion p {
+  color: #555;
+  line-height: 1.5;
+}
+
+.btn-borrar-confirmar {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-borrar-confirmar:hover {
+  background: #bb2d3b;
+}
+
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .admin {
+    padding: 20px 16px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .btn-nuevo {
+    width: 100%;
+  }
+
+  /* Filtros apilados a ancho completo */
+  .filtros-admin {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filtros-admin .buscador,
+  .filtros-admin select,
+  .btn-limpiar {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Tabla → tarjetas apiladas */
+  .tabla,
+  .tabla tbody,
+  .tabla tr,
+  .tabla td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tabla thead {
+    display: none;
+  }
+
+  .tabla {
+    border: none;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .tabla tr {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .tabla td {
+    border-top: 1px solid var(--borde);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .tabla td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--texto-suave);
+  }
+
+  .acciones {
+    justify-content: flex-end;
+  }
+
+  /* Modal tipo bottom-sheet */
+  .modal-fondo {
+    align-items: flex-end;
+  }
+
+  .modal {
+    width: 100%;
+    max-width: none;
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+    padding: 24px 20px;
+  }
+
+  .campo-fila {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .modal-acciones {
+    flex-direction: column-reverse;
+  }
+
+  .modal-acciones .btn-cancelar,
+  .modal-acciones .btn-guardar {
+    width: 100%;
+  }
 }

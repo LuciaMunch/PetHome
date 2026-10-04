@@ -63,6 +63,25 @@
   gap: 6px;
 }
 
+/* Buscador */
+.filtros-solicitudes {
+  margin-bottom: 1rem;
+}
+.filtros-solicitudes .buscador {
+  width: 100%;
+  max-width: 340px;
+  padding: 10px 16px;
+  border: 1.5px solid var(--borde, #dcecee2);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.filtros-solicitudes .buscador:focus {
+  outline: none;
+  border-color: var(--verde-menta, #58A787);
+}
+
 /* Botón "Ver más" en la tabla */
 .btn-detalle {
   background: #495057;
@@ -196,4 +215,124 @@
   text-align: center;
   color: #888;
   padding: 2rem;
+}
+
+/* Cartel de confirmación (notificación al adoptante) */
+.conf-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+.conf-caja {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.conf-icono {
+  font-size: 44px;
+  margin-bottom: 8px;
+}
+.conf-caja p {
+  color: #333;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+}
+.conf-btn {
+  background: #198754;
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.conf-btn:hover { background: #157347; }
+/* ===== RESPONSIVE: mobile ===== */
+@media (max-width: 768px) {
+  .admin-container {
+    margin: 1rem auto;
+  }
+
+  .filtros-solicitudes .buscador {
+    max-width: 100%;
+  }
+
+  /* Tabla → tarjetas apiladas */
+  .tabla-responsive {
+    overflow: visible;
+  }
+
+  .tabla-admin,
+  .tabla-admin tbody,
+  .tabla-admin tr,
+  .tabla-admin td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tabla-admin thead {
+    display: none;
+  }
+
+  .tabla-admin {
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .tabla-admin tr {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .tabla-admin td {
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .tabla-admin td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #666;
+  }
+
+  /* Botón "Ver más" ocupa su propia fila, alineado a la derecha */
+  .tabla-admin td:last-child {
+    justify-content: flex-end;
+  }
+  .tabla-admin td:last-child::before {
+    content: none;
+  }
+
+  .sub-dato {
+    margin-left: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  /* Modal de detalle: más margen al overlay por si hace scroll */
+  .acciones-modal {
+    flex-direction: column;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AnimalService } from '../../services/animal.service';
@@ -25,6 +25,27 @@ export class AdminAnimales implements OnInit {
 
   animales = signal<Animal[]>([]);
 
+  // Filtros de búsqueda
+  buscarNombre = signal('');
+  filtroEspecie = signal('');
+  filtroSexo = signal('');
+  filtroEstado = signal('');
+
+  // Lista filtrada: se recalcula sola cuando cambia la lista o algún filtro
+  animalesFiltrados = computed(() => {
+    const nombre = this.buscarNombre().toLowerCase().trim();
+    const especie = this.filtroEspecie();
+    const sexo = this.filtroSexo();
+    const estado = this.filtroEstado();
+
+    return this.animales().filter(a =>
+      (!nombre || a.nombre.toLowerCase().includes(nombre)) &&
+      (!especie || a.especie === especie) &&
+      (!sexo || a.sexo === sexo) &&
+      (!estado || a.estado === estado)
+    );
+  });
+
   // Datos de ejemplo (plan B, si el backend no responde)
   private ejemplo: Animal[] = [
     { id: 1, nombre: 'Luna',  especie: 'PERRO', sexo: 'HEMBRA', tamanio: 'MEDIANO',  edad: 2, descripcion: 'Le encanta jugar en el patio', estado: 'DISPONIBLE' },
@@ -36,6 +57,10 @@ export class AdminAnimales implements OnInit {
   animalActual: Animal = this.animalVacio();
   fotosSeleccionadas = signal<string[]>([]);
   private archivoFoto: File | null = null;
+
+  // Confirmación de borrado (reemplaza al confirm() nativo del navegador)
+  mostrarConfirmacionBorrar = signal(false);
+  animalABorrar: Animal | null = null;
 
   constructor(private animalService: AnimalService) {}
 
@@ -49,6 +74,13 @@ export class AdminAnimales implements OnInit {
       next: (data) => this.animales.set(data),
       error: () => this.animales.set([...this.ejemplo])
     });
+  }
+
+  limpiarFiltros(): void {
+    this.buscarNombre.set('');
+    this.filtroEspecie.set('');
+    this.filtroSexo.set('');
+    this.filtroEstado.set('');
   }
 
   private animalVacio(): Animal {
@@ -78,8 +110,8 @@ export class AdminAnimales implements OnInit {
           // Si hay una foto seleccionada, la subimos al animal recién creado
           if (this.archivoFoto) {
             this.animalService.subirFoto(creado.id, this.archivoFoto).subscribe({
-              next: () => console.log('Foto subida'),
-              error: () => console.log('No se pudo subir la foto (login pendiente)')
+              next: () => { console.log('Foto subida'); this.cargarAnimales(); },
+              error: () => console.log('No se pudo subir la foto')
             });
           }
           this.cerrarFormulario();
@@ -95,6 +127,13 @@ export class AdminAnimales implements OnInit {
       this.animalService.actualizar(this.animalActual.id, this.animalActual).subscribe({
         next: (actualizado) => {
           this.animales.update(lista => lista.map(a => a.id === actualizado.id ? actualizado : a));
+          // Si hay una foto seleccionada, la subimos al animal editado
+          if (this.archivoFoto) {
+            this.animalService.subirFoto(actualizado.id, this.archivoFoto).subscribe({
+              next: () => { console.log('Foto subida'); this.cargarAnimales(); },
+              error: () => console.log('No se pudo subir la foto')
+            });
+          }
           this.cerrarFormulario();
         },
         error: () => {
@@ -105,12 +144,29 @@ export class AdminAnimales implements OnInit {
     }
   }
 
+  // Abre el modal de confirmación en vez del confirm() nativo
   borrar(animal: Animal): void {
-    if (!confirm('¿Seguro que querés borrar a ' + animal.nombre + '?')) return;
+    this.animalABorrar = animal;
+    this.mostrarConfirmacionBorrar.set(true);
+  }
+
+  // Se ejecuta cuando el usuario confirma el borrado en el modal
+  confirmarBorrado(): void {
+    if (!this.animalABorrar) return;
+    const animal = this.animalABorrar;
+
     this.animalService.eliminar(animal.id).subscribe({
       next: () => this.animales.update(lista => lista.filter(a => a.id !== animal.id)),
       error: () => this.animales.update(lista => lista.filter(a => a.id !== animal.id))
     });
+
+    this.cancelarBorrado();
+  }
+
+  // Cierra el modal sin borrar nada
+  cancelarBorrado(): void {
+    this.mostrarConfirmacionBorrar.set(false);
+    this.animalABorrar = null;
   }
 
   cerrarFormulario(): void {

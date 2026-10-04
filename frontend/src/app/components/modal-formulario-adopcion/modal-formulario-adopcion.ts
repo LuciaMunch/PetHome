@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SolicitudAdopcionService } from '../../services/solicitud-adopcion.service';
@@ -17,19 +17,33 @@ export class ModalFormularioAdopcion {
 
   enviando = false;
   mensajeError = '';
+  enviadoConExito = false;
 
   form;
 
   constructor(
     private fb: FormBuilder,
-    private solicitudService: SolicitudAdopcionService
+    private solicitudService: SolicitudAdopcionService,
+    private cdr: ChangeDetectorRef
   ) {
     this.form = this.fb.nonNullable.group({
       tipoVivienda: ['CASA' as 'CASA' | 'DEPARTAMENTO', Validators.required],
       tienePatio: [true, Validators.required],
       integrantesHogar: [1, [Validators.required, Validators.min(1)]],
+
       otrasMascotas: [false, Validators.required],
+      cantidadOtrasMascotas: [null as number | null],
+      cualesOtrasMascotas: [''],
+
       experienciaPrevia: [false, Validators.required],
+      cualesMascotasActuales: [''],
+
+      tieneTrabajo: [false],
+      cualTrabajo: [''],
+
+      viajaSeguido: [false],
+      quienCuidaEnViajes: [''],
+
       motivo: [''],
     });
   }
@@ -45,7 +59,8 @@ export class ModalFormularioAdopcion {
     this.solicitudService.enviarSolicitud(payload).subscribe({
       next: () => {
         this.enviando = false;
-        this.cerrar.emit();
+        this.enviadoConExito = true;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.enviando = false;
@@ -56,8 +71,13 @@ export class ModalFormularioAdopcion {
         } else {
           this.mensajeError = 'Ocurrió un error al enviar la solicitud. Intentá de nuevo.';
         }
+        this.cdr.detectChanges();
       }
     });
+  }
+
+  cerrarTodo(): void {
+    this.cerrar.emit();
   }
 
   cancelar(): void {
