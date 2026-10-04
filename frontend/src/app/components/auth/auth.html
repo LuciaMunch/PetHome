@@ -2,6 +2,10 @@
   <div class="card">
     <h2>{{ modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}</h2>
 
+    @if (error) {
+    <p class="error">{{ error }}</p>
+    }
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="field">
         <label for="nombre_usuario">Nombre de usuario</label>
@@ -93,10 +97,6 @@
           placeholder="Tu edad"
         />
       </div>
-      }
-
-      @if (error) {
-      <p class="error">{{ error }}</p>
       }
 
       <button type="submit" [disabled]="loading || form.invalid">

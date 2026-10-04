@@ -120,6 +120,48 @@ textarea {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.campo-condicional {
+  background: #f8f9fa;
+  border-left: 3px solid #f4941e;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0 1rem;
+  border-radius: 6px;
+}
+.pantalla-exito {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.icono-exito {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.pantalla-exito h2 {
+  margin: 0.5rem 0;
+}
+
+.pantalla-exito p {
+  color: #555;
+  line-height: 1.5;
+  margin: 0.75rem 0 1.5rem;
+}
+
+.btn-entendido {
+  background: #1b4332;
+  color: white;
+  border: none;
+  padding: 0.7rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-entendido:hover {
+  background: #14331f;
+}
+
 /* ===== RESPONSIVE: mobile ===== */
 @media (max-width: 768px) {
   .overlay {

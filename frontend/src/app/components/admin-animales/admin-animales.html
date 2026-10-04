@@ -145,4 +145,18 @@
     </div>
   </div>
   }
+
+  @if (mostrarConfirmacionBorrar()) {
+  <div class="modal-fondo" (click)="cancelarBorrado()">
+    <div class="modal modal-confirmacion" (click)="$event.stopPropagation()">
+      <h2>⚠️ Confirmar borrado</h2>
+      <p>¿Seguro que querés borrar a <strong>{{ animalABorrar?.nombre }}</strong>? Esta acción no se puede deshacer.</p>
+
+      <div class="modal-acciones">
+        <button class="btn-cancelar" (click)="cancelarBorrado()">Cancelar</button>
+        <button class="btn-borrar-confirmar" (click)="confirmarBorrado()">Borrar</button>
+      </div>
+    </div>
+  </div>
+  }
 </div>

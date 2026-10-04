@@ -14,7 +14,14 @@ public class SolicitudAdopcionMapper {
                 .tienePatio(request.getTienePatio())
                 .integrantesHogar(request.getIntegrantesHogar())
                 .otrasMascotas(request.getOtrasMascotas())
+                .cantidadOtrasMascotas(request.getCantidadOtrasMascotas())
+                .cualesOtrasMascotas(request.getCualesOtrasMascotas())
                 .experienciaPrevia(request.getExperienciaPrevia())
+                .cualesMascotasActuales(request.getCualesMascotasActuales())
+                .tieneTrabajo(request.getTieneTrabajo())
+                .cualTrabajo(request.getCualTrabajo())
+                .viajaSeguido(request.getViajaSeguido())
+                .quienCuidaEnViajes(request.getQuienCuidaEnViajes())
                 .motivo(request.getMotivo())
                 .build();
     }
@@ -34,7 +41,19 @@ public class SolicitudAdopcionMapper {
                 solicitud.getAnimal().getNombre(),
                 solicitud.getUsuario().getId(),
                 solicitud.getUsuario().getNombreUsuario(),
-                solicitud.getUsuario().getEmail()
+                solicitud.getUsuario().getEmail(),
+                solicitud.getUsuario().getNombreCompleto(),
+                solicitud.getUsuario().getTelefono(),
+                solicitud.getUsuario().getDireccion(),
+                solicitud.getUsuario().getCiudad(),
+                solicitud.getUsuario().getProvincia(),
+                solicitud.getCantidadOtrasMascotas(),
+                solicitud.getCualesOtrasMascotas(),
+                solicitud.getCualesMascotasActuales(),
+                solicitud.getTieneTrabajo(),
+                solicitud.getCualTrabajo(),
+                solicitud.getViajaSeguido(),
+                solicitud.getQuienCuidaEnViajes()
         );
     }
 }

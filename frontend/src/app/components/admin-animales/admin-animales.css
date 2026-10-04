@@ -233,6 +233,32 @@
   cursor: pointer;
   font-weight: 700;
 }
+
+/* Modal de confirmación de borrado */
+.modal-confirmacion {
+  max-width: 420px;
+}
+
+.modal-confirmacion p {
+  color: #555;
+  line-height: 1.5;
+}
+
+.btn-borrar-confirmar {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-borrar-confirmar:hover {
+  background: #bb2d3b;
+}
+
 /* ===== RESPONSIVE: mobile ===== */
 @media (max-width: 768px) {
   .admin {
@@ -332,6 +358,7 @@
   .modal-acciones {
     flex-direction: column-reverse;
   }
+
   .modal-acciones .btn-cancelar,
   .modal-acciones .btn-guardar {
     width: 100%;

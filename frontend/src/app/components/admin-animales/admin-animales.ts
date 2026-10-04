@@ -58,6 +58,10 @@ export class AdminAnimales implements OnInit {
   fotosSeleccionadas = signal<string[]>([]);
   private archivoFoto: File | null = null;
 
+  // Confirmación de borrado (reemplaza al confirm() nativo del navegador)
+  mostrarConfirmacionBorrar = signal(false);
+  animalABorrar: Animal | null = null;
+
   constructor(private animalService: AnimalService) {}
 
   ngOnInit(): void {
@@ -140,12 +144,29 @@ export class AdminAnimales implements OnInit {
     }
   }
 
+  // Abre el modal de confirmación en vez del confirm() nativo
   borrar(animal: Animal): void {
-    if (!confirm('¿Seguro que querés borrar a ' + animal.nombre + '?')) return;
+    this.animalABorrar = animal;
+    this.mostrarConfirmacionBorrar.set(true);
+  }
+
+  // Se ejecuta cuando el usuario confirma el borrado en el modal
+  confirmarBorrado(): void {
+    if (!this.animalABorrar) return;
+    const animal = this.animalABorrar;
+
     this.animalService.eliminar(animal.id).subscribe({
       next: () => this.animales.update(lista => lista.filter(a => a.id !== animal.id)),
       error: () => this.animales.update(lista => lista.filter(a => a.id !== animal.id))
     });
+
+    this.cancelarBorrado();
+  }
+
+  // Cierra el modal sin borrar nada
+  cancelarBorrado(): void {
+    this.mostrarConfirmacionBorrar.set(false);
+    this.animalABorrar = null;
   }
 
   cerrarFormulario(): void {

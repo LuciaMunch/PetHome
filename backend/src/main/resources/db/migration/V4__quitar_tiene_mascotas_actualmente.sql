@@ -1,0 +1,2 @@
+ALTER TABLE solicitud_adopcion
+DROP COLUMN tiene_mascotas_actualmente;

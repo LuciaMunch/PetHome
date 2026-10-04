@@ -36,8 +36,29 @@ public class SolicitudAdopcion {
     @Column(name = "otras_mascotas", nullable = false)
     private boolean otrasMascotas;
 
+    @Column(name = "cantidad_otras_mascotas")
+    private Integer cantidadOtrasMascotas;
+
+    @Column(name = "cuales_otras_mascotas", columnDefinition = "TEXT")
+    private String cualesOtrasMascotas;
+
     @Column(name = "experiencia_previa", nullable = false)
     private boolean experienciaPrevia;
+
+    @Column(name = "cuales_mascotas_actuales", columnDefinition = "TEXT")
+    private String cualesMascotasActuales;
+
+    @Column(name = "tiene_trabajo")
+    private Boolean tieneTrabajo;
+
+    @Column(name = "cual_trabajo")
+    private String cualTrabajo;
+
+    @Column(name = "viaja_seguido")
+    private Boolean viajaSeguido;
+
+    @Column(name = "quien_cuida_en_viajes", columnDefinition = "TEXT")
+    private String quienCuidaEnViajes;
 
     @Column(columnDefinition = "TEXT")
     private String motivo;

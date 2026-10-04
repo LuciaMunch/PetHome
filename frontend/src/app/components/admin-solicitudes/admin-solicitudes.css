@@ -325,6 +325,12 @@
     content: none;
   }
 
+  .sub-dato {
+    margin-left: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
   /* Modal de detalle: más margen al overlay por si hace scroll */
   .acciones-modal {
     flex-direction: column;

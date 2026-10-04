@@ -58,17 +58,38 @@
     <h3>🐾 Solicitud para {{ solicitudSeleccionada.animalNombre }}</h3>
 
     <h4>Datos del adoptante</h4>
+    <p><strong>Nombre completo:</strong> {{ solicitudSeleccionada.usuarioNombreCompleto || '—' }}</p>
     <p><strong>Nombre de usuario:</strong> {{ solicitudSeleccionada.usuarioNombre }}</p>
     <p><strong>Email:</strong> {{ solicitudSeleccionada.usuarioEmail }}</p>
-
+    <p><strong>Teléfono:</strong> {{ solicitudSeleccionada.usuarioTelefono || '—' }}</p>
+    <p><strong>Dirección:</strong> {{ solicitudSeleccionada.usuarioDireccion || '—' }}, {{ solicitudSeleccionada.usuarioCiudad || '—' }}, {{ solicitudSeleccionada.usuarioProvincia || '—' }}</p>
     <h4>Formulario de adopción</h4>
     <p><strong>Tipo de vivienda:</strong> {{ solicitudSeleccionada.tipoVivienda }}</p>
     <p><strong>¿Tiene patio?:</strong> {{ solicitudSeleccionada.tienePatio ? 'Sí' : 'No' }}</p>
     <p><strong>Integrantes del hogar:</strong> {{ solicitudSeleccionada.integrantesHogar }}</p>
-    <p><strong>¿Tiene otras mascotas?:</strong> {{ solicitudSeleccionada.otrasMascotas ? 'Sí' : 'No' }}</p>
-    <p><strong>¿Experiencia previa?:</strong> {{ solicitudSeleccionada.experienciaPrevia ? 'Sí' : 'No' }}</p>
-    <p><strong>Motivo:</strong> {{ solicitudSeleccionada.motivo || '—' }}</p>
 
+    <p><strong>¿Tiene otras mascotas?:</strong> {{ solicitudSeleccionada.otrasMascotas ? 'Sí' : 'No' }}</p>
+    @if (solicitudSeleccionada.otrasMascotas) {
+    <p class="sub-dato"><strong>Cantidad:</strong> {{ solicitudSeleccionada.cantidadOtrasMascotas || '—' }}</p>
+    <p class="sub-dato"><strong>Cuáles:</strong> {{ solicitudSeleccionada.cualesOtrasMascotas || '—' }}</p>
+    }
+
+    <p><strong>¿Experiencia previa?:</strong> {{ solicitudSeleccionada.experienciaPrevia ? 'Sí' : 'No' }}</p>
+    @if (solicitudSeleccionada.experienciaPrevia) {
+    <p class="sub-dato"><strong>Detalle:</strong> {{ solicitudSeleccionada.cualesMascotasActuales || '—' }}</p>
+    }
+
+    <p><strong>¿Tiene trabajo?:</strong> {{ solicitudSeleccionada.tieneTrabajo ? 'Sí' : 'No' }}</p>
+    @if (solicitudSeleccionada.tieneTrabajo) {
+    <p class="sub-dato"><strong>Cuál:</strong> {{ solicitudSeleccionada.cualTrabajo || '—' }}</p>
+    }
+
+    <p><strong>¿Viaja seguido?:</strong> {{ solicitudSeleccionada.viajaSeguido ? 'Sí' : 'No' }}</p>
+    @if (solicitudSeleccionada.viajaSeguido) {
+    <p class="sub-dato"><strong>Quién cuida en esos casos:</strong> {{ solicitudSeleccionada.quienCuidaEnViajes || '—' }}</p>
+    }
+
+    <p><strong>Motivo:</strong> {{ solicitudSeleccionada.motivo || '—' }}</p>
     <div class="acciones-modal">
       <button class="btn-rechazar" (click)="rechazar(solicitudSeleccionada.id)">Rechazar</button>
       <button class="btn-aprobar" (click)="aprobar(solicitudSeleccionada.id)">Aprobar</button>
