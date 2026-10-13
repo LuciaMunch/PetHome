@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -31,6 +32,21 @@ public class GlobalExceptionHandler {
         ProblemDetail problema = ProblemDetail.forStatusAndDetail(
                 HttpStatus.CONFLICT, ex.getMessage());
         problema.setTitle("Operación no permitida");
+        return problema;
+    }
+
+    /*
+     * Autorización (403): la petición está autenticada pero el rol no alcanza.
+     * Los endpoints de administración se protegen con @PreAuthorize("hasRole('ADMIN')"),
+     * que lanza AccessDeniedException DENTRO del controlador (seguridad a nivel de método),
+     * por lo que no la atrapa el AccessDeniedHandler de la cadena de filtros, sino este manejador.
+     * Sin esto, un acceso con rol insuficiente devolvería 500 en lugar de 403.
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ProblemDetail manejarAccesoDenegado(AccessDeniedException ex) {
+        ProblemDetail problema = ProblemDetail.forStatusAndDetail(
+                HttpStatus.FORBIDDEN, "No tenés permisos para acceder a este recurso");
+        problema.setTitle("Acceso denegado");
         return problema;
     }
 
