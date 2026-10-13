@@ -83,16 +83,34 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
         SolicitudAdopcion solicitud = solicitudAdopcionRepository.findById(solicitudId)
                 .orElseThrow(() -> new EntityNotFoundException("Solicitud no encontrada con id: " + solicitudId));
 
-        Long animalId = solicitud.getAnimal().getId();
+        // --- Guardas de negocio (control de concurrencia, primera línea de defensa) ---
+        // 1) La solicitud debe seguir PENDIENTE. Si otro admin ya la aprobó/rechazó, cortamos acá.
+        if (solicitud.getEstado() != EstadoSolicitud.PENDIENTE) {
+            throw new IllegalStateException(
+                    "La solicitud ya fue procesada (estado actual: " + solicitud.getEstado() + ")");
+        }
+
+        Animal animal = solicitud.getAnimal();
+
+        // 2) El animal no puede estar ya adoptado por otra solicitud.
+        if (animal.getEstado() == EstadoAnimal.ADOPTADO) {
+            throw new IllegalStateException("El animal ya fue adoptado por otra solicitud");
+        }
+
+        Long animalId = animal.getId();
 
         solicitud.setEstado(EstadoSolicitud.APROBADA);
         solicitudAdopcionRepository.save(solicitud);
 
+        // Rechaza automáticamente las demás solicitudes pendientes del mismo animal
         List<SolicitudAdopcion> otrasPendientes =
                 solicitudAdopcionRepository.findByAnimalIdAndEstado(animalId, EstadoSolicitud.PENDIENTE);
         otrasPendientes.forEach(s -> s.setEstado(EstadoSolicitud.RECHAZADA));
         solicitudAdopcionRepository.saveAll(otrasPendientes);
 
+        // Marca el animal como ADOPTADO. Si dos transacciones llegan hasta acá en paralelo,
+        // el @Version de Animal hace que la segunda falle con ObjectOptimisticLockingFailureException
+        // (segunda línea de defensa, a nivel de base de datos).
         animalService.marcarAdoptado(animalId);
     }
 
@@ -101,6 +119,11 @@ public class SolicitudAdopcionServiceImpl implements SolicitudAdopcionService {
     public void rechazarSolicitud(Long solicitudId) {
         SolicitudAdopcion solicitud = solicitudAdopcionRepository.findById(solicitudId)
                 .orElseThrow(() -> new EntityNotFoundException("Solicitud no encontrada con id: " + solicitudId));
+
+        if (solicitud.getEstado() != EstadoSolicitud.PENDIENTE) {
+            throw new IllegalStateException(
+                    "La solicitud ya fue procesada (estado actual: " + solicitud.getEstado() + ")");
+        }
 
         solicitud.setEstado(EstadoSolicitud.RECHAZADA);
         solicitudAdopcionRepository.save(solicitud);
