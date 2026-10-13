@@ -1,6 +1,8 @@
 package com.pethome.configs;
 
 import com.pethome.security.JwtAuthenticationFilter;
+import com.pethome.security.RestAccessDeniedHandler;
+import com.pethome.security.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -24,7 +26,10 @@ public class SecurityConfig {
 
     // Define la cadena de seguridad principal de la app
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtFilter) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http,
+                                    JwtAuthenticationFilter jwtFilter,
+                                    RestAuthenticationEntryPoint authEntryPoint,
+                                    RestAccessDeniedHandler accessDeniedHandler) throws Exception {
         return http
                 // Como usamos JWT (stateless), NO usamos cookies ni CSRF => lo desactivamos
                 .csrf(AbstractHttpConfigurer::disable)
@@ -47,6 +52,14 @@ public class SecurityConfig {
                         // TODO lo demás exige estar autenticado con token válido
                         .anyRequest().authenticated())
 
+                // Diferenciación de errores de seguridad:
+                //   - 401 (authenticationEntryPoint): la petición NO está autenticada (sin token o token inválido)
+                //   - 403 (accessDeniedHandler): la petición SÍ está autenticada pero el rol no alcanza
+                // Sin esta configuración, Spring Security respondía 403 en ambos casos.
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(authEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
+
                 // Registra NUESTRO filtro ANTES del filtro estándar de login de Spring.
                 // Así primero validamos el JWT y después Spring decide si deja pasar.
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -64,7 +77,9 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-    // Cifra las contraseñas (hash BCrypt): nunca guardamos la contraseña en texto plano
+
+    // Hashea las contraseñas con BCrypt (hash de una sola vía, NO cifrado reversible):
+    // nunca guardamos la contraseña en texto plano.
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
